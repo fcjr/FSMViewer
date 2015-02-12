@@ -92,7 +92,7 @@ public class FSMStore {
     }
 
     public Transition getTransition(int ID) {
-    
+   return null;
     }
 
     public int numStates() { return 0;}
