@@ -13,6 +13,10 @@ run {
     standardInput = System.in
 }
 
+test {
+     include '**/*Suite.class'
+}
+
 if (hasProperty("depreciation")) {
     tasks.withType(Compile) {
         options.compilerArgs << "-Xlint:deprecation"
