@@ -24,13 +24,13 @@ public class DisplayStore {
 	    
     }
 
-     public int removeState(int x, int y,){
+     public int removeState(int x, int y){
 	
 	return displayGraph[getRow(x)][getColumn(y)].removeNode();
 	
      }
 
-    public boolean moveState(x1, y1, x2, y2){
+    public boolean moveState(int x1,int y1,int x2,int y2){
 
 	if(displayGraph[getRow(x2)][getColumn(y2)].containsState()){
 	    return false;
@@ -42,11 +42,11 @@ public class DisplayStore {
 
     }
 
-    public int getState(x, y){
+    public int getState(int x, int y){
 	return displayGraph[getRow(x)][getColumn(y)].getID();
     }
 
-    public booean containsState(x,y){
+    public boolean containsState(int x,int y){
 	return displayGraph[getRow(x)][getColumn(y)].containsState();
     }
 
