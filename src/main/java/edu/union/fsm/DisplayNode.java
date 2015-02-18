@@ -1,4 +1,4 @@
-import stuff...;
+package edu.union.fsm;
 
 
 public class DisplayNode {
@@ -9,16 +9,16 @@ public class DisplayNode {
     private int myID;
     
     public DisplayNode(){
-	myType = false;
+	hasState = false;
 	myID = -1;
     }
     
-    public int containsState(){
+    public boolean containsState(){
 	return hasState;
     }
 
     public int getID(){
-	return myID();
+	return myID;
     }
     
     public int setNode(int ID){
