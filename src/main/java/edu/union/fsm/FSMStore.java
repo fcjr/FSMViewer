@@ -15,6 +15,10 @@ public class FSMStore {
         Transitions = new ArrayList<Transition>();
     }
 
+    public int addState(String name) {
+        return this.addState(name, 0);
+    }
+
     public int addState(String name,int type){
         int toReturn = this.nextID;
         State toAdd = new State(nextID,name,type);
@@ -23,35 +27,58 @@ public class FSMStore {
         return toReturn;
     }
 
-    public int addTransition(String name, int fromID, int toID){ 
-        int toReturn = this.nextID;
-        Transition toAdd = new Transition(nextID,name,fromID,toID);
-        Transitions.add(toAdd);
-        nextID++;
-        return toReturn;
+
+    //TODO DOESNT ADD NAMES TO EXISTING TRANSITIONS
+    public int addTransition(String name, int fromID, int toID){
+        if (this.containsState(fromID) && this.containsState(toID)){
+          Transition toAdd = getTransitionPrivate(fromID, toID);
+          if(toAdd != null){
+            toAdd.addCondition(name);
+            return toAdd.getID();
+          } else {
+            int toReturn = this.nextID;
+            toAdd = new Transition(nextID,name,fromID,toID);
+            Transitions.add(toAdd);
+            nextID++;
+            return toReturn;
+          }
+        } else {
+        return -1;
+      }
+    }
+
+    private Transition getTransitionPrivate(int fromID, int toID) {
+      for(Transition currentTrans: Transitions) {
+        if (currentTrans.getFromID() == fromID && currentTrans.getToID() == toID){
+          return currentTrans;
+        }
+      }
+      return null;
     }
 
     public void removeState(int id) {
         if(this.containsState(id)){
-            for(int i=0;i>States.size();i++){
+            for(int i=0;i<States.size();i++){
                 State currentState = States.get(i);
                 if(currentState.getID() == id) {
                     States.remove(i);
                 }
             }
-            Iterator<Transition> iter = Transitions.iterator();
-            while (iter.hasNext()) {
-                Transition current = iter.next();
-                if(current.getToID() == id || current.getFromID() == id) {
-                    iter.remove();
-                }
+            ArrayList<Integer> transToRemove = new ArrayList<Integer>();
+            for(Transition currentTrans: Transitions) {
+              if(currentTrans.getToID() == id || currentTrans.getFromID() == id) {
+                transToRemove.add(currentTrans.getID());
+              }
+            }
+            for (Integer idToRemove: transToRemove) {
+              this.removeTransition(idToRemove.intValue());
             }
         }
-        }
+    }
 
     public void removeTransition(int id) {
         if(this.containsTransition(id)){
-            for(int i=0;i>Transitions.size();i++){
+            for(int i=0;i<Transitions.size();i++){
                 Transition currentTransition = Transitions.get(i);
                 if(currentTransition.getID() == id) {
                     Transitions.remove(i);
@@ -71,7 +98,7 @@ public class FSMStore {
         return false;
     }
 
-    public boolean containsTransition(int ID) { 
+    public boolean containsTransition(int ID) {
         for(int i = 0;i<Transitions.size();i++) {
             Transition currentTransition = Transitions.get(i);
             if(currentTransition.getID() == ID) {
@@ -92,10 +119,16 @@ public class FSMStore {
     }
 
     public Transition getTransition(int ID) {
-   return null;
+        for(int i=0;i<Transitions.size();i++) {
+           Transition currentTransition = Transitions.get(i);
+           if (currentTransition.getID() == ID) {
+                return currentTransition;
+           }
+        }
+        return null;
     }
 
-    public int numStates() { return 0;}
+    public int numStates() { return States.size();}
 
-    public int numTransitions() {return 0;}
+    public int numTransitions() {return Transitions.size();}
 }
