@@ -2,65 +2,66 @@ package edu.union.fsm;
 
 public class DisplayStore {
     
-    int row = 20;
-    int column = 20;
-    int pixelwidth;
-    int pixelheight;
+    int row;
+    int column;
+ 
     DisplayNode[][] displayGraph;
 
     public DisplayStore(int x, int y){
-
-	pixelwidth = x/20;
-	pixelheight = y/20;
+	row = x;
+	column = y;
 	displayGraph = new DisplayNode[row][column];
+	for(int i = 0; i < row; i++){
+	    for(int j=0; j < column; j++){
+		displayGraph[i][j] = new DisplayNode();
+	    }
+	}
  
 
     }
 
     public int addState(int x, int y, int ID){
-	
-	return displayGraph[getRow(x)][getColumn(y)].setNode(ID);
+
+	return displayGraph[x][y].setNode(ID);
 
 	    
     }
 
      public int removeState(int x, int y){
-	
-	return displayGraph[getRow(x)][getColumn(y)].removeNode();
+
+	 return displayGraph[x][y].removeNode();
 	
      }
 
     public boolean moveState(int x1,int y1,int x2,int y2){
 
-	if(displayGraph[getRow(x2)][getColumn(y2)].containsState()){
+	if(displayGraph[x2][y2].containsState()){
+	    System.out.println(displayGraph[x2][y2].containsState());
 	    return false;
 	}
 	else{
-	    displayGraph[getRow(x2)][getColumn(y2)] =  displayGraph[getRow(x1)][getColumn(y1)];
+	    System.out.println(displayGraph[x2][y2].getID());
+	    displayGraph[x2][y2].setNode(displayGraph[x1][y1].getID());
+
+	    displayGraph[x1][y1].removeNode();
+
+
+
 	    return true;
 	}
 
     }
 
     public int getState(int x, int y){
-	return displayGraph[getRow(x)][getColumn(y)].getID();
+
+	return displayGraph[x][y].getID();
     }
 
     public boolean containsState(int x,int y){
-	return displayGraph[getRow(x)][getColumn(y)].containsState();
+	return displayGraph[x][y].containsState();
     }
+
 
     
 
-    //not sure the size of the buttons or whether the bottons will affect the relative postition of the pixels, 
-    //so this can might need to be changed
-    private int getRow(int x){
-	x = x/pixelheight; 
-	return x;
-    }
-
-    private int getColumn(int y){
-	y = y/pixelwidth;
-	return y;
-    }
 }
