@@ -1,0 +1,121 @@
+package edu.union.fsm.tests;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
+
+import org.junit.Test;
+import org.junit.Ignore;
+import org.junit.Before;
+import org.junit.After;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+import edu.union.fsm.*;
+
+@RunWith(JUnit4.class)
+public class FSMStoreTests {
+
+    private FSMStore fsmStore;
+
+    @Before
+    public void setUp() {
+        fsmStore = new FSMStore();
+    }
+
+    @After
+    public void tearDown() {
+        fsmStore = null;
+    }
+
+    @Test
+    public void construct() {
+        assertEquals("an empty fsm has no states", 0, fsmStore.numStates());
+        assertEquals("an empty fsm has no transitions", 0, fsmStore.numTransitions());
+    }
+
+    @Test
+    public void addState() {
+        int id = fsmStore.addState("A");
+        assertTrue("adding a state adds the state", fsmStore.containsState(id));
+        assertEquals("adding a state increments the number of states",
+                1,
+                fsmStore.numStates());
+        assertEquals("adding a state does not mess with the number of transitions",
+                0,
+                fsmStore.numTransitions());
+        int id2 = fsmStore.addState("B");
+        assertTrue("adding another state returns a unique id", id != id2);
+    }
+
+    @Test
+    public void addTransition() {
+        int id = fsmStore.addState("A");
+        int id2 = fsmStore.addState("B");
+        int transID = fsmStore.addTransition("arrow", id, id2);
+
+        assertTrue("adding a transition adds a transition", fsmStore.containsTransition(transID));
+        assertEquals("adding a Tansition increases the number of Transitions",
+                1,
+                fsmStore.numTransitions());
+        assertEquals("adding a Transition does not change the number of states",
+                2,
+                fsmStore.numStates());
+
+        int transID2 = fsmStore.addTransition("other arrow", id, id2);
+        assertTrue("adding a Transition with a different condition name but same to and from states, adds the condition to the existing transition and returns the same id",
+                transID == transID2);
+        assertEquals("adding anotehr condition in an existing transition does not increas the number of stored transitions",
+                1, fsmStore.numTransitions());
+
+        int id3 = fsmStore.addState("C");
+        int transID3 = fsmStore.addTransition("other arrow again", id, id3);
+        assertTrue("adding a tans between a different set of states creates a new transition object",
+                transID != transID3);
+    }
+
+    @Test
+    public void removeTransition() {
+        int id = fsmStore.addState("A");
+        int id2 = fsmStore.addState("B");
+        int transID = fsmStore.addTransition("arrow", id, id2);
+        fsmStore.removeTransition(transID);
+        //System.out.println(fsmStore.containsTransition(transID));
+        //System.out.println(fsmStore.getTransition(transID).getLabel());
+        assertFalse("removing a transition removes it from the fsm",
+                fsmStore.containsTransition(transID));
+        assertEquals("removing a transition is reflected in the number of transitions",
+                0, fsmStore.numTransitions());
+        assertEquals("removing a transition does not change the num of states",
+                2, fsmStore.numStates());
+    }
+
+    @Test
+    public void removeState() {
+        int id = fsmStore.addState("A");
+        int id1 = fsmStore.addState("B");
+        int id2 = fsmStore.addState("C");
+        int id3 = fsmStore.addState("D");
+        int trans = fsmStore.addTransition("arrow", id, id1);
+        int trans2 = fsmStore.addTransition("another arrow", id1, id2);
+        int trans3 = fsmStore.addTransition("yet another arrow", id2, id3);
+        int trans4 = fsmStore.addTransition("second to", id, id2);
+        fsmStore.removeState(id3);
+        assertFalse("removing a state removes the state from the fsm",
+                fsmStore.containsState(id3));
+        assertEquals("removing a state decrements the number of states",
+                3,
+                fsmStore.numStates());
+        assertFalse("removing a state removes all of the transitions to it",
+                fsmStore.containsTransition(trans3));
+        assertTrue("removing a state does not remove transitions that dont go to or from it",
+                fsmStore.containsTransition(trans) && fsmStore.numTransitions() == 3);
+    }
+
+    public void getStates() {
+    }
+
+    public void getTransitions() {
+    }
+}
