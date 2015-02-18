@@ -19,14 +19,15 @@ public class View extends JFrame{
   private JButton deleteTransitionButton = new JButton("Delete Transition");
   private JLabel nameLabel = new JLabel(" Name: ");
   private JTextField nameField = new JTextField(10);
-
+  private DrawingComponent drawingComponent = new DrawingComponent();
   View(){
 
     JPanel panel = new JPanel();
 
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setTitle("Finite State Machine Viewer");
-    this.setSize(1080, 720);
+    this.setSize(740, 760);
+    this.setResizable(false);
 
     // add the panes to the panel
     panel.add(addStateButton);
@@ -35,6 +36,7 @@ public class View extends JFrame{
     panel.add(deleteTransitionButton);
     panel.add(nameLabel);
     panel.add(nameField);
+    panel.add(drawingComponent);
 
     this.add(panel);
 
