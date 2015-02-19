@@ -2,6 +2,9 @@ package edu.union.fsm;
 
 import java.util.ArrayList;
 
+/**
+ * Transition Class stores all relevent information about a transition.
+ */
 public class Transition {
 
     private int id;
@@ -9,6 +12,13 @@ public class Transition {
     private int fromID;
     private int toID;
 
+    /**
+     * constructor.
+     * @param   id id of transition
+     * @param   name name of transition
+     * @param   fromID from state's id
+     * @param   toID to state's id
+     */
     public Transition(int id, String name, int fromID, int toID) {
         this.id = id;
         this.conditions = new ArrayList<String>();
@@ -17,13 +27,26 @@ public class Transition {
         this.toID = toID;
     }
 
+    /**
+     * returns the transitions id
+     * @return id of transition
+     */
     public int getID() {
         return id;
     }
 
+    /**
+     * returns the id of the from state
+     * @return from state id
+     */
     public int getFromID() {
         return fromID;
     }
+
+    /**
+     * returns the id of the to state
+     * @return to state id
+     */
     public int getToID() {
         return toID;
     }
@@ -32,16 +55,29 @@ public class Transition {
             this.conditions.add(name);
         }
     }
-    public void removeCondition(String name) { 
+
+    /**
+     * removes the given condition if it exists.
+     * @param name name of condition to remove
+     */
+    public void removeCondition(String name) {
         if(this.conditions.contains(name)) {
             this.conditions.remove(name);
         }
     }
+
+    /**
+     * returns the number of conditions in the transition
+     * @return num of conditions
+     */
     public int numConditions() {
         return conditions.size();
     }
 
-    //TEST THIS
+    /**
+     * returns a string for use in labeling transtions
+     * @return a string which contains all of the condition names
+     */
     public String getLabel() {
         String toReturn = conditions.toString();
         toReturn = toReturn.replaceAll("[\\[\\]]","");

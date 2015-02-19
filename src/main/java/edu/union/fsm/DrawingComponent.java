@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 /**
- *
+ *component for drawing fsm's
  *
  */
 public class DrawingComponent extends JComponent {
@@ -17,6 +17,10 @@ public class DrawingComponent extends JComponent {
     private final int CELL_SIZE =700/NUMBER_OF_CELLS;
     private final int DIMENSION = CELL_SIZE*NUMBER_OF_CELLS;
 
+    /**
+     * constructor.
+     * @param  model refference to the model
+     */
     public DrawingComponent(Model model){
 
         this.myModel = model;
@@ -26,6 +30,10 @@ public class DrawingComponent extends JComponent {
     }
 
 
+    /**
+     * paints the fsm
+     * @param g magical graphics object.
+     */
     public void paintComponent(Graphics g) {
 
     super.paintComponent(g);
@@ -35,6 +43,10 @@ public class DrawingComponent extends JComponent {
 
     }
 
+    /**
+     * paints the grid layout
+     * @param g magical graphics object.
+     */
     private void paintGridLines(Graphics g)
     {
         //paint columns
@@ -56,6 +68,10 @@ public class DrawingComponent extends JComponent {
 
     }
 
+    /**
+     * paints the states to the component
+     * @param g magical graphics object
+     */
     private void paintStates(Graphics g){
         DisplayStore displayStore = myModel.displayStore;
         FSMStore fsmStore = myModel.fsmStore;
@@ -75,6 +91,10 @@ public class DrawingComponent extends JComponent {
 
     }
 
+    /**
+     * paints the transtitions to the component
+     * @param g magical graphics object
+     */
     private void paintTransitions(Graphics g){
         ArrayList<Transition> transitions = myModel.fsmStore.getTransitions();
         for(Transition currentTrans: transitions){
@@ -87,6 +107,13 @@ public class DrawingComponent extends JComponent {
 
     }
 
+    /**
+     * paints a transition.
+     * @param  g magical graphics object
+     * @param  name name of the transition
+     * @param  fromID id of the fromstate
+     * @param  toID id of the toState
+     */
     private void paintTransition(Graphics g, String name, int fromID, int toID){
         int fromRow = myModel.displayStore.getRow(fromID);
         int fromColumn = myModel.displayStore.getColumn(fromID);
@@ -116,11 +143,25 @@ public class DrawingComponent extends JComponent {
 
     }
 
+    /**
+     * converts raw coords to cell locations.
+     * @param  coord raw coord
+     * @return       cell data
+     */
      public int coordToCellSpot(int coord)
     {
         return coord/CELL_SIZE;
     }
 
+    /**
+     * paints a state.
+     * @param  g magic
+     * @param  name name of the state
+     * @param  isStart the fact that it is a start or not
+     * @param  isAccept the fact that it is an accept or not
+     * @param  row the row to draw it in
+     * @param  column the column to draw it in
+     */
     private void paintState(Graphics g, String name, boolean isStart, boolean isAccept,
               int row, int column)
     {
@@ -153,6 +194,13 @@ public class DrawingComponent extends JComponent {
 
     }
 
+    /**
+     * draws a string in the center of the given rectangle
+     * @param  g magic
+     * @param  text text to draw
+     * @param  rect the rect to draw in
+     * @param  font the font to write in
+     */
     private void drawCenteredString(Graphics g, String text, Rectangle rect, Font font) {
     // Get the FontMetrics
     FontMetrics metrics = g.getFontMetrics(font);

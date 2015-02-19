@@ -28,6 +28,11 @@ public class View extends JFrame implements ModelListener{
   private DrawingComponent drawingComponent;
 
 
+  /**
+   * constructor.  takes in a refference to the model
+   *
+   * @param model the model class
+   */
   View(Model model) {
     this.model = model;
     drawingComponent = new DrawingComponent(model);
@@ -56,23 +61,38 @@ public class View extends JFrame implements ModelListener{
 
   }
 
+  /**
+   * repaints the drawing component
+   */
   public void update(){
       drawingComponent.repaint();
       this.clearName();
   }
 
+  /**
+   * returns the string in the name field
+   * @return user inputed string.
+   */
   public String getName(){
 
     return nameField.getText();
 
   }
 
+  /**
+   * clears nameField.
+   */
   public void clearName(){
 
     nameField.setText("");
 
   }
 
+  /**
+   * converts raw coords to cell locations.
+   * @param  coord raw coord
+   * @return       cell data
+   */
   public int coordToCellSpot(int coord) {
       return drawingComponent.coordToCellSpot(coord);
   }
