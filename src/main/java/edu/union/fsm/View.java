@@ -14,11 +14,13 @@ import javax.swing.*;
 public class View extends JFrame implements ModelListener{
 
 
-  private JButton addStateButton = new JButton("Add State");
-  private JButton deleteStateButton = new JButton("Delete State");
-  private JButton moveStateButton = new JButton("Move State");
-  private JButton addTransitionButton = new JButton("Add Transition ");
-  private JButton deleteTransitionButton = new JButton("Delete Transition");
+  private JLabel stateLabel = new JLabel("State: ");
+  private JButton addStateButton = new JButton("Add");
+  private JButton deleteStateButton = new JButton("Delete");
+  private JButton moveStateButton = new JButton("Move");
+  private JLabel transitionLabel = new JLabel(" Transition: ");
+  private JButton addTransitionButton = new JButton("Add");
+  private JButton deleteTransitionButton = new JButton("Delete");
   private JLabel nameLabel = new JLabel(" Name: ");
   private JTextField nameField = new JTextField(10);
   private Model model;
@@ -37,9 +39,11 @@ public class View extends JFrame implements ModelListener{
     this.setResizable(false);
 
     // add the panes to the panel
+    panel.add(stateLabel);
     panel.add(addStateButton);
     panel.add(deleteStateButton);
     panel.add(moveStateButton);
+    panel.add(transitionLabel);
     panel.add(addTransitionButton);
     panel.add(deleteTransitionButton);
     panel.add(nameLabel);
