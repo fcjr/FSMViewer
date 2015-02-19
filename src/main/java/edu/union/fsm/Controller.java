@@ -74,8 +74,12 @@ public class Controller implements MouseListener {
       public void execute(){
           String name = theView.getName();
           //TODO SELECT TYPE
-          int id = theModel.fsmStore.addState(name);
-          theModel.displayStore.addState(firstX,firstY,id);
+          if (!theModel.displayStore.containsState(firstX,firstY)){
+              int id = theModel.fsmStore.addState(name);
+              theModel.displayStore.addState(firstX,firstY,id);
+          } else {
+              theView.displayErrorMessage("Can't Add State, state already exists in position.");
+          }
       }
   }
 
