@@ -1,10 +1,10 @@
 package edu.union.fsm;
 
 public class DisplayStore {
-    
+
     int row;
     int column;
- 
+
     DisplayNode[][] displayGraph;
 
     public DisplayStore(int x, int y){
@@ -16,7 +16,7 @@ public class DisplayStore {
 		displayGraph[i][j] = new DisplayNode();
 	    }
 	}
- 
+
 
     }
 
@@ -24,23 +24,23 @@ public class DisplayStore {
 
 	return displayGraph[x][y].setNode(ID);
 
-	    
+
     }
 
      public int removeState(int x, int y){
 
 	 return displayGraph[x][y].removeNode();
-	
+
      }
 
     public boolean moveState(int x1,int y1,int x2,int y2){
 
 	if(displayGraph[x2][y2].containsState()){
-	    System.out.println(displayGraph[x2][y2].containsState());
+	    //System.out.println(displayGraph[x2][y2].containsState());
 	    return false;
 	}
 	else{
-	    System.out.println(displayGraph[x2][y2].getID());
+	    //System.out.println(displayGraph[x2][y2].getID());
 	    displayGraph[x2][y2].setNode(displayGraph[x1][y1].getID());
 
 	    displayGraph[x1][y1].removeNode();
@@ -62,6 +62,6 @@ public class DisplayStore {
     }
 
 
-    
+
 
 }
