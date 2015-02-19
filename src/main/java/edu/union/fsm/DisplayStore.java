@@ -48,16 +48,33 @@ public class DisplayStore {
 
     }
 
+    public int getRows() {
+        return row;
+    }
+
+    public int getColumns() {
+        return column;
+    }
+
     public int addState(int x, int y, int ID){
 
-	return displayGraph[x][y].setNode(ID);
+        int toReturn = displayGraph[x][y].setNode(ID);
+
+        notifyListeners();
+
+        return toReturn;
 
 
     }
 
      public int removeState(int x, int y){
 
-	 return displayGraph[x][y].removeNode();
+         int toReturn = displayGraph[x][y].removeNode();
+
+         notifyListeners();
+
+	     return toReturn;
+
 
      }
 
@@ -82,11 +99,11 @@ public class DisplayStore {
 
     public int getState(int x, int y){
 
-	return displayGraph[x][y].getID();
+	       return displayGraph[x][y].getID();
     }
 
     public boolean containsState(int x,int y){
-	return displayGraph[x][y].containsState();
+	       return displayGraph[x][y].containsState();
     }
 
 
