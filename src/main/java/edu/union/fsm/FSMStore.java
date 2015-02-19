@@ -2,17 +2,42 @@ package edu.union.fsm;
 
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class FSMStore {
 
     private ArrayList<State> States;
     private ArrayList<Transition> Transitions;
     private int nextID;
+    private Vector listeners;
 
     public FSMStore(){
         nextID = 0;
         States = new ArrayList<State>();
         Transitions = new ArrayList<Transition>();
+        listeners = new Vector();
+    }
+
+    public void addListener(ModelListener l)
+    {
+        listeners.add(l);
+    }
+
+    public void removeListener(ModelListener l)
+    {
+        listeners.remove(l);
+    }
+
+    private void notifyListeners()
+    {
+        ModelListener l;
+        Iterator iter = listeners.iterator();
+
+        while(iter.hasNext()) {
+            l = (ModelListener) iter.next();
+            l.update();
+        }
+
     }
 
     public int addState(String name) {
