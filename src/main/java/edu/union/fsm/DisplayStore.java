@@ -3,6 +3,9 @@ package edu.union.fsm;
 import java.util.Vector;
 import java.util.*;
 
+/**
+ * Class for storing the position information.
+ */
 public class DisplayStore {
 
     int row;
@@ -12,6 +15,11 @@ public class DisplayStore {
 
     Vector listeners;
 
+    /**
+     * constructor.
+     * @param   x number of rows
+     * @param   y number of columns
+     */
     public DisplayStore(int x, int y){
 	row = x;
 	column = y;
@@ -26,6 +34,11 @@ public class DisplayStore {
 
     }
 
+    /**
+     * returns the row of a given id
+     * @param  id id to check
+     * @return    the row number
+     */
     public int getRow(int id) {
         for(int r = 0; r < row; r++){
     	    for(int c=0; c < column; c++){
@@ -37,7 +50,11 @@ public class DisplayStore {
         }
         return -1;
     }
-
+    /**
+    * returns the column of a given id
+    * @param  id id to check
+    * @return    the column number
+    */
     public int getColumn(int id) {
         for(int r = 0; r < row; r++){
             for(int c=0; c < column; c++){
@@ -50,16 +67,27 @@ public class DisplayStore {
         return -1;
     }
 
+    /**
+     * adds a ModelListener to the store.
+     * @param l listener to add
+     */
     public void addListener(ModelListener l)
     {
         listeners.add(l);
     }
 
+    /**
+    * removes a ModelListener to the store.
+    * @param l listener to remove
+    */
     public void removeListener(ModelListener l)
     {
         listeners.remove(l);
     }
 
+    /**
+     * calls .update() on all ModelListeners
+     */
     private void notifyListeners()
     {
         ModelListener l;
@@ -72,14 +100,29 @@ public class DisplayStore {
 
     }
 
+    /**
+     * return number of rows
+     * @return # of rows
+     */
     public int getRows() {
         return row;
     }
 
+    /**
+     * returns number of columns
+     * @return # of columns
+     */
     public int getColumns() {
         return column;
     }
 
+    /**
+     * adds a state to the displayStore
+     * @param   x row of display
+     * @param   y column of display
+     * @param   ID id of state to add
+     * @return  the id of the state
+     */
     public int addState(int x, int y, int ID){
 
         int toReturn = displayGraph[x][y].setNode(ID);
@@ -91,6 +134,12 @@ public class DisplayStore {
 
     }
 
+    /**
+    * removes a state to the displayStore
+    * @param   x row of display
+    * @param   y column of display
+    * @return  the id of the state
+    */
      public int removeState(int x, int y){
 
          int toReturn = displayGraph[x][y].removeNode();
@@ -102,6 +151,14 @@ public class DisplayStore {
 
      }
 
+    /**
+     * moves state from one pos to another
+     * @param   x1 xpos of state
+     * @param   y1 ypos of state
+     * @param   x2 xpos to move
+     * @param   y2 ypos to move
+     * @return  true iff move is sucessful
+     */
     public boolean moveState(int x1,int y1,int x2,int y2){
 
 	if(displayGraph[x2][y2].containsState()){
@@ -121,11 +178,23 @@ public class DisplayStore {
 
     }
 
+    /**
+     * returns the id of the state in a given spot
+     * @param   x column
+     * @param   y row
+     * @return  id of state
+     */
     public int getState(int x, int y){
 
 	       return displayGraph[x][y].getID();
     }
 
+    /**
+     * returns true iff the state exists.
+     * @param   x column
+     * @param   y row
+     * @return  true iff the state exists.
+     */
     public boolean containsState(int x,int y){
 	       return displayGraph[x][y].containsState();
     }
