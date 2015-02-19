@@ -92,6 +92,39 @@ public class Controller implements MouseListener {
       }
   }
 
+  private class AddTransitionTool implements Tool{
+      public void execute(){
+
+          if(theModel.displayStore.containsState(firstX,firstY) &&
+             theModel.displayStore.containsState(secondX,secondY)) {
+                 String name = theView.getName();
+                 int fromID = theModel.displayStore.getState(firstX,firstY);
+                 int toID = theModel.displayStore.getState(secondX,secondY);
+                 theModel.fsmStore.addTransition(name,fromID,toID);
+          } else {
+              theView.displayErrorMessage("Error: Not a valid transition.");
+          }
+      }
+  }
+
+  private class DeleteTransitionTool implements Tool{
+      public void execute(){
+          if(theModel.displayStore.containsState(firstX,firstY) &&
+             theModel.displayStore.containsState(secondX,secondY)) {
+                 String name = theView.getName();
+                 int fromID = theModel.displayStore.getState(firstX,firstY);
+                 int toID = theModel.displayStore.getState(secondX,secondY);
+                    if (theModel.fsmStore.containsTransitionWithIDs(fromID,toID)){
+                        theModel.fsmStore.removeTransitionWithIDs(fromID,toID);
+                    } else{
+                        theView.displayErrorMessage("Error: No transtion exists.");
+                    }
+             } else {
+                 theView.displayErrorMessage("Error: Invalid States.");
+             }
+      }
+  }
+
   //BUTTON LISTENERS all these do are toggle the current tool.
   private class AddStateListener implements ActionListener{
 
@@ -142,7 +175,7 @@ public class Controller implements MouseListener {
 
       try{
 
-        currentTool = new AddStateTool();
+        currentTool = new AddTransitionTool();
       }
 
       catch(Exception ex){
@@ -163,8 +196,7 @@ public class Controller implements MouseListener {
 
       try{
 
-        theView.displayErrorMessage("Deleted Transition");
-        theView.clearName();
+          currentTool = new DeleteTransitionTool();
       }
 
       catch(Exception ex){
