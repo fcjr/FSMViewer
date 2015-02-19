@@ -40,6 +40,10 @@ public class FSMStore {
 
     }
 
+    public ArrayList<Transition> getTransitions(){
+        return Transitions;
+    }
+    
     public int addState(String name) {
         return this.addState(name,3);
     }
