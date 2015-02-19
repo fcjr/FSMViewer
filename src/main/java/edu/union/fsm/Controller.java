@@ -9,12 +9,21 @@ package edu.union.fsm;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 
-public class Controller {
+
+public class Controller implements MouseListener {
 
   private View theView;
   private Model theModel;
+  private ToolInvoker toolInvoker;
+  private Tool currentTool;
+  private int firstX;
+  private int secondX;
+  private int firstY;
+  private int secondY;
 
   public Controller(View theView, Model theModel) {
     this.theView = theView;
@@ -23,21 +32,88 @@ public class Controller {
     theModel.displayStore.addListener(theView);
 
 
+    firstX = 0;
+    firstY = 0;
+    secondX = 0;
+    secondY = 0;
+    toolInvoker = new ToolInvoker();
+    currentTool = new DefaultTool();
+
+
     //Adds all of the control listeners to their respected Jpane
     this.theView.addAddStateListener(new AddStateListener());
     this.theView.addDeleteStateButtonListener(new DeleteStateListener());
     this.theView.addAddTransitionButtonListener(new AddTransitionButtonListener());
     this.theView.addDeleteTransitionButtonListener(new DeleteTransitionButtonListener());
+    this.theView.addMouseListener(this);
   }
 
-  //TODO pull out these classes into separate files
-  private class DeleteTransitionButtonListener implements ActionListener{
+  //MOUSE EVENTS
+  public void mouseExited(MouseEvent e) {}
+  public void mouseClicked(MouseEvent e) {}
+  public void mouseEntered(MouseEvent e) {}
+
+  public void mousePressed(MouseEvent e) {
+      firstX = theView.coordToCellSpot(e.getX());
+      firstY = theView.coordToCellSpot(e.getY());
+  }
+  public void mouseReleased(MouseEvent e) {
+      secondX = theView.coordToCellSpot(e.getX());
+      secondY = theView.coordToCellSpot(e.getY());
+      toolInvoker.runTool(currentTool);
+  }
+
+  //TOOLS
+  private class DefaultTool implements Tool{
+      public void execute(){
+      //DO NOTHING
+      }
+  }
+
+  private class AddStateTool implements Tool{
+      public void execute(){
+          String name = theView.getName();
+          //TODO SELECT TYPE
+          int id = theModel.fsmStore.addState(name);
+          theModel.displayStore.addState(firstX,firstY,id);
+      }
+  }
+
+  private class DeleteStateTool implements Tool{
+      public void execute(){
+          //DO NOTHING
+      }
+  }
+
+  //BUTTON LISTENERS all these do are toggle the current tool.
+  private class AddStateListener implements ActionListener{
 
     public void actionPerformed(ActionEvent e) {
 
       try{
 
-        theView.displayErrorMessage("Deleted Transition");
+         currentTool = new AddStateTool();
+      }
+
+      catch(Exception ex){
+
+        System.out.println(ex);
+
+        theView.displayErrorMessage("AHHH");
+
+      }
+
+    }
+
+  }
+
+  private class DeleteStateListener implements ActionListener{
+
+    public void actionPerformed(ActionEvent e) {
+
+      try{
+
+        currentTool = new DeleteStateTool();
         theView.clearName();
       }
 
@@ -59,8 +135,7 @@ public class Controller {
 
       try{
 
-        theView.displayErrorMessage("Added Transition");
-        theView.clearName();
+        currentTool = new AddStateTool();
       }
 
       catch(Exception ex){
@@ -75,35 +150,13 @@ public class Controller {
 
   }
 
-  private class DeleteStateListener implements ActionListener{
+  private class DeleteTransitionButtonListener implements ActionListener{
 
     public void actionPerformed(ActionEvent e) {
 
       try{
 
-        theView.displayErrorMessage("Deleted State");
-        theView.clearName();
-      }
-
-      catch(Exception ex){
-
-        System.out.println(ex);
-
-        theView.displayErrorMessage("AHHH");
-
-      }
-
-    }
-
-  }
-
-  private class AddStateListener implements ActionListener{
-
-    public void actionPerformed(ActionEvent e) {
-
-      try{
-
-        theView.displayErrorMessage("Added State");
+        theView.displayErrorMessage("Deleted Transition");
         theView.clearName();
       }
 
