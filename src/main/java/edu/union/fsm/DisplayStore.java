@@ -26,6 +26,30 @@ public class DisplayStore {
 
     }
 
+    public int getRow(int id) {
+        for(int r = 0; r < row; r++){
+    	    for(int c=0; c < column; c++){
+                DisplayNode current = displayGraph[r][c];
+                if(current.getID() == id) {
+                    return r;
+                }
+            }
+        }
+        return -1;
+    }
+
+    public int getColumn(int id) {
+        for(int r = 0; r < row; r++){
+            for(int c=0; c < column; c++){
+                DisplayNode current = displayGraph[r][c];
+                if(current.getID() == id) {
+                    return c;
+                }
+            }
+        }
+        return -1;
+    }
+
     public void addListener(ModelListener l)
     {
         listeners.add(l);
