@@ -12,7 +12,12 @@ public class State {
     private int id;
     private String name;
     private boolean start;
-    private boolean except;
+    private boolean accept;
+
+
+    //type 0 == start
+    //type 1 == accept
+    //other == neither
 
     public State(int id, String name) {
         this.id = id;
@@ -39,17 +44,24 @@ public class State {
         this.name = name;
     }
 
-    public void setType(int type) { 
+    public void setType(int type) {
         if(type == 0) {
             this.start = true;
-            this.except = false;
+            this.accept = false;
         } else if(type == 1) {
             this.start = false;
-            this.except = true;
+            this.accept = true;
         } else {
             this.start = false;
-            this.except = false;
+            this.accept = false;
         }
+    }
+    public boolean isStart(){
+        return start;
+    }
+
+    public boolean isAccept(){
+        return accept;
     }
 
 
