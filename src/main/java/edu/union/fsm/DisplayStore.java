@@ -1,11 +1,16 @@
 package edu.union.fsm;
 
+import java.util.Vector;
+import java.util.*;
+
 public class DisplayStore {
 
     int row;
     int column;
 
     DisplayNode[][] displayGraph;
+
+    Vector listeners;
 
     public DisplayStore(int x, int y){
 	row = x;
@@ -17,6 +22,29 @@ public class DisplayStore {
 	    }
 	}
 
+    listeners = new Vector();
+
+    }
+
+    public void addListener(ModelListener l)
+    {
+        listeners.add(l);
+    }
+
+    public void removeListener(ModelListener l)
+    {
+        listeners.remove(l);
+    }
+
+    private void notifyListeners()
+    {
+        ModelListener l;
+        Iterator iter = listeners.iterator();
+
+        while(iter.hasNext()) {
+            l = (ModelListener) iter.next();
+            l.update();
+        }
 
     }
 
