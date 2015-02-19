@@ -43,7 +43,7 @@ public class FSMStore {
     public ArrayList<Transition> getTransitions(){
         return Transitions;
     }
-    
+
     public int addState(String name) {
         return this.addState(name,3);
     }
@@ -63,6 +63,7 @@ public class FSMStore {
           Transition toAdd = getTransitionPrivate(fromID, toID);
           if(toAdd != null){
             toAdd.addCondition(name);
+            notifyListeners();
             return toAdd.getID();
           } else {
             int toReturn = this.nextID;
