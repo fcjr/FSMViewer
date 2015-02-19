@@ -19,6 +19,8 @@ public class Controller {
   public Controller(View theView, Model theModel) {
     this.theView = theView;
     this.theModel = theModel;
+    theModel.fsmStore.addListener(theView);
+    theModel.displayStore.addListener(theView);
 
 
     //Adds all of the control listeners to their respected Jpane
