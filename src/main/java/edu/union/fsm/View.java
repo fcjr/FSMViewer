@@ -65,6 +65,10 @@ public class View extends JFrame implements ModelListener{
 
   }
 
+  public int coordToCellSpot(int coord) {
+      return drawingComponent.coordToCellSpot(coord);
+  }
+
   //ADD LISTENER FUNCTIONS
 
   public void addMouseListener(MouseListener mouseHandler){
