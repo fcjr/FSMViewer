@@ -8,6 +8,7 @@
 package edu.union.fsm;
 
 import java.awt.event.ActionListener;
+import java.awt.event.*;
 import javax.swing.*;
 
 public class View extends JFrame implements ModelListener{
@@ -49,6 +50,7 @@ public class View extends JFrame implements ModelListener{
 
   public void update(){
       drawingComponent.repaint();
+      this.clearName();
   }
 
   public String getName(){
@@ -64,6 +66,12 @@ public class View extends JFrame implements ModelListener{
   }
 
   //ADD LISTENER FUNCTIONS
+
+  public void addMouseListener(MouseListener mouseHandler){
+
+      drawingComponent.addMouseListener(mouseHandler);
+
+  }
 
   public void addAddStateListener(ActionListener listenForAddStateButton){
 
