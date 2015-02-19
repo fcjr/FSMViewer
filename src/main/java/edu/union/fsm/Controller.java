@@ -85,7 +85,10 @@ public class Controller implements MouseListener {
 
   private class DeleteStateTool implements Tool{
       public void execute(){
-          //DO NOTHING
+          if(theModel.displayStore.containsState(firstX,firstY)){
+              int id = theModel.displayStore.removeState(firstX,firstY);
+              theModel.fsmStore.removeState(id);
+          }
       }
   }
 
