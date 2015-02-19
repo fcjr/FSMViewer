@@ -10,7 +10,7 @@ package edu.union.fsm;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class View extends JFrame{
+public class View extends JFrame implements ModelListener{
 
 
   private JButton addStateButton = new JButton("Add State");
@@ -19,8 +19,13 @@ public class View extends JFrame{
   private JButton deleteTransitionButton = new JButton("Delete Transition");
   private JLabel nameLabel = new JLabel(" Name: ");
   private JTextField nameField = new JTextField(10);
-  private DrawingComponent drawingComponent = new DrawingComponent();
-  View(){
+  private Model model;
+  private DrawingComponent drawingComponent;
+
+
+  View(Model model) {
+    this.model = model;
+    drawingComponent = new DrawingComponent(model);
 
     JPanel panel = new JPanel();
 
@@ -40,6 +45,10 @@ public class View extends JFrame{
 
     this.add(panel);
 
+  }
+
+  public void update(){
+      drawingComponent.repaint();
   }
 
   public String getName(){
