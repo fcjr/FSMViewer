@@ -90,7 +90,7 @@ public class DisplayStore {
 
 	    displayGraph[x1][y1].removeNode();
 
-
+        notifyListeners();
 
 	    return true;
 	}
