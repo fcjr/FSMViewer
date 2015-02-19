@@ -41,8 +41,9 @@ public class Controller implements MouseListener {
 
 
     //Adds all of the control listeners to their respected Jpane
-    this.theView.addAddStateListener(new AddStateListener());
+    this.theView.addAddStateButtonListener(new AddStateListener());
     this.theView.addDeleteStateButtonListener(new DeleteStateListener());
+    this.theView.addMoveStateButtonListener(new MoveStateListener());
     this.theView.addAddTransitionButtonListener(new AddTransitionButtonListener());
     this.theView.addDeleteTransitionButtonListener(new DeleteTransitionButtonListener());
     this.theView.addMouseListener(this);
@@ -89,6 +90,17 @@ public class Controller implements MouseListener {
               int id = theModel.displayStore.removeState(firstX,firstY);
               theModel.fsmStore.removeState(id);
           }
+      }
+  }
+
+  private class MoveStateTool implements Tool{
+      public void execute(){
+          if(theModel.displayStore.containsState(firstX,firstY) &&
+             !theModel.displayStore.containsState(secondX,secondY)) {
+                 theModel.displayStore.moveState(firstX,firstY,secondX,secondY);
+             } else{
+                 theView.displayErrorMessage("Error: Not a valid move.");
+             }
       }
   }
 
@@ -154,7 +166,27 @@ public class Controller implements MouseListener {
       try{
 
         currentTool = new DeleteStateTool();
-        theView.clearName();
+      }
+
+      catch(Exception ex){
+
+        System.out.println(ex);
+
+        theView.displayErrorMessage("AHHH");
+
+      }
+
+    }
+
+  }
+
+  private class MoveStateListener implements ActionListener{
+
+    public void actionPerformed(ActionEvent e) {
+
+      try{
+
+        currentTool = new MoveStateTool();
       }
 
       catch(Exception ex){

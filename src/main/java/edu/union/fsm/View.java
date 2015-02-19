@@ -16,6 +16,7 @@ public class View extends JFrame implements ModelListener{
 
   private JButton addStateButton = new JButton("Add State");
   private JButton deleteStateButton = new JButton("Delete State");
+  private JButton moveStateButton = new JButton("Move State");
   private JButton addTransitionButton = new JButton("Add Transition ");
   private JButton deleteTransitionButton = new JButton("Delete Transition");
   private JLabel nameLabel = new JLabel(" Name: ");
@@ -32,12 +33,13 @@ public class View extends JFrame implements ModelListener{
 
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setTitle("Finite State Machine Viewer");
-    this.setSize(740, 760);
+    this.setSize(980, 760);
     this.setResizable(false);
 
     // add the panes to the panel
     panel.add(addStateButton);
     panel.add(deleteStateButton);
+    panel.add(moveStateButton);
     panel.add(addTransitionButton);
     panel.add(deleteTransitionButton);
     panel.add(nameLabel);
@@ -77,9 +79,15 @@ public class View extends JFrame implements ModelListener{
 
   }
 
-  public void addAddStateListener(ActionListener listenForAddStateButton){
+  public void addAddStateButtonListener(ActionListener listenForAddStateButton){
 
     addStateButton.addActionListener(listenForAddStateButton);
+
+  }
+
+  public void addMoveStateButtonListener(ActionListener listenForAddStateButton){
+
+    moveStateButton.addActionListener(listenForAddStateButton);
 
   }
 
