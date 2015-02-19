@@ -44,6 +44,7 @@ public class Controller implements MouseListener {
     this.theView.addAddStateButtonListener(new AddStateListener());
     this.theView.addDeleteStateButtonListener(new DeleteStateListener());
     this.theView.addMoveStateButtonListener(new MoveStateListener());
+    this.theView.addToggleTypeButtonListener(new ToggleTypeButtonListener());
     this.theView.addAddTransitionButtonListener(new AddTransitionButtonListener());
     this.theView.addDeleteTransitionButtonListener(new DeleteTransitionButtonListener());
     this.theView.addMouseListener(this);
@@ -101,6 +102,15 @@ public class Controller implements MouseListener {
              } else{
                  theView.displayErrorMessage("Error: Not a valid move.");
              }
+      }
+  }
+
+  private class ToggleTypeTool implements Tool{
+      public void execute(){
+          if(theModel.displayStore.containsState(firstX,firstY)){
+              int id = theModel.displayStore.getState(firstX,firstY);
+              theModel.fsmStore.toggleStateType(id);
+          }
       }
   }
 
@@ -187,6 +197,27 @@ public class Controller implements MouseListener {
       try{
 
         currentTool = new MoveStateTool();
+      }
+
+      catch(Exception ex){
+
+        System.out.println(ex);
+
+        theView.displayErrorMessage("AHHH");
+
+      }
+
+    }
+
+  }
+
+  private class ToggleTypeButtonListener implements ActionListener{
+
+    public void actionPerformed(ActionEvent e) {
+
+      try{
+
+        currentTool = new ToggleTypeTool();
       }
 
       catch(Exception ex){

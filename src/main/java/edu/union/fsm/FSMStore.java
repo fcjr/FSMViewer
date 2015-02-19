@@ -56,6 +56,14 @@ public class FSMStore {
         return toReturn;
     }
 
+    public void toggleStateType(int id) {
+        if (this.containsState(id)){
+            State toToggle = this.getState(id);
+            toToggle.toggleState();
+            notifyListeners();
+        }
+    }
+
 
     //TODO DOESNT ADD NAMES TO EXISTING TRANSITIONS
     public int addTransition(String name, int fromID, int toID){

@@ -18,6 +18,7 @@ public class View extends JFrame implements ModelListener{
   private JButton addStateButton = new JButton("Add");
   private JButton deleteStateButton = new JButton("Delete");
   private JButton moveStateButton = new JButton("Move");
+  private JButton toggleTypeButton = new JButton("Toggle Type");
   private JLabel transitionLabel = new JLabel(" Transition: ");
   private JButton addTransitionButton = new JButton("Add");
   private JButton deleteTransitionButton = new JButton("Delete");
@@ -43,6 +44,7 @@ public class View extends JFrame implements ModelListener{
     panel.add(addStateButton);
     panel.add(deleteStateButton);
     panel.add(moveStateButton);
+    panel.add(toggleTypeButton);
     panel.add(transitionLabel);
     panel.add(addTransitionButton);
     panel.add(deleteTransitionButton);
@@ -93,6 +95,10 @@ public class View extends JFrame implements ModelListener{
 
     moveStateButton.addActionListener(listenForAddStateButton);
 
+  }
+
+  public void addToggleTypeButtonListener(ActionListener l) {
+      toggleTypeButton.addActionListener(l);
   }
 
   public void addDeleteStateButtonListener(ActionListener l) {

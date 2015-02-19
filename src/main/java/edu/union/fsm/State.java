@@ -22,7 +22,7 @@ public class State {
     public State(int id, String name) {
         this.id = id;
         this.name = name;
-        this.setType(3);
+        this.setType(2);
     }
 
 
@@ -38,6 +38,16 @@ public class State {
 
     public String getName() {
         return name;
+    }
+
+    public void toggleState() {
+        if(start) {
+            this.setType(1);
+        } else if (accept) {
+            this.setType(2);
+        } else {
+            this.setType(0);
+        }
     }
 
     public void rename(String name) {
