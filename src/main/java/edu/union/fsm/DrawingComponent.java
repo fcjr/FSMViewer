@@ -4,6 +4,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.ArrayList;
 
 /**
  *
@@ -77,8 +78,21 @@ public class DrawingComponent extends JComponent {
     }
 
     private void paintTransitions(Graphics g){
+        ArrayList<Transition> transitions = myModel.fsmStore.getTransitions();
+        for(Transition currentTrans: transitions){
+            String name = currentTrans.getLabel();
+            int fromID = currentTrans.getFromID();
+            int toID = currentTrans.getToID();
+
+            //paintTransition(g,name,fromID,toID);
+        }
 
     }
+
+    //private void paintTransition(Graphics g, String name, int fromID, int toID){
+    //    int fromRow = myModel.fsmStore.getRow(fromID);
+    //    int fromColumn =
+    //}
 
      public int coordToCellSpot(int coord)
     {
