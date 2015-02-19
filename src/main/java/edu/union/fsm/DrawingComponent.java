@@ -10,8 +10,6 @@ import java.util.ArrayList;
  *
  *
  */
-
-
 public class DrawingComponent extends JComponent {
 
     private Model myModel;
@@ -84,15 +82,39 @@ public class DrawingComponent extends JComponent {
             int fromID = currentTrans.getFromID();
             int toID = currentTrans.getToID();
 
-            //paintTransition(g,name,fromID,toID);
+            paintTransition(g,name,fromID,toID);
         }
 
     }
 
-    //private void paintTransition(Graphics g, String name, int fromID, int toID){
-    //    int fromRow = myModel.fsmStore.getRow(fromID);
-    //    int fromColumn =
-    //}
+    private void paintTransition(Graphics g, String name, int fromID, int toID){
+        int fromRow = myModel.displayStore.getRow(fromID);
+        int fromColumn = myModel.displayStore.getColumn(fromID);
+        int toRow = myModel.displayStore.getRow(toID);
+        int toColumn = myModel.displayStore.getColumn(toID);
+        int offset = CELL_SIZE/2;
+        int x1 = fromRow * CELL_SIZE + offset;
+        int y1 = fromColumn * CELL_SIZE + offset;
+        int x2 = toRow * CELL_SIZE + offset;
+        int y2 = toColumn * CELL_SIZE + offset;
+
+            g.setColor(Color.RED);
+
+        //Draws line
+        g.drawLine(x1,y1,x2,y2);
+
+        int midLineX = (x1+x2) / 2;
+        int midLineY = (y1+y2) / 2;
+
+
+        //Draws circle to show direction and name
+        g.drawOval(x2-4,y2-4,8,8);
+
+        g.drawString(name,midLineX, midLineY);
+
+        g.setColor(Color.BLACK);
+
+    }
 
      public int coordToCellSpot(int coord)
     {
