@@ -21,7 +21,7 @@ public class DisplayStoreTests {
 
     @Before
     public void setUp() {
-
+	displayStore = new DisplayStore(20, 20);
     }
 
     @After
@@ -31,5 +31,63 @@ public class DisplayStoreTests {
 
     @Test
     public void testConstructor() {
+	assertEquals("an empty displaystore has no states", -1, displayStore.getState(1,1));
+    }
+
+    @Test
+    public void testaddState(){
+	displayStore.addState(1,1, 10);
+	/**for(int i = 0; i < 20; i++){
+	    for(int j=0; j < 20; j++){
+		System.out.println("row x  " + i +" column y  " +j + " the ID number " + displayStore.getState(i,j));
+	    }
+	    }**/
+	assertEquals("at grid [1][1] it has a state", 10, displayStore.getState(1,1));
+	assertEquals("at grid [1][1] it has a state", -1, displayStore.getState(2,1));
+	assertEquals("at grid [1][1] it has a states", -1, displayStore.getState(3,1));
+	assertEquals("at grid [1][1] it has a state", -1, displayStore.getState(4,1));
+	assertEquals("aat grid [1][1] it has a states", -1, displayStore.getState(5,1));
+	assertEquals("aat grid [1][1] it has a states", -1, displayStore.getState(6,1));
+
+
+
+    }
+    @Test
+    public void testremoveState(){
+    
+	displayStore.addState(1,1,10);
+	assertEquals("at grid [1][1] it has a state", 10, displayStore.getState(1,1));
+	displayStore.removeState(1,1);
+	assertEquals("at grid [1][1] it has a state", -1, displayStore.getState(1,1));
+		
+
+    }
+
+    @Test
+    public void testmoveState(){
+	displayStore.addState(1,1,10);
+	displayStore.moveState(1,1,2,2);
+
+	assertEquals("at grid [1][1] it has a state", 10, displayStore.getState(2,2));
+    }
+		
+    @Test
+    public void testcontainsState(){
+	displayStore.addState(1,1,10);
+	assertEquals("at grid [1][1] it has a state", true, displayStore.containsState(1,1));
+
     }
 }
+/**
+
+
+
+
+
+
+
+    public boolean containsState(int x,int y){
+	return displayGraph[getRow(x)][getColumn(y)].containsState();
+    }
+	    **/
+

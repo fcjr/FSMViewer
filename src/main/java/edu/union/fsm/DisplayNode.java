@@ -5,8 +5,8 @@ public class DisplayNode {
     
 
 
-    private boolean hasState;
-    private int myID;
+    public boolean hasState;
+    public int myID;
     
     public DisplayNode(){
 	hasState = false;
