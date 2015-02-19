@@ -85,6 +85,33 @@ public class FSMStore {
 
     }
 
+    public int getTransitionWithIDs(int fromID, int toID) {
+      for(Transition currentTrans: Transitions) {
+        if (currentTrans.getFromID() == fromID && currentTrans.getToID() == toID){
+          return currentTrans.getID();
+        }
+      }
+      return -1;
+    }
+
+    public boolean containsTransitionWithIDs(int fromID, int toID) {
+      for(Transition currentTrans: Transitions) {
+        if (currentTrans.getFromID() == fromID && currentTrans.getToID() == toID){
+          return true;
+        }
+      }
+      return false;
+  }
+
+  public boolean removeTransitionWithIDs(int fromID, int toID) {
+        if (containsTransitionWithIDs(fromID,toID)){
+            int idToRemove = getTransitionWithIDs(fromID,toID);
+            removeTransition(idToRemove);
+            return true;
+        }
+        return false;
+  }
+
     public void removeState(int id) {
         if(this.containsState(id)){
             for(int i=0;i<States.size();i++){
