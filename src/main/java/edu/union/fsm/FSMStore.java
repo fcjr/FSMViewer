@@ -2,7 +2,7 @@ package edu.union.fsm;
 
 import java.util.Iterator;
 import java.util.ArrayList;
-import java.util.Vector;
+import java.util.*;
 
 public class FSMStore {
 
@@ -41,7 +41,7 @@ public class FSMStore {
     }
 
     public int addState(String name) {
-        return this.addState(name, 0);
+        return this.addState(name,3);
     }
 
     public int addState(String name,int type){
@@ -65,11 +65,14 @@ public class FSMStore {
             toAdd = new Transition(nextID,name,fromID,toID);
             Transitions.add(toAdd);
             nextID++;
+            //SUCESSFULLY ADDED TRANSITION NOTIFY LISTENERS
+            notifyListeners();
             return toReturn;
           }
         } else {
         return -1;
       }
+
     }
 
     private Transition getTransitionPrivate(int fromID, int toID) {
@@ -79,6 +82,7 @@ public class FSMStore {
         }
       }
       return null;
+
     }
 
     public void removeState(int id) {
@@ -110,6 +114,8 @@ public class FSMStore {
                 }
             }
         }
+        //SUCESSFULLY REMOVED TRANSITION NOTIFY LISTENERS
+        notifyListeners();
     }
 
 

@@ -17,15 +17,13 @@ public class DrawingComponent extends JComponent {
     private final int NUMBER_OF_CELLS = 8;
     private final int CELL_SIZE =700/NUMBER_OF_CELLS;
     private final int DIMENSION = CELL_SIZE*NUMBER_OF_CELLS;
-    private Model model;
 
     public DrawingComponent(Model model){
 
-        this.model = model;
+        this.myModel = model;
 
         setSize(new Dimension(DIMENSION, DIMENSION));
         setPreferredSize(new Dimension(DIMENSION, DIMENSION));
-        this.myModel = myModel;
     }
 
 
@@ -35,8 +33,6 @@ public class DrawingComponent extends JComponent {
     paintGridLines(g);
     paintStates(g);
     paintTransitions(g);
-
-    paintState(g, "THIS THING", true, true , 4, 4);
 
     }
 
@@ -62,6 +58,21 @@ public class DrawingComponent extends JComponent {
     }
 
     private void paintStates(Graphics g){
+        DisplayStore displayStore = myModel.displayStore;
+        FSMStore fsmStore = myModel.fsmStore;
+
+        for(int row = 0; row < displayStore.getRows(); row++){
+            for(int column = 0; column < displayStore.getColumns(); column++) {
+                if(displayStore.containsState(row,column)){
+                    int id = displayStore.getState(row,column);
+                    State toDraw = fsmStore.getState(id);
+                    String name = toDraw.getName();
+                    boolean isStart = toDraw.isStart();
+                    boolean isAccept = toDraw.isAccept();
+                    paintState(g,name,isStart,isAccept,row,column);
+                }
+            }
+        }
 
     }
 
@@ -90,8 +101,8 @@ public class DrawingComponent extends JComponent {
        if (isStart) {
            int quarter = CELL_SIZE/4;
            int half = CELL_SIZE/2;
-           int touchingPointy = row*CELL_SIZE + quarter;
-           int touchingPointx = column*CELL_SIZE + half;
+           int touchingPointx = row*CELL_SIZE + half;
+           int touchingPointy = column*CELL_SIZE + quarter;
            int x1 = row*CELL_SIZE + quarter;
            int y1 = column*CELL_SIZE;
            int x2 = row*CELL_SIZE + quarter + half;
