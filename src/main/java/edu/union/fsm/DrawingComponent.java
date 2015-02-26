@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.lang.Math;
 
 /**
  *component for drawing fsm's
@@ -124,22 +125,114 @@ public class DrawingComponent extends JComponent {
         int y1 = fromColumn * CELL_SIZE + offset;
         int x2 = toRow * CELL_SIZE + offset;
         int y2 = toColumn * CELL_SIZE + offset;
+	int xl = x2-x1;
+	int yl = y2-y1;
+	int x3 = 0;
+	int y3 = 0;
 
-            g.setColor(Color.RED);
+	 g.setColor(Color.ORANGE);
+	if (xl == 0){    
+	    if (yl<0){
+		double thetal = 3*Math.PI/2 + Math.PI/4;
+		double thetar = 3*Math.PI/2 - Math.PI/4;
+		int ytl = (int)(Math.sin(thetal)*(double)offset/2);
+		int xtl = (int)(Math.cos(thetal)*(double)offset/2);
+		int ytr = (int)(Math.sin(thetar)*(double)offset/2);
+		int xtr = (int)(Math.cos(thetar)*(double)offset/2);
+		y3 = y2+offset;
+		x3 = x2;
+		    
+		xtl = x3-xtl;
+		ytl = y3-ytl;
+		xtr = x3-xtr;
+		ytr = y3-ytr;
+		
+		int x1Points[] = {xtl, xtr, x3, xtl};
+		int y1Points[] = {ytl, ytr, y3, ytl};
+		g.fillPolygon(x1Points, y1Points, 3);
+		    
+		g.drawLine(x1,y1,x3, y3);
+	    }
+	    else{
+		double thetal = Math.PI/2 + Math.PI/4;
+		double thetar = Math.PI/2 - Math.PI/4;
+		int ytl = (int)(Math.sin(thetal)*(double)offset/2);
+		int xtl = (int)(Math.cos(thetal)*(double)offset/2);
+		int ytr = (int)(Math.sin(thetar)*(double)offset/2);
+		int xtr = (int)(Math.cos(thetar)*(double)offset/2);
+		y3 = y2-offset;
+		x3 = x2;
+		xtl = x3-xtl;
+		ytl = y3-ytl;
+		xtr = x3-xtr;
+		ytr = y3-ytr;
+
+		int x1Points[] = {xtl, xtr, x3, xtl};
+		int y1Points[] = {ytl, ytr, y3, ytl};
+		g.fillPolygon(x1Points, y1Points, 3);
+
+		g.drawLine(x1,y1,x3, y3);
+	    }
+	}
+	
+	else{
+	    double theta = Math.atan((double)yl/(double)xl);
+	    double thetal = theta + Math.PI/4;
+	    double thetar = theta - Math.PI/4;
+	    int ytl = (int)(Math.sin(thetal)*(double)offset/2);
+	    int xtl = (int)(Math.cos(thetal)*(double)offset/2);
+	    int ytr = (int)(Math.sin(thetar)*(double)offset/2);
+	    int xtr = (int)(Math.cos(thetar)*(double)offset/2);
+	    int yt = (int)(Math.sin(theta)*(double)offset);
+	    int xt = (int)(Math.cos(theta)*(double)offset);
+	    
+	    if(x1<x2 && y1<y2){
+		x3 = x2-xt;
+		y3 = y2-yt;
+		xtl = x3-xtl;
+		ytl = y3-ytl;
+		xtr = x3-xtr;
+		ytr = y3-ytr;
+	    }
+	    else if(x1<x2 && !(y1<y2)){
+		x3 = x2-xt;
+		y3 = y2-yt;
+		xtl = x3-xtl;
+		ytl = y3-ytl;
+		xtr = x3-xtr;
+		ytr = y3-ytr;
+	    }
+	    else if(!(x1<x2) && y1<y2){
+		x3 = (x2+xt);
+		y3 = (y2+yt);
+		xtl = x3+xtl;
+		ytl = y3+ytl;
+		xtr = x3+xtr;
+		ytr = y3+ytr;
+	    }
+	    else{
+		x3 = (x2+xt);
+		y3 = (y2+yt);
+		xtl = x3+xtl;
+		ytl = y3+ytl;
+		xtr = x3+xtr;
+		ytr = y3+ytr;
+	    }
 
         //Draws line
-        g.drawLine(x1,y1,x2,y2);
+	    int x1Points[] = {xtl, xtr, x3, xtl};
+	    int y1Points[] = {ytl, ytr, y3, ytl};
+	    g.fillPolygon(x1Points, y1Points, 3);
+	    
+	    g.drawLine(x1,y1,x3,y3);
+	}
 
         int midLineX = (x1+x2) / 2;
         int midLineY = (y1+y2) / 2;
 
-
-        //Draws circle to show direction and name
-        g.drawOval(x2-4,y2-4,8,8);
-
+        //Draws name
         g.drawString(name,midLineX, midLineY);
-
-        g.setColor(Color.BLACK);
+	g.setColor(Color.BLACK);
 
     }
 
