@@ -3,6 +3,7 @@ package edu.union.fsm;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.*;
+import java.io.*;
 
 /**
  * FSMStore stores States, and Transitions and allows for modifications of them.
@@ -10,7 +11,7 @@ import java.util.*;
  *
  * @author Frankie,rudy,nate
  */
-public class FSMStore {
+public class FSMStore implements Serializable{
 
     private ArrayList<State> States;
     private ArrayList<Transition> Transitions;
@@ -48,7 +49,7 @@ public class FSMStore {
     /**
      * calls update on all of the listeners
      */
-    private void notifyListeners()
+    public void notifyListeners()
     {
         ModelListener l;
         Iterator iter = listeners.iterator();

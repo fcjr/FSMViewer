@@ -2,11 +2,12 @@ package edu.union.fsm;
 
 import java.util.Vector;
 import java.util.*;
+import java.io.*;
 
 /**
  * Class for storing the position information.
  */
-public class DisplayStore {
+public class DisplayStore implements Serializable {
 
     int row;
     int column;
@@ -88,7 +89,7 @@ public class DisplayStore {
     /**
      * calls .update() on all ModelListeners
      */
-    private void notifyListeners()
+    public void notifyListeners()
     {
         ModelListener l;
         Iterator iter = listeners.iterator();
