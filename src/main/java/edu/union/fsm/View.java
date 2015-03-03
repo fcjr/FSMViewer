@@ -24,6 +24,9 @@ public class View extends JFrame implements ModelListener{
   private JButton deleteTransitionButton = new JButton("Delete");
   private JLabel nameLabel = new JLabel(" Name: ");
   private JTextField nameField = new JTextField(10);
+  private JButton saveBin = new JButton("Save");
+  private JButton loadBin = new JButton("Load");
+
   private Model model;
   private DrawingComponent drawingComponent;
 
@@ -56,6 +59,8 @@ public class View extends JFrame implements ModelListener{
     panel.add(nameLabel);
     panel.add(nameField);
     panel.add(drawingComponent);
+    panel.add(saveBin);
+    panel.add(loadBin);
 
     this.add(panel);
 
@@ -131,6 +136,12 @@ public class View extends JFrame implements ModelListener{
 
   public void addDeleteTransitionButtonListener(ActionListener l) {
     deleteTransitionButton.addActionListener(l);
+  }
+  public void addSaveBinButtonListener(ActionListener l) {
+      saveBin.addActionListener(l);
+  }
+  public void addLoadBinButtonListener(ActionListener l) {
+      loadBin.addActionListener(l);
   }
 
 

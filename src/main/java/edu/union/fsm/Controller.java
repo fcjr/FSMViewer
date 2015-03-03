@@ -47,6 +47,8 @@ public class Controller implements MouseListener {
     this.theView.addToggleTypeButtonListener(new ToggleTypeButtonListener());
     this.theView.addAddTransitionButtonListener(new AddTransitionButtonListener());
     this.theView.addDeleteTransitionButtonListener(new DeleteTransitionButtonListener());
+    this.theView.addSaveBinButtonListener(new SaveBinButtonListener());
+    this.theView.addLoadBinButtonListener(new LoadBinButtonListener());
     this.theView.addMouseListener(this);
   }
 
@@ -161,7 +163,7 @@ public class Controller implements MouseListener {
 
         System.out.println(ex);
 
-        theView.displayErrorMessage("AHHH");
+        theView.displayErrorMessage("Error Selecting Tool");
 
       }
 
@@ -182,7 +184,7 @@ public class Controller implements MouseListener {
 
         System.out.println(ex);
 
-        theView.displayErrorMessage("AHHH");
+        theView.displayErrorMessage("Error Selecting Tool");
 
       }
 
@@ -203,7 +205,7 @@ public class Controller implements MouseListener {
 
         System.out.println(ex);
 
-        theView.displayErrorMessage("AHHH");
+        theView.displayErrorMessage("Error Selecting Tool");
 
       }
 
@@ -224,7 +226,7 @@ public class Controller implements MouseListener {
 
         System.out.println(ex);
 
-        theView.displayErrorMessage("AHHH");
+        theView.displayErrorMessage("Error Selecting Tool");
 
       }
 
@@ -245,7 +247,7 @@ public class Controller implements MouseListener {
 
         System.out.println(ex);
 
-        theView.displayErrorMessage("AHHH");
+        theView.displayErrorMessage("Error Selecting Tool");
 
       }
 
@@ -266,12 +268,51 @@ public class Controller implements MouseListener {
 
         System.out.println(ex);
 
-        theView.displayErrorMessage("AHHH");
+        theView.displayErrorMessage("Error Selecting Tool");
+      }
+    }
+  }
 
+  private class SaveBinButtonListener implements ActionListener{
+
+    public void actionPerformed(ActionEvent e) {
+
+      try{
+
+          SaveBin saver = new SaveBin(theModel);
+          saver.saveFile("save.bin");
       }
 
-    }
+      catch(Exception ex){
 
+        System.out.println(ex);
+
+        theView.displayErrorMessage("Error Selecting Tool");
+      }
+    }
+  }
+
+  private class LoadBinButtonListener implements ActionListener{
+
+    public void actionPerformed(ActionEvent e) {
+
+      try{
+
+          //Model test = new Model();
+          //theModel.load(test);
+          LoadBin loader = new LoadBin(theModel);
+          loader.loadFile("save.bin");
+          theModel.addListener(theView);
+          theView.displayErrorMessage("loaded");
+      }
+
+      catch(Exception ex){
+
+        System.out.println(ex);
+
+        theView.displayErrorMessage("Error Selecting Tool");
+      }
+    }
   }
 
 }
