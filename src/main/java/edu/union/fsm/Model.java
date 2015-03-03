@@ -28,8 +28,6 @@ public Model(){
 public void load(Model modelToLoad) {
     this.fsmStore = modelToLoad.fsmStore;
     this.displayStore = modelToLoad.displayStore;
-    fsmStore.notifyListeners();
-    displayStore.notifyListeners();
 }
 
 public void addListener(ModelListener l) {
@@ -37,6 +35,11 @@ public void addListener(ModelListener l) {
     displayStore.addListener(l);
     fsmStore.notifyListeners();
     displayStore.notifyListeners();
+}
+
+public void cleanForWriting() {
+    displayStore.clearListeners();
+    fsmStore.clearListeners();
 }
 
 
