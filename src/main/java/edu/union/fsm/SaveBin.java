@@ -9,6 +9,9 @@ package edu.union.fsm;
 
 import java.io.*;
 import javax.swing.JFileChooser;
+import org.apache.commons.io.FilenameUtils;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class SaveBin {
 
@@ -26,19 +29,26 @@ public class SaveBin {
         try {
 
             JFileChooser c = new JFileChooser();
+
+            FileFilter filter = new FileNameExtensionFilter("Bin Files","bin");
+            c.setFileFilter(filter);
+
             int returnVal = c.showSaveDialog(view);
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
 
                 File file = c.getSelectedFile();
 
-                String fileName = file.getPath();
+                //ENSURE BIN FILE
+                if (FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("bin")) {
+                        //DO NOTHING FILE IS GOOD
+                } else {
+                    //replace file extension if is wrong
+                    file = new File(file.getParentFile(), FilenameUtils.getBaseName(file.getName())+".bin");
+                }
 
-                System.out.println(fileName);
 
-                //String file = "testing.bin";
-
-                FileOutputStream fs = new FileOutputStream(fileName);
+                FileOutputStream fs = new FileOutputStream(file);
 
                 ObjectOutputStream os = new ObjectOutputStream(fs);
 
@@ -52,7 +62,7 @@ public class SaveBin {
 
             }
             else if (returnVal == JFileChooser.CANCEL_OPTION) {
-                //DO NOTHING
+                //DO NOTHING, close pane
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

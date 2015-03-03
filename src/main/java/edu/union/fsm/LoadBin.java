@@ -10,6 +10,8 @@ package edu.union.fsm;
 import java.io.*;
 import javax.swing.JFileChooser;
 import java.io.File;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class LoadBin {
 
@@ -25,8 +27,14 @@ public class LoadBin {
         try {
 
             JFileChooser c = new JFileChooser();
+            
+            FileFilter filter = new FileNameExtensionFilter("Bin Files","bin");
+            c.setFileFilter(filter);
+
             int returnVal = c.showOpenDialog(view);
+
             if (returnVal == JFileChooser.APPROVE_OPTION) {
+
 
                 File file = c.getSelectedFile();
 
