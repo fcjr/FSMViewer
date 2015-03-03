@@ -67,6 +67,13 @@ public class View extends JFrame implements ModelListener{
   }
 
   /**
+   *	Returns the main display component.
+   */
+   public JComponent getMainDisplayComponent(){
+       return this.drawingComponent;
+   }
+
+  /**
    * repaints the drawing component
    */
   public void update(){
