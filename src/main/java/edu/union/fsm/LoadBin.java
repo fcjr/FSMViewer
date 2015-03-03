@@ -8,35 +8,52 @@
 package edu.union.fsm;
 
 import java.io.*;
+import javax.swing.JFileChooser;
+import java.io.File;
 
 public class LoadBin {
 
     private Model model;
+    private View view;
 
-    public LoadBin(Model model){
+    public LoadBin(Model model, View view){
         this.model = model;
+        this.view = view;
     }
 
-    public void loadFile(String fileName){
+    public void loadFile(){
         try {
 
-            FileInputStream fs = new FileInputStream(fileName);
+            JFileChooser c = new JFileChooser();
+            int returnVal = c.showOpenDialog(view);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
 
-            ObjectInputStream os = new ObjectInputStream(fs);
+                File file = c.getSelectedFile();
 
-            Model loadedModel = (Model) os.readObject();
+                FileInputStream fs = new FileInputStream(file);
 
-            model.load(loadedModel);
+                ObjectInputStream os = new ObjectInputStream(fs);
 
-            os.close();
+                Model loadedModel = (Model) os.readObject();
 
-            fs.close();
+                model.load(loadedModel);
+                model.addListener(view);
+
+                os.close();
+
+                fs.close();
+
+
+            }
+            if (returnVal == JFileChooser.CANCEL_OPTION) {
+                //DO NOTHING
+            }
         } catch (FileNotFoundException e) {
-            //DO NOTHING
+            e.printStackTrace();
         } catch (IOException e) {
-            //DO NOTHING
+            e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            //DO NOTHING
+            e.printStackTrace();
         }
     }
 

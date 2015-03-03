@@ -8,31 +8,56 @@
 package edu.union.fsm;
 
 import java.io.*;
+import javax.swing.JFileChooser;
 
 public class SaveBin {
 
-    private Model model;
+    private class SerialChooser extends JFileChooser implements Serializable{}
 
-    public SaveBin(Model model){
+    private Model model;
+    private View view;
+
+    public SaveBin(Model model, View view){
         this.model = model;
+        this.view = view;
     }
 
-    public void saveFile(String fileName){
+    public void saveFile(){
         try {
 
-            FileOutputStream fs = new FileOutputStream(fileName);
+            JFileChooser c = new JFileChooser();
+            int returnVal = c.showSaveDialog(view);
 
-            ObjectOutputStream os = new ObjectOutputStream(fs);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
 
-            os.writeObject(model);
+                File file = c.getSelectedFile();
 
-            os.close();
+                String fileName = file.getPath();
 
-            fs.close();
+                System.out.println(fileName);
+
+                //String file = "testing.bin";
+
+                FileOutputStream fs = new FileOutputStream(fileName);
+
+                ObjectOutputStream os = new ObjectOutputStream(fs);
+
+                //model.cleanForWriting();
+
+                os.writeObject(model);
+
+                os.close();
+
+                fs.close();
+
+            }
+            else if (returnVal == JFileChooser.CANCEL_OPTION) {
+                //DO NOTHING
+            }
         } catch (FileNotFoundException e) {
-            //DO NOTHING
+            e.printStackTrace();
         } catch (IOException e) {
-            //DO NOTHING
+            e.printStackTrace();
         }
     }
 
