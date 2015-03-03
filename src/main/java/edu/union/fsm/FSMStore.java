@@ -16,7 +16,7 @@ public class FSMStore implements Serializable{
     private ArrayList<State> States;
     private ArrayList<Transition> Transitions;
     private int nextID;
-    private Vector listeners;
+    private transient Vector listeners;
 
     /**
      * default constructor
@@ -34,6 +34,9 @@ public class FSMStore implements Serializable{
      */
     public void addListener(ModelListener l)
     {
+        if (listeners == null) {
+            listeners = new Vector();
+        }
         listeners.add(l);
     }
 
@@ -44,6 +47,15 @@ public class FSMStore implements Serializable{
     public void removeListener(ModelListener l)
     {
         listeners.remove(l);
+    }
+
+    /**
+     * removes all Listeners
+     * @param l the listener to remove
+     */
+    public void clearListeners()
+    {
+        listeners = new Vector();
     }
 
     /**

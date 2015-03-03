@@ -14,7 +14,7 @@ public class DisplayStore implements Serializable {
 
     DisplayNode[][] displayGraph;
 
-    Vector listeners;
+    private transient Vector listeners;
 
     /**
      * constructor.
@@ -74,6 +74,9 @@ public class DisplayStore implements Serializable {
      */
     public void addListener(ModelListener l)
     {
+        if (listeners == null) {
+            listeners = new Vector();
+        }
         listeners.add(l);
     }
 
@@ -84,6 +87,15 @@ public class DisplayStore implements Serializable {
     public void removeListener(ModelListener l)
     {
         listeners.remove(l);
+    }
+
+    /**
+     * removes all Listeners
+     * @param l the listener to remove
+     */
+    public void clearListeners()
+    {
+        listeners = new Vector();
     }
 
     /**
