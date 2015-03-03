@@ -279,12 +279,16 @@ public class Controller implements MouseListener {
 
       try{
 
-          SaveBin saver = new SaveBin(theModel);
-          saver.saveFile("save.bin");
+          SaveBin saver = new SaveBin(theModel, theView);
+          saver.saveFile();
+          theModel.addListener(theView);
+          //SavePNG saver = new SavePNG(theView.getMainDisplayComponent(), theView);
+          //saver.saveFile();
       }
 
       catch(Exception ex){
 
+         ex.printStackTrace();
         System.out.println(ex);
 
         theView.displayErrorMessage("Error Selecting Tool");
@@ -296,19 +300,14 @@ public class Controller implements MouseListener {
 
     public void actionPerformed(ActionEvent e) {
 
-      try{
-
-          //Model test = new Model();
-          //theModel.load(test);
-          LoadBin loader = new LoadBin(theModel);
-          loader.loadFile("save.bin");
+      try {
+          LoadBin loader = new LoadBin(theModel, theView);
+          loader.loadFile();
           theModel.addListener(theView);
-          theView.displayErrorMessage("loaded");
-      }
-
-      catch(Exception ex){
+      } catch(Exception ex){
 
         System.out.println(ex);
+        ex.printStackTrace();
 
         theView.displayErrorMessage("Error Selecting Tool");
       }
