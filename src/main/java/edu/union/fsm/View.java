@@ -41,30 +41,34 @@ public class View extends JFrame implements ModelListener{
     this.model = model;
     drawingComponent = new DrawingComponent(model);
 
-    JPanel panel = new JPanel();
+    JPanel topPanel = new JPanel();
+    JPanel middlePanel = new JPanel();
+    JPanel bottomPanel = new JPanel();
 
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setTitle("Finite State Machine Viewer");
-    this.setSize(980, 800);
+    this.setSize(980, 810);
     this.setResizable(false);
     this.setLayout(new BorderLayout());
 
     // add the panes to the panel
-    panel.add(stateLabel, BorderLayout.PAGE_START);
-    panel.add(addStateButton, BorderLayout.PAGE_START);
-    panel.add(deleteStateButton, BorderLayout.PAGE_START);
-    panel.add(moveStateButton, BorderLayout.PAGE_START);
-    panel.add(toggleTypeButton, BorderLayout.PAGE_START);
-    panel.add(transitionLabel, BorderLayout.PAGE_START);
-    panel.add(addTransitionButton, BorderLayout.PAGE_START);
-    panel.add(deleteTransitionButton, BorderLayout.PAGE_START);
-    panel.add(nameLabel, BorderLayout.PAGE_START);
-    panel.add(nameField, BorderLayout.PAGE_START);
-    panel.add(drawingComponent, BorderLayout.CENTER);
-    panel.add(saveBin, BorderLayout.PAGE_END);
-    panel.add(loadBin, BorderLayout.PAGE_END);
+    topPanel.add(stateLabel);
+    topPanel.add(addStateButton);
+    topPanel.add(deleteStateButton);
+    topPanel.add(moveStateButton);
+    topPanel.add(toggleTypeButton);
+    topPanel.add(transitionLabel);
+    topPanel.add(addTransitionButton);
+    topPanel.add(deleteTransitionButton);
+    topPanel.add(nameLabel);
+    topPanel.add(nameField);
+    middlePanel.add(drawingComponent);
+    bottomPanel.add(saveBin);
+    bottomPanel.add(loadBin);
 
-    this.add(panel);
+    this.add(topPanel,BorderLayout.NORTH);
+    this.add(middlePanel,BorderLayout.CENTER);
+    this.add(bottomPanel,BorderLayout.SOUTH);
 
   }
 
