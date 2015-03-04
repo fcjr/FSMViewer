@@ -49,6 +49,7 @@ public class Controller implements MouseListener {
     this.theView.addDeleteTransitionButtonListener(new DeleteTransitionButtonListener());
     this.theView.addSaveBinButtonListener(new SaveBinButtonListener());
     this.theView.addLoadBinButtonListener(new LoadBinButtonListener());
+    this.theView.addSavePNGButtonListener(new SavePNGButtonListener());
     this.theView.addMouseListener(this);
   }
 
@@ -282,8 +283,6 @@ public class Controller implements MouseListener {
           SaveBin saver = new SaveBin(theModel, theView);
           saver.saveFile();
           theModel.addListener(theView);
-          //SavePNG saver = new SavePNG(theView.getMainDisplayComponent(), theView);
-          //saver.saveFile();
       }
 
       catch(Exception ex){
@@ -313,5 +312,23 @@ public class Controller implements MouseListener {
       }
     }
   }
+
+  private class SavePNGButtonListener implements ActionListener{
+
+    public void actionPerformed(ActionEvent e) {
+
+      try {
+          SavePNG saver = new SavePNG(theView.getMainDisplayComponent(), theView);
+          saver.saveFile();
+      } catch(Exception ex){
+
+        System.out.println(ex);
+        ex.printStackTrace();
+
+        theView.displayErrorMessage("Error Selecting Tool");
+      }
+    }
+  }
+
 
 }
