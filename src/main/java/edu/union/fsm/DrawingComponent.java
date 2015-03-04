@@ -130,7 +130,9 @@ public class DrawingComponent extends JComponent {
 	int x3 = 0;
 	int y3 = 0;
 
-	 g.setColor(Color.ORANGE);
+	g.setColor(Color.ORANGE);
+
+	// This is the case in which the states are vertically to one another
 	if (xl == 0){    
 	    if (yl<0){
 		double thetal = 3*Math.PI/2 + Math.PI/4;
@@ -139,9 +141,9 @@ public class DrawingComponent extends JComponent {
 		int xtl = (int)(Math.cos(thetal)*(double)offset/2);
 		int ytr = (int)(Math.sin(thetar)*(double)offset/2);
 		int xtr = (int)(Math.cos(thetar)*(double)offset/2);
+
 		y3 = y2+offset;
-		x3 = x2;
-		    
+		x3 = x2;	    
 		xtl = x3-xtl;
 		ytl = y3-ytl;
 		xtr = x3-xtr;
@@ -149,8 +151,7 @@ public class DrawingComponent extends JComponent {
 		
 		int x1Points[] = {xtl, xtr, x3, xtl};
 		int y1Points[] = {ytl, ytr, y3, ytl};
-		g.fillPolygon(x1Points, y1Points, 3);
-		    
+		g.fillPolygon(x1Points, y1Points, 3);    
 		g.drawLine(x1,y1,x3, y3);
 	    }
 	    else{
@@ -160,6 +161,7 @@ public class DrawingComponent extends JComponent {
 		int xtl = (int)(Math.cos(thetal)*(double)offset/2);
 		int ytr = (int)(Math.sin(thetar)*(double)offset/2);
 		int xtr = (int)(Math.cos(thetar)*(double)offset/2);
+
 		y3 = y2-offset;
 		x3 = x2;
 		xtl = x3-xtl;
@@ -170,7 +172,6 @@ public class DrawingComponent extends JComponent {
 		int x1Points[] = {xtl, xtr, x3, xtl};
 		int y1Points[] = {ytl, ytr, y3, ytl};
 		g.fillPolygon(x1Points, y1Points, 3);
-
 		g.drawLine(x1,y1,x3, y3);
 	    }
 	}
@@ -186,44 +187,27 @@ public class DrawingComponent extends JComponent {
 	    int yt = (int)(Math.sin(theta)*(double)offset);
 	    int xt = (int)(Math.cos(theta)*(double)offset);
 	    
-	    if(x1<x2 && y1<y2){
+	    if(x1<x2 && (y1<y2 || y1>=y2)){
 		x3 = x2-xt;
 		y3 = y2-yt;
 		xtl = x3-xtl;
 		ytl = y3-ytl;
 		xtr = x3-xtr;
 		ytr = y3-ytr;
-	    }
-	    else if(x1<x2 && !(y1<y2)){
-		x3 = x2-xt;
-		y3 = y2-yt;
-		xtl = x3-xtl;
-		ytl = y3-ytl;
-		xtr = x3-xtr;
-		ytr = y3-ytr;
-	    }
-	    else if(!(x1<x2) && y1<y2){
-		x3 = (x2+xt);
-		y3 = (y2+yt);
-		xtl = x3+xtl;
-		ytl = y3+ytl;
-		xtr = x3+xtr;
-		ytr = y3+ytr;
 	    }
 	    else{
-		x3 = (x2+xt);
-		y3 = (y2+yt);
+		x3 = x2+xt;
+		y3 = y2+yt;
 		xtl = x3+xtl;
 		ytl = y3+ytl;
 		xtr = x3+xtr;
 		ytr = y3+ytr;
 	    }
 
-        //Draws line
+	    //Draws line
 	    int x1Points[] = {xtl, xtr, x3, xtl};
 	    int y1Points[] = {ytl, ytr, y3, ytl};
 	    g.fillPolygon(x1Points, y1Points, 3);
-	    
 	    g.drawLine(x1,y1,x3,y3);
 	}
 
@@ -233,7 +217,6 @@ public class DrawingComponent extends JComponent {
         //Draws name
         g.drawString(name,midLineX, midLineY);
 	g.setColor(Color.BLACK);
-
     }
 
     /**
@@ -258,8 +241,7 @@ public class DrawingComponent extends JComponent {
     private void paintState(Graphics g, String name, boolean isStart, boolean isAccept,
               int row, int column)
     {
-
-        //draw initial circle
+       //draw initial circle
        g.drawOval(row*CELL_SIZE, column*CELL_SIZE, CELL_SIZE, CELL_SIZE);
 
        //if is an accept draws the second circle
@@ -284,7 +266,6 @@ public class DrawingComponent extends JComponent {
        //draw name
        Rectangle rect = new Rectangle(row*CELL_SIZE,column*CELL_SIZE,CELL_SIZE,CELL_SIZE);
        drawCenteredString(g,name,rect,g.getFont());
-
     }
 
     /**
