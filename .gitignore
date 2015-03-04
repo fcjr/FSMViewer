@@ -2,4 +2,4 @@ build/*
 .gradle
 *.DS_Store
 *.bin
-!example.bin
+!documents/example.bin
