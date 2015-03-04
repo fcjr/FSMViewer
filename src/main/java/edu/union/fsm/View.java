@@ -7,6 +7,7 @@
 
 package edu.union.fsm;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.*;
 import javax.swing.*;
@@ -44,23 +45,24 @@ public class View extends JFrame implements ModelListener{
 
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setTitle("Finite State Machine Viewer");
-    this.setSize(980, 760);
+    this.setSize(980, 800);
     this.setResizable(false);
+    this.setLayout(new BorderLayout());
 
     // add the panes to the panel
-    panel.add(stateLabel);
-    panel.add(addStateButton);
-    panel.add(deleteStateButton);
-    panel.add(moveStateButton);
-    panel.add(toggleTypeButton);
-    panel.add(transitionLabel);
-    panel.add(addTransitionButton);
-    panel.add(deleteTransitionButton);
-    panel.add(nameLabel);
-    panel.add(nameField);
-    panel.add(drawingComponent);
-    panel.add(saveBin);
-    panel.add(loadBin);
+    panel.add(stateLabel, BorderLayout.PAGE_START);
+    panel.add(addStateButton, BorderLayout.PAGE_START);
+    panel.add(deleteStateButton, BorderLayout.PAGE_START);
+    panel.add(moveStateButton, BorderLayout.PAGE_START);
+    panel.add(toggleTypeButton, BorderLayout.PAGE_START);
+    panel.add(transitionLabel, BorderLayout.PAGE_START);
+    panel.add(addTransitionButton, BorderLayout.PAGE_START);
+    panel.add(deleteTransitionButton, BorderLayout.PAGE_START);
+    panel.add(nameLabel, BorderLayout.PAGE_START);
+    panel.add(nameField, BorderLayout.PAGE_START);
+    panel.add(drawingComponent, BorderLayout.CENTER);
+    panel.add(saveBin, BorderLayout.PAGE_END);
+    panel.add(loadBin, BorderLayout.PAGE_END);
 
     this.add(panel);
 
@@ -94,10 +96,8 @@ public class View extends JFrame implements ModelListener{
   /**
    * clears nameField.
    */
-  public void clearName(){
-
+  public void clearName() {
     nameField.setText("");
-
   }
 
   /**
@@ -110,37 +110,24 @@ public class View extends JFrame implements ModelListener{
   }
 
   //ADD LISTENER FUNCTIONS
-
-  public void addMouseListener(MouseListener mouseHandler){
-
+  public void addMouseListener(MouseListener mouseHandler) {
       drawingComponent.addMouseListener(mouseHandler);
-
   }
-
-  public void addAddStateButtonListener(ActionListener listenForAddStateButton){
-
+  public void addAddStateButtonListener(ActionListener listenForAddStateButton) {
     addStateButton.addActionListener(listenForAddStateButton);
-
   }
-
-  public void addMoveStateButtonListener(ActionListener listenForAddStateButton){
-
+  public void addMoveStateButtonListener(ActionListener listenForAddStateButton) {
     moveStateButton.addActionListener(listenForAddStateButton);
-
   }
-
   public void addToggleTypeButtonListener(ActionListener l) {
       toggleTypeButton.addActionListener(l);
   }
-
   public void addDeleteStateButtonListener(ActionListener l) {
     deleteStateButton.addActionListener(l);
   }
-
   public void addAddTransitionButtonListener(ActionListener l) {
     addTransitionButton.addActionListener(l);
   }
-
   public void addDeleteTransitionButtonListener(ActionListener l) {
     deleteTransitionButton.addActionListener(l);
   }
@@ -158,10 +145,8 @@ public class View extends JFrame implements ModelListener{
   *
   * @param errorMessage the message to add.
   */
-  public void displayErrorMessage(String errorMessage){
-
+  public void displayErrorMessage(String errorMessage) {
     JOptionPane.showMessageDialog(this, errorMessage);
-
   }
 
 }
