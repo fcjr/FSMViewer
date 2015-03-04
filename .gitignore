@@ -2,4 +2,5 @@ build/*
 .gradle
 *.DS_Store
 *.bin
+*.png
 !documents/example.bin
