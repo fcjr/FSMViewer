@@ -30,6 +30,13 @@ public class DrawingComponent extends JComponent {
         setPreferredSize(new Dimension(DIMENSION, DIMENSION));
     }
 
+    public void printAll(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.fillRect(0,0,DIMENSION,DIMENSION);
+        //paintGridLines(g);
+        paintStates(g);
+        paintTransitions(g);
+        }
 
     /**
      * paints the fsm
@@ -131,7 +138,7 @@ public class DrawingComponent extends JComponent {
 	int y3 = 0;
 
 	 g.setColor(Color.ORANGE);
-	if (xl == 0){    
+	if (xl == 0){
 	    if (yl<0){
 		double thetal = 3*Math.PI/2 + Math.PI/4;
 		double thetar = 3*Math.PI/2 - Math.PI/4;
@@ -141,16 +148,16 @@ public class DrawingComponent extends JComponent {
 		int xtr = (int)(Math.cos(thetar)*(double)offset/2);
 		y3 = y2+offset;
 		x3 = x2;
-		    
+
 		xtl = x3-xtl;
 		ytl = y3-ytl;
 		xtr = x3-xtr;
 		ytr = y3-ytr;
-		
+
 		int x1Points[] = {xtl, xtr, x3, xtl};
 		int y1Points[] = {ytl, ytr, y3, ytl};
 		g.fillPolygon(x1Points, y1Points, 3);
-		    
+
 		g.drawLine(x1,y1,x3, y3);
 	    }
 	    else{
@@ -174,7 +181,7 @@ public class DrawingComponent extends JComponent {
 		g.drawLine(x1,y1,x3, y3);
 	    }
 	}
-	
+
 	else{
 	    double theta = Math.atan((double)yl/(double)xl);
 	    double thetal = theta + Math.PI/4;
@@ -185,7 +192,7 @@ public class DrawingComponent extends JComponent {
 	    int xtr = (int)(Math.cos(thetar)*(double)offset/2);
 	    int yt = (int)(Math.sin(theta)*(double)offset);
 	    int xt = (int)(Math.cos(theta)*(double)offset);
-	    
+
 	    if(x1<x2 && y1<y2){
 		x3 = x2-xt;
 		y3 = y2-yt;
@@ -223,7 +230,7 @@ public class DrawingComponent extends JComponent {
 	    int x1Points[] = {xtl, xtr, x3, xtl};
 	    int y1Points[] = {ytl, ytr, y3, ytl};
 	    g.fillPolygon(x1Points, y1Points, 3);
-	    
+
 	    g.drawLine(x1,y1,x3,y3);
 	}
 
@@ -258,6 +265,7 @@ public class DrawingComponent extends JComponent {
     private void paintState(Graphics g, String name, boolean isStart, boolean isAccept,
               int row, int column)
     {
+        g.setColor(Color.BLACK);
 
         //draw initial circle
        g.drawOval(row*CELL_SIZE, column*CELL_SIZE, CELL_SIZE, CELL_SIZE);
