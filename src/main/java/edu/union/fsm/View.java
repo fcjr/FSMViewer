@@ -25,8 +25,9 @@ public class View extends JFrame implements ModelListener{
   private JButton deleteTransitionButton = new JButton("Delete");
   private JLabel nameLabel = new JLabel(" Name: ");
   private JTextField nameField = new JTextField(10);
-  private JButton saveBin = new JButton("Save");
-  private JButton loadBin = new JButton("Load");
+  private JButton saveBinButton = new JButton("Save");
+  private JButton loadBinButton = new JButton("Load");
+  private JButton savePNGButton = new JButton("Save Image (PNG)");
 
   private Model model;
   private DrawingComponent drawingComponent;
@@ -63,8 +64,9 @@ public class View extends JFrame implements ModelListener{
     topPanel.add(nameLabel);
     topPanel.add(nameField);
     middlePanel.add(drawingComponent);
-    bottomPanel.add(saveBin);
-    bottomPanel.add(loadBin);
+    bottomPanel.add(saveBinButton);
+    bottomPanel.add(loadBinButton);
+    bottomPanel.add(savePNGButton);
 
     this.add(topPanel,BorderLayout.NORTH);
     this.add(middlePanel,BorderLayout.CENTER);
@@ -136,10 +138,13 @@ public class View extends JFrame implements ModelListener{
     deleteTransitionButton.addActionListener(l);
   }
   public void addSaveBinButtonListener(ActionListener l) {
-      saveBin.addActionListener(l);
+      saveBinButton.addActionListener(l);
   }
   public void addLoadBinButtonListener(ActionListener l) {
-      loadBin.addActionListener(l);
+      loadBinButton.addActionListener(l);
+  }
+  public void addSavePNGButtonListener(ActionListener l) {
+      savePNGButton.addActionListener(l);
   }
 
 
