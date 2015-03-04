@@ -6,8 +6,10 @@
 
 package edu.union.fsm;
 
+import java.io.*;
 
-public class State {
+
+public class State implements Serializable {
 
     private int id;
     private String name;

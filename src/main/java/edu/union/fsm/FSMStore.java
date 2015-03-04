@@ -3,6 +3,7 @@ package edu.union.fsm;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.*;
+import java.io.*;
 
 /**
  * FSMStore stores States, and Transitions and allows for modifications of them.
@@ -10,12 +11,12 @@ import java.util.*;
  *
  * @author Frankie,rudy,nate
  */
-public class FSMStore {
+public class FSMStore implements Serializable{
 
     private ArrayList<State> States;
     private ArrayList<Transition> Transitions;
     private int nextID;
-    private Vector listeners;
+    private transient Vector listeners;
 
     /**
      * default constructor
@@ -33,6 +34,9 @@ public class FSMStore {
      */
     public void addListener(ModelListener l)
     {
+        if (listeners == null) {
+            listeners = new Vector();
+        }
         listeners.add(l);
     }
 
@@ -46,9 +50,18 @@ public class FSMStore {
     }
 
     /**
+     * removes all Listeners
+     * @param l the listener to remove
+     */
+    public void clearListeners()
+    {
+        listeners = new Vector();
+    }
+
+    /**
      * calls update on all of the listeners
      */
-    private void notifyListeners()
+    public void notifyListeners()
     {
         ModelListener l;
         Iterator iter = listeners.iterator();

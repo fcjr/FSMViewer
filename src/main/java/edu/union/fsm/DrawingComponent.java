@@ -30,6 +30,13 @@ public class DrawingComponent extends JComponent {
         setPreferredSize(new Dimension(DIMENSION, DIMENSION));
     }
 
+    public void printAll(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.fillRect(0,0,DIMENSION,DIMENSION);
+        //paintGridLines(g);
+        paintStates(g);
+        paintTransitions(g);
+        }
 
     /**
      * paints the fsm
@@ -148,7 +155,7 @@ public class DrawingComponent extends JComponent {
 		ytl = y3-ytl;
 		xtr = x3-xtr;
 		ytr = y3-ytr;
-		
+
 		int x1Points[] = {xtl, xtr, x3, xtl};
 		int y1Points[] = {ytl, ytr, y3, ytl};
 		g.fillPolygon(x1Points, y1Points, 3);    
@@ -175,7 +182,7 @@ public class DrawingComponent extends JComponent {
 		g.drawLine(x1,y1,x3, y3);
 	    }
 	}
-	
+
 	else{
 	    double theta = Math.atan((double)yl/(double)xl);
 	    double thetal = theta + Math.PI/4;

@@ -2,18 +2,19 @@ package edu.union.fsm;
 
 import java.util.Vector;
 import java.util.*;
+import java.io.*;
 
 /**
  * Class for storing the position information.
  */
-public class DisplayStore {
+public class DisplayStore implements Serializable {
 
     int row;
     int column;
 
     DisplayNode[][] displayGraph;
 
-    Vector listeners;
+    private transient Vector listeners;
 
     /**
      * constructor.
@@ -73,6 +74,9 @@ public class DisplayStore {
      */
     public void addListener(ModelListener l)
     {
+        if (listeners == null) {
+            listeners = new Vector();
+        }
         listeners.add(l);
     }
 
@@ -86,9 +90,18 @@ public class DisplayStore {
     }
 
     /**
+     * removes all Listeners
+     * @param l the listener to remove
+     */
+    public void clearListeners()
+    {
+        listeners = new Vector();
+    }
+
+    /**
      * calls .update() on all ModelListeners
      */
-    private void notifyListeners()
+    public void notifyListeners()
     {
         ModelListener l;
         Iterator iter = listeners.iterator();

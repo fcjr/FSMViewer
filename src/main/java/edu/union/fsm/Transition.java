@@ -1,11 +1,12 @@
 package edu.union.fsm;
 
 import java.util.ArrayList;
+import java.io.*;
 
 /**
  * Transition Class stores all relevent information about a transition.
  */
-public class Transition {
+public class Transition implements Serializable {
 
     private int id;
     private ArrayList<String> conditions;
