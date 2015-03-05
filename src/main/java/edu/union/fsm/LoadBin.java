@@ -9,29 +9,30 @@ package edu.union.fsm;
 
 import java.io.*;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import java.io.File;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class LoadBin {
 
-    private Model model;
-    private View view;
+    private JFrame toPrompt;
 
-    public LoadBin(Model model, View view){
-        this.model = model;
-        this.view = view;
+    public LoadBin(JFrame toPrompt){
+        this.toPrompt = toPrompt;
     }
 
-    public void loadFile(){
+    public Object loadFile(){
         try {
 
+            Object toReturn = null;
+
             JFileChooser c = new JFileChooser();
-            
+
             FileFilter filter = new FileNameExtensionFilter("Bin Files","bin");
             c.setFileFilter(filter);
 
-            int returnVal = c.showOpenDialog(view);
+            int returnVal = c.showOpenDialog(toPrompt);
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
 
@@ -42,10 +43,8 @@ public class LoadBin {
 
                 ObjectInputStream os = new ObjectInputStream(fs);
 
-                Model loadedModel = (Model) os.readObject();
+                toReturn = os.readObject();
 
-                model.load(loadedModel);
-                model.addListener(view);
 
                 os.close();
 
@@ -56,6 +55,8 @@ public class LoadBin {
             if (returnVal == JFileChooser.CANCEL_OPTION) {
                 //DO NOTHING
             }
+
+            return toReturn;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -63,6 +64,7 @@ public class LoadBin {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
 

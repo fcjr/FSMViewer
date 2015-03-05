@@ -7,6 +7,7 @@
 
 package edu.union.fsm;
 
+import javax.swing.*;
 import java.io.*;
 import javax.swing.JFileChooser;
 import org.apache.commons.io.FilenameUtils;
@@ -17,12 +18,12 @@ public class SaveBin {
 
     private class SerialChooser extends JFileChooser implements Serializable{}
 
-    private Model model;
-    private View view;
+    private Object toSave;
+    private JFrame frameToPrompt;
 
-    public SaveBin(Model model, View view){
-        this.model = model;
-        this.view = view;
+    public SaveBin(Object toSave, JFrame frameToPrompt){
+        this.toSave = toSave;
+        this.frameToPrompt = frameToPrompt;
     }
 
     public void saveFile(){
@@ -33,7 +34,7 @@ public class SaveBin {
             FileFilter filter = new FileNameExtensionFilter("Bin Files","bin");
             c.setFileFilter(filter);
 
-            int returnVal = c.showSaveDialog(view);
+            int returnVal = c.showSaveDialog(frameToPrompt);
 
             if (returnVal == JFileChooser.APPROVE_OPTION) {
 
@@ -54,7 +55,7 @@ public class SaveBin {
 
                 //model.cleanForWriting();
 
-                os.writeObject(model);
+                os.writeObject(toSave);
 
                 os.close();
 
