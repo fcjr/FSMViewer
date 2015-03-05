@@ -4,14 +4,14 @@ import edu.union.fsm.*;
 
 public class ToolInfoHolder {
 
-    Model model;
+    InformationStore model;
     SwingDisplay swingDisplay;
     int firstX;
     int firstY;
     int secondX;
     int secondY;
 
-    public ToolInfoHolder(Model model, SwingDisplay swingDisplay) {
+    public ToolInfoHolder(InformationStore model, SwingDisplay swingDisplay) {
         this.model = model;
         this.swingDisplay = swingDisplay;
         firstX = 0;
@@ -21,7 +21,7 @@ public class ToolInfoHolder {
     }
 
     //GETTERS
-    public Model getModel() {
+    public InformationStore getInformationStore() {
         return model;
     }
     public SwingDisplay getSwingDisplay() {

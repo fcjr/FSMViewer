@@ -6,14 +6,14 @@ public class DeleteStateTool implements Tool{
 
 
     ToolInfoHolder info;
-    Model theModel;
+    InformationStore informationStore;
     SwingDisplay swingDisplay;
     int firstX;
     int firstY;
 
     public DeleteStateTool(ToolInfoHolder info){
         this.info = info;
-        this.theModel = info.getModel();
+        this.informationStore = info.getInformationStore();
         this.swingDisplay = info.getSwingDisplay();
         firstX = 0;
         firstY = 0;
@@ -24,9 +24,9 @@ public class DeleteStateTool implements Tool{
         firstX = info.getFirstX();
         firstY = info.getFirstY();
 
-        if(theModel.displayStore.containsState(firstX,firstY)){
-            int id = theModel.displayStore.removeState(firstX,firstY);
-            theModel.fsmStore.removeState(id);
+        if(informationStore.displayStore.containsState(firstX,firstY)){
+            int id = informationStore.displayStore.removeState(firstX,firstY);
+            informationStore.fsmStore.removeState(id);
         }
     }
 }

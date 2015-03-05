@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class SwingDisplay extends JFrame implements ModelListener{
+public class SwingDisplay extends JFrame implements InformationStoreListener{
 
 
   private JLabel stateLabel = new JLabel("State: ");
@@ -29,7 +29,7 @@ public class SwingDisplay extends JFrame implements ModelListener{
   private JButton loadBinButton = new JButton("Load");
   private JButton savePNGButton = new JButton("Save Image (PNG)");
 
-  private Model model;
+  private InformationStore model;
   private DrawingComponent drawingComponent;
 
 
@@ -38,7 +38,7 @@ public class SwingDisplay extends JFrame implements ModelListener{
    *
    * @param model the model class
    */
-  SwingDisplay(Model model) {
+  SwingDisplay(InformationStore model) {
     this.model = model;
     drawingComponent = new DrawingComponent(model);
 

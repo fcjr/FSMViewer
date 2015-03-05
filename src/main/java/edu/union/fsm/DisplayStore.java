@@ -69,10 +69,10 @@ public class DisplayStore implements Serializable {
     }
 
     /**
-     * adds a ModelListener to the store.
+     * adds a InformationStoreListener to the store.
      * @param l listener to add
      */
-    public void addListener(ModelListener l)
+    public void addListener(InformationStoreListener l)
     {
         if (listeners == null) {
             listeners = new Vector();
@@ -81,10 +81,10 @@ public class DisplayStore implements Serializable {
     }
 
     /**
-    * removes a ModelListener to the store.
+    * removes a InformationStoreListener to the store.
     * @param l listener to remove
     */
-    public void removeListener(ModelListener l)
+    public void removeListener(InformationStoreListener l)
     {
         listeners.remove(l);
     }
@@ -99,15 +99,15 @@ public class DisplayStore implements Serializable {
     }
 
     /**
-     * calls .update() on all ModelListeners
+     * calls .update() on all InformationStoreListeners
      */
     public void notifyListeners()
     {
-        ModelListener l;
+        InformationStoreListener l;
         Iterator iter = listeners.iterator();
 
         while(iter.hasNext()) {
-            l = (ModelListener) iter.next();
+            l = (InformationStoreListener) iter.next();
             l.update();
         }
 

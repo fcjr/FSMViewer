@@ -5,7 +5,7 @@ import edu.union.fsm.*;
 public class DeleteTransitionTool implements Tool{
 
     ToolInfoHolder info;
-    Model theModel;
+    InformationStore informationStore;
     SwingDisplay swingDisplay;
     int firstX;
     int firstY;
@@ -14,7 +14,7 @@ public class DeleteTransitionTool implements Tool{
 
     public DeleteTransitionTool(ToolInfoHolder info){
         this.info = info;
-        this.theModel = info.getModel();
+        this.informationStore = info.getInformationStore();
         this.swingDisplay = info.getSwingDisplay();
         firstX = 0;
         firstY = 0;
@@ -29,13 +29,13 @@ public class DeleteTransitionTool implements Tool{
         secondX = info.getSecondX();
         secondY = info.getSecondY();
 
-        if(theModel.displayStore.containsState(firstX,firstY) &&
-           theModel.displayStore.containsState(secondX,secondY)) {
+        if(informationStore.displayStore.containsState(firstX,firstY) &&
+           informationStore.displayStore.containsState(secondX,secondY)) {
                String name = swingDisplay.getName();
-               int fromID = theModel.displayStore.getState(firstX,firstY);
-               int toID = theModel.displayStore.getState(secondX,secondY);
-                  if (theModel.fsmStore.containsTransitionWithIDs(fromID,toID)){
-                      theModel.fsmStore.removeTransitionWithIDs(fromID,toID);
+               int fromID = informationStore.displayStore.getState(firstX,firstY);
+               int toID = informationStore.displayStore.getState(secondX,secondY);
+                  if (informationStore.fsmStore.containsTransitionWithIDs(fromID,toID)){
+                      informationStore.fsmStore.removeTransitionWithIDs(fromID,toID);
                   } else{
                       swingDisplay.displayErrorMessage("Error: No transtion exists.");
                   }

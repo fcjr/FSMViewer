@@ -32,7 +32,7 @@ public class FSMStore implements Serializable{
      * adds the given listener to the listener vector
      * @param l the listener to add
      */
-    public void addListener(ModelListener l)
+    public void addListener(InformationStoreListener l)
     {
         if (listeners == null) {
             listeners = new Vector();
@@ -44,7 +44,7 @@ public class FSMStore implements Serializable{
      * removes the requested listener
      * @param l the listener to remove
      */
-    public void removeListener(ModelListener l)
+    public void removeListener(InformationStoreListener l)
     {
         listeners.remove(l);
     }
@@ -63,11 +63,11 @@ public class FSMStore implements Serializable{
      */
     public void notifyListeners()
     {
-        ModelListener l;
+        InformationStoreListener l;
         Iterator iter = listeners.iterator();
 
         while(iter.hasNext()) {
-            l = (ModelListener) iter.next();
+            l = (InformationStoreListener) iter.next();
             l.update();
         }
 

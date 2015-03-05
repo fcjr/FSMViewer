@@ -13,7 +13,7 @@ import java.lang.Math;
  */
 public class DrawingComponent extends JComponent {
 
-    private Model myModel;
+    private InformationStore informationStore;
     private final int NUMBER_OF_CELLS = 8;
     private final int CELL_SIZE =700/NUMBER_OF_CELLS;
     private final int DIMENSION = CELL_SIZE*NUMBER_OF_CELLS;
@@ -22,9 +22,9 @@ public class DrawingComponent extends JComponent {
      * constructor.
      * @param  model refference to the model
      */
-    public DrawingComponent(Model model){
+    public DrawingComponent(InformationStore model){
 
-        this.myModel = model;
+        this.informationStore = model;
 
         setSize(new Dimension(DIMENSION, DIMENSION));
         setPreferredSize(new Dimension(DIMENSION, DIMENSION));
@@ -81,8 +81,8 @@ public class DrawingComponent extends JComponent {
      * @param g magical graphics object
      */
     private void paintStates(Graphics g){
-        DisplayStore displayStore = myModel.displayStore;
-        FSMStore fsmStore = myModel.fsmStore;
+        DisplayStore displayStore = informationStore.displayStore;
+        FSMStore fsmStore = informationStore.fsmStore;
 
         for(int row = 0; row < displayStore.getRows(); row++){
             for(int column = 0; column < displayStore.getColumns(); column++) {
@@ -104,7 +104,7 @@ public class DrawingComponent extends JComponent {
      * @param g magical graphics object
      */
     private void paintTransitions(Graphics g){
-        ArrayList<Transition> transitions = myModel.fsmStore.getTransitions();
+        ArrayList<Transition> transitions = informationStore.fsmStore.getTransitions();
         for(Transition currentTrans: transitions){
             String name = currentTrans.getLabel();
             int fromID = currentTrans.getFromID();
@@ -123,10 +123,10 @@ public class DrawingComponent extends JComponent {
      * @param  toID id of the toState
      */
     private void paintTransition(Graphics g, String name, int fromID, int toID){
-        int fromRow = myModel.displayStore.getRow(fromID);
-        int fromColumn = myModel.displayStore.getColumn(fromID);
-        int toRow = myModel.displayStore.getRow(toID);
-        int toColumn = myModel.displayStore.getColumn(toID);
+        int fromRow = informationStore.displayStore.getRow(fromID);
+        int fromColumn = informationStore.displayStore.getColumn(fromID);
+        int toRow = informationStore.displayStore.getRow(toID);
+        int toColumn = informationStore.displayStore.getColumn(toID);
         int offset = CELL_SIZE/2;
         int x1 = fromRow * CELL_SIZE + offset;
         int y1 = fromColumn * CELL_SIZE + offset;

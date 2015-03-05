@@ -11,12 +11,12 @@ public class FSMApp {
 
     public static void main(String[] args) {
 
-      Model theModel = new Model();
+      InformationStore informationStore = new InformationStore();
 
-      SwingDisplay swingDisplay = new SwingDisplay(theModel);
+      SwingDisplay swingDisplay = new SwingDisplay(informationStore);
 
 
-      Controller theController = new Controller(swingDisplay,theModel);
+      Controller theController = new Controller(swingDisplay,informationStore);
 
         swingDisplay.setVisible(true);
 

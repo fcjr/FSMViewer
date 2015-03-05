@@ -18,18 +18,18 @@ import java.awt.event.MouseListener;
 public class Controller implements MouseListener {
 
   private SwingDisplay swingDisplay;
-  private Model theModel;
+  private InformationStore informationStore;
   private Tool currentTool;
   private ToolInfoHolder toolInfoHolder;
 
-  public Controller(SwingDisplay swingDisplay, Model theModel) {
+  public Controller(SwingDisplay swingDisplay, InformationStore informationStore) {
     this.swingDisplay = swingDisplay;
-    this.theModel = theModel;
-    theModel.fsmStore.addListener(swingDisplay);
-    theModel.displayStore.addListener(swingDisplay);
+    this.informationStore = informationStore;
+    informationStore.fsmStore.addListener(swingDisplay);
+    informationStore.displayStore.addListener(swingDisplay);
 
 
-    toolInfoHolder = new ToolInfoHolder(theModel, swingDisplay);
+    toolInfoHolder = new ToolInfoHolder(informationStore, swingDisplay);
     currentTool = new DefaultTool();
 
 
@@ -199,9 +199,9 @@ public class Controller implements MouseListener {
 
       try{
 
-          SaveBin saver = new SaveBin(theModel, swingDisplay);
+          SaveBin saver = new SaveBin(informationStore, swingDisplay);
           saver.saveFile();
-          theModel.addListener(swingDisplay);
+          informationStore.addListener(swingDisplay);
       }
 
       catch(Exception ex){
@@ -222,8 +222,8 @@ public class Controller implements MouseListener {
 
           LoadBin loader = new LoadBin(swingDisplay);
           Object toLoad = loader.loadFile();
-          Model loadModel = (Model) toLoad;
-          theModel.load(loadModel, swingDisplay);
+          InformationStore loadInformationStore = (InformationStore) toLoad;
+          informationStore.load(loadInformationStore, swingDisplay);
 
       } catch(NullPointerException ex) {
         //DO NOTHING
