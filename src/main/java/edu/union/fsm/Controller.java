@@ -7,6 +7,7 @@
 
 package edu.union.fsm;
 
+import edu.union.fsm.tool.*;;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -18,12 +19,8 @@ public class Controller implements MouseListener {
 
   private View theView;
   private Model theModel;
-  private ToolInvoker toolInvoker;
   private Tool currentTool;
-  private int firstX;
-  private int secondX;
-  private int firstY;
-  private int secondY;
+  private ToolInfoHolder toolInfoHolder;
 
   public Controller(View theView, Model theModel) {
     this.theView = theView;
@@ -32,11 +29,7 @@ public class Controller implements MouseListener {
     theModel.displayStore.addListener(theView);
 
 
-    firstX = 0;
-    firstY = 0;
-    secondX = 0;
-    secondY = 0;
-    toolInvoker = new ToolInvoker();
+    toolInfoHolder = new ToolInfoHolder(theModel, theView);
     currentTool = new DefaultTool();
 
 
@@ -59,96 +52,22 @@ public class Controller implements MouseListener {
   public void mouseEntered(MouseEvent e) {}
 
   public void mousePressed(MouseEvent e) {
-      firstX = theView.coordToCellSpot(e.getX());
-      firstY = theView.coordToCellSpot(e.getY());
+      int firstX = theView.coordToCellSpot(e.getX());
+      toolInfoHolder.setFirstX(firstX);
+
+      int firstY = theView.coordToCellSpot(e.getY());
+      toolInfoHolder.setFirstY(firstY);
   }
   public void mouseReleased(MouseEvent e) {
-      secondX = theView.coordToCellSpot(e.getX());
-      secondY = theView.coordToCellSpot(e.getY());
-      toolInvoker.runTool(currentTool);
+      int secondX = theView.coordToCellSpot(e.getX());
+      toolInfoHolder.setSecondX(secondX);
+
+      int secondY = theView.coordToCellSpot(e.getY());
+      toolInfoHolder.setSecondY(secondY);
+
+      currentTool.execute();
   }
 
-  //TOOLS
-  private class DefaultTool implements Tool{
-      public void execute(){
-      //DO NOTHING
-      }
-  }
-
-  private class AddStateTool implements Tool{
-      public void execute(){
-          String name = theView.getName();
-          //TODO SELECT TYPE
-          if (!theModel.displayStore.containsState(firstX,firstY)){
-              int id = theModel.fsmStore.addState(name);
-              theModel.displayStore.addState(firstX,firstY,id);
-          } else {
-              theView.displayErrorMessage("Can't Add State, state already exists in position.");
-          }
-      }
-  }
-
-  private class DeleteStateTool implements Tool{
-      public void execute(){
-          if(theModel.displayStore.containsState(firstX,firstY)){
-              int id = theModel.displayStore.removeState(firstX,firstY);
-              theModel.fsmStore.removeState(id);
-          }
-      }
-  }
-
-  private class MoveStateTool implements Tool{
-      public void execute(){
-          if(theModel.displayStore.containsState(firstX,firstY) &&
-             !theModel.displayStore.containsState(secondX,secondY)) {
-                 theModel.displayStore.moveState(firstX,firstY,secondX,secondY);
-             } else{
-                 theView.displayErrorMessage("Error: Not a valid move.");
-             }
-      }
-  }
-
-  private class ToggleTypeTool implements Tool{
-      public void execute(){
-          if(theModel.displayStore.containsState(firstX,firstY)){
-              int id = theModel.displayStore.getState(firstX,firstY);
-              theModel.fsmStore.toggleStateType(id);
-          }
-      }
-  }
-
-  private class AddTransitionTool implements Tool{
-      public void execute(){
-
-          if(theModel.displayStore.containsState(firstX,firstY) &&
-             theModel.displayStore.containsState(secondX,secondY)) {
-                 String name = theView.getName();
-                 int fromID = theModel.displayStore.getState(firstX,firstY);
-                 int toID = theModel.displayStore.getState(secondX,secondY);
-                 theModel.fsmStore.addTransition(name,fromID,toID);
-          } else {
-              theView.displayErrorMessage("Error: Not a valid transition.");
-          }
-      }
-  }
-
-  private class DeleteTransitionTool implements Tool{
-      public void execute(){
-          if(theModel.displayStore.containsState(firstX,firstY) &&
-             theModel.displayStore.containsState(secondX,secondY)) {
-                 String name = theView.getName();
-                 int fromID = theModel.displayStore.getState(firstX,firstY);
-                 int toID = theModel.displayStore.getState(secondX,secondY);
-                    if (theModel.fsmStore.containsTransitionWithIDs(fromID,toID)){
-                        theModel.fsmStore.removeTransitionWithIDs(fromID,toID);
-                    } else{
-                        theView.displayErrorMessage("Error: No transtion exists.");
-                    }
-             } else {
-                 theView.displayErrorMessage("Error: Invalid States.");
-             }
-      }
-  }
 
   //BUTTON LISTENERS all these do are toggle the current tool.
   private class AddStateListener implements ActionListener{
@@ -157,7 +76,7 @@ public class Controller implements MouseListener {
 
       try{
 
-         currentTool = new AddStateTool();
+         currentTool = new AddStateTool(toolInfoHolder);
       }
 
       catch(Exception ex){
@@ -178,7 +97,7 @@ public class Controller implements MouseListener {
 
       try{
 
-        currentTool = new DeleteStateTool();
+        currentTool = new DeleteStateTool(toolInfoHolder);
       }
 
       catch(Exception ex){
@@ -199,7 +118,7 @@ public class Controller implements MouseListener {
 
       try{
 
-        currentTool = new MoveStateTool();
+        currentTool = new MoveStateTool(toolInfoHolder);
       }
 
       catch(Exception ex){
@@ -220,7 +139,7 @@ public class Controller implements MouseListener {
 
       try{
 
-        currentTool = new ToggleTypeTool();
+        currentTool = new ToggleTypeTool(toolInfoHolder);
       }
 
       catch(Exception ex){
@@ -241,7 +160,7 @@ public class Controller implements MouseListener {
 
       try{
 
-        currentTool = new AddTransitionTool();
+        currentTool = new AddTransitionTool(toolInfoHolder);
       }
 
       catch(Exception ex){
@@ -262,7 +181,7 @@ public class Controller implements MouseListener {
 
       try{
 
-          currentTool = new DeleteTransitionTool();
+          currentTool = new DeleteTransitionTool(toolInfoHolder);
       }
 
       catch(Exception ex){

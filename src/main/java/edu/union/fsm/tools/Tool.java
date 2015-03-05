@@ -1,4 +1,6 @@
-package edu.union.fsm;
+package edu.union.fsm.tool;
+
+import edu.union.fsm.*;
 
 //Tool Interface
 
