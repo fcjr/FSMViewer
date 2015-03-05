@@ -25,9 +25,10 @@ public Model(){
 
     }
 
-public void load(Model modelToLoad) {
+public void load(Model modelToLoad, ModelListener l) {
     this.fsmStore = modelToLoad.fsmStore;
     this.displayStore = modelToLoad.displayStore;
+    this.addListener(l);
 }
 
 public void addListener(ModelListener l) {
