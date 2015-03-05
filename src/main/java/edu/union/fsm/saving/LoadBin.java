@@ -5,7 +5,7 @@
 * @version 1
 */
 
-package edu.union.fsm;
+package edu.union.fsm.saving;
 
 import java.io.*;
 import javax.swing.JFileChooser;

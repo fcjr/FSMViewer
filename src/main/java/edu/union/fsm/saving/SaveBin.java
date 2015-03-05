@@ -5,7 +5,7 @@
 * @version 1
 */
 
-package edu.union.fsm;
+package edu.union.fsm.saving;
 
 import javax.swing.*;
 import java.io.*;
