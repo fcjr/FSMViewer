@@ -6,14 +6,14 @@ public class ToggleTypeTool implements Tool{
 
     ToolInfoHolder info;
     Model theModel;
-    View theView;
+    SwingDisplay swingDisplay;
     int firstX;
     int firstY;
 
     public ToggleTypeTool(ToolInfoHolder info){
         this.info = info;
         this.theModel = info.getModel();
-        this.theView = info.getView();
+        this.swingDisplay = info.getSwingDisplay();
         firstX = 0;
         firstY = 0;
     }

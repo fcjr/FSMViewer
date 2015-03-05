@@ -1,5 +1,5 @@
 /**
-* Main Application for viewing finite state machines.
+* Main Application for SwingDisplaying finite state machines.
 *
 * @author Frank, Rudy, & Nate
 * @version 1
@@ -13,12 +13,12 @@ public class FSMApp {
 
       Model theModel = new Model();
 
-      View theView = new View(theModel);
+      SwingDisplay swingDisplay = new SwingDisplay(theModel);
 
 
-      Controller theController = new Controller(theView,theModel);
+      Controller theController = new Controller(swingDisplay,theModel);
 
-        theView.setVisible(true);
+        swingDisplay.setVisible(true);
 
     }
 }

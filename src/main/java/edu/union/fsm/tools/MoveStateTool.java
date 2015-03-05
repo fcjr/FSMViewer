@@ -8,7 +8,7 @@ public class MoveStateTool implements Tool{
 
     ToolInfoHolder info;
     Model theModel;
-    View theView;
+    SwingDisplay swingDisplay;
     int firstX;
     int firstY;
     int secondX;
@@ -17,7 +17,7 @@ public class MoveStateTool implements Tool{
     public MoveStateTool(ToolInfoHolder info){
         this.info = info;
         this.theModel = info.getModel();
-        this.theView = info.getView();
+        this.swingDisplay = info.getSwingDisplay();
         firstX = 0;
         firstY = 0;
         secondX = 0;
@@ -36,7 +36,7 @@ public class MoveStateTool implements Tool{
            !theModel.displayStore.containsState(secondX,secondY)) {
                theModel.displayStore.moveState(firstX,firstY,secondX,secondY);
            } else{
-               theView.displayErrorMessage("Error: Not a valid move.");
+               swingDisplay.displayErrorMessage("Error: Not a valid move.");
            }
     }
 }

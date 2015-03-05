@@ -1,5 +1,5 @@
 /**
-* Controller Method, manages listeners for the view file.
+* Controller Method, manages listeners for the SwingDisplay file.
 *
 * @author Frank, Rudy, & Nate
 * @version 1
@@ -17,33 +17,33 @@ import java.awt.event.MouseListener;
 
 public class Controller implements MouseListener {
 
-  private View theView;
+  private SwingDisplay swingDisplay;
   private Model theModel;
   private Tool currentTool;
   private ToolInfoHolder toolInfoHolder;
 
-  public Controller(View theView, Model theModel) {
-    this.theView = theView;
+  public Controller(SwingDisplay swingDisplay, Model theModel) {
+    this.swingDisplay = swingDisplay;
     this.theModel = theModel;
-    theModel.fsmStore.addListener(theView);
-    theModel.displayStore.addListener(theView);
+    theModel.fsmStore.addListener(swingDisplay);
+    theModel.displayStore.addListener(swingDisplay);
 
 
-    toolInfoHolder = new ToolInfoHolder(theModel, theView);
+    toolInfoHolder = new ToolInfoHolder(theModel, swingDisplay);
     currentTool = new DefaultTool();
 
 
     //Adds all of the control listeners to their respected Jpane
-    this.theView.addAddStateButtonListener(new AddStateListener());
-    this.theView.addDeleteStateButtonListener(new DeleteStateListener());
-    this.theView.addMoveStateButtonListener(new MoveStateListener());
-    this.theView.addToggleTypeButtonListener(new ToggleTypeButtonListener());
-    this.theView.addAddTransitionButtonListener(new AddTransitionButtonListener());
-    this.theView.addDeleteTransitionButtonListener(new DeleteTransitionButtonListener());
-    this.theView.addSaveBinButtonListener(new SaveBinButtonListener());
-    this.theView.addLoadBinButtonListener(new LoadBinButtonListener());
-    this.theView.addSavePNGButtonListener(new SavePNGButtonListener());
-    this.theView.addMouseListener(this);
+    this.swingDisplay.addAddStateButtonListener(new AddStateListener());
+    this.swingDisplay.addDeleteStateButtonListener(new DeleteStateListener());
+    this.swingDisplay.addMoveStateButtonListener(new MoveStateListener());
+    this.swingDisplay.addToggleTypeButtonListener(new ToggleTypeButtonListener());
+    this.swingDisplay.addAddTransitionButtonListener(new AddTransitionButtonListener());
+    this.swingDisplay.addDeleteTransitionButtonListener(new DeleteTransitionButtonListener());
+    this.swingDisplay.addSaveBinButtonListener(new SaveBinButtonListener());
+    this.swingDisplay.addLoadBinButtonListener(new LoadBinButtonListener());
+    this.swingDisplay.addSavePNGButtonListener(new SavePNGButtonListener());
+    this.swingDisplay.addMouseListener(this);
   }
 
   //MOUSE EVENTS
@@ -52,17 +52,17 @@ public class Controller implements MouseListener {
   public void mouseEntered(MouseEvent e) {}
 
   public void mousePressed(MouseEvent e) {
-      int firstX = theView.coordToCellSpot(e.getX());
+      int firstX = swingDisplay.coordToCellSpot(e.getX());
       toolInfoHolder.setFirstX(firstX);
 
-      int firstY = theView.coordToCellSpot(e.getY());
+      int firstY = swingDisplay.coordToCellSpot(e.getY());
       toolInfoHolder.setFirstY(firstY);
   }
   public void mouseReleased(MouseEvent e) {
-      int secondX = theView.coordToCellSpot(e.getX());
+      int secondX = swingDisplay.coordToCellSpot(e.getX());
       toolInfoHolder.setSecondX(secondX);
 
-      int secondY = theView.coordToCellSpot(e.getY());
+      int secondY = swingDisplay.coordToCellSpot(e.getY());
       toolInfoHolder.setSecondY(secondY);
 
       currentTool.execute();
@@ -83,7 +83,7 @@ public class Controller implements MouseListener {
 
         System.out.println(ex);
 
-        theView.displayErrorMessage("Error Selecting Tool");
+        swingDisplay.displayErrorMessage("Error Selecting Tool");
 
       }
 
@@ -104,7 +104,7 @@ public class Controller implements MouseListener {
 
         System.out.println(ex);
 
-        theView.displayErrorMessage("Error Selecting Tool");
+        swingDisplay.displayErrorMessage("Error Selecting Tool");
 
       }
 
@@ -125,7 +125,7 @@ public class Controller implements MouseListener {
 
         System.out.println(ex);
 
-        theView.displayErrorMessage("Error Selecting Tool");
+        swingDisplay.displayErrorMessage("Error Selecting Tool");
 
       }
 
@@ -146,7 +146,7 @@ public class Controller implements MouseListener {
 
         System.out.println(ex);
 
-        theView.displayErrorMessage("Error Selecting Tool");
+        swingDisplay.displayErrorMessage("Error Selecting Tool");
 
       }
 
@@ -167,7 +167,7 @@ public class Controller implements MouseListener {
 
         System.out.println(ex);
 
-        theView.displayErrorMessage("Error Selecting Tool");
+        swingDisplay.displayErrorMessage("Error Selecting Tool");
 
       }
 
@@ -188,7 +188,7 @@ public class Controller implements MouseListener {
 
         System.out.println(ex);
 
-        theView.displayErrorMessage("Error Selecting Tool");
+        swingDisplay.displayErrorMessage("Error Selecting Tool");
       }
     }
   }
@@ -199,9 +199,9 @@ public class Controller implements MouseListener {
 
       try{
 
-          SaveBin saver = new SaveBin(theModel, theView);
+          SaveBin saver = new SaveBin(theModel, swingDisplay);
           saver.saveFile();
-          theModel.addListener(theView);
+          theModel.addListener(swingDisplay);
       }
 
       catch(Exception ex){
@@ -209,7 +209,7 @@ public class Controller implements MouseListener {
          ex.printStackTrace();
         System.out.println(ex);
 
-        theView.displayErrorMessage("Error Selecting Tool");
+        swingDisplay.displayErrorMessage("Error Selecting Tool");
       }
     }
   }
@@ -220,10 +220,10 @@ public class Controller implements MouseListener {
 
       try {
 
-          LoadBin loader = new LoadBin(theView);
+          LoadBin loader = new LoadBin(swingDisplay);
           Object toLoad = loader.loadFile();
           Model loadModel = (Model) toLoad;
-          theModel.load(loadModel, theView);
+          theModel.load(loadModel, swingDisplay);
 
       } catch(NullPointerException ex) {
         //DO NOTHING
@@ -232,7 +232,7 @@ public class Controller implements MouseListener {
         System.out.println(ex);
         ex.printStackTrace();
 
-        theView.displayErrorMessage("Error Selecting Tool");
+        swingDisplay.displayErrorMessage("Error Selecting Tool");
       }
     }
   }
@@ -242,14 +242,14 @@ public class Controller implements MouseListener {
     public void actionPerformed(ActionEvent e) {
 
       try {
-          SavePNG saver = new SavePNG(theView.getMainDisplayComponent(), theView);
+          SavePNG saver = new SavePNG(swingDisplay.getMainDisplayComponent(), swingDisplay);
           saver.saveFile();
       } catch(Exception ex){
 
         System.out.println(ex);
         ex.printStackTrace();
 
-        theView.displayErrorMessage("Error Selecting Tool");
+        swingDisplay.displayErrorMessage("Error Selecting Tool");
       }
     }
   }

@@ -1,5 +1,5 @@
 /**
-* Finite State Machine Viewer
+* Finite State Machine Swing Display
 *
 * @author Frank, Rudy, & Nate
 * @version 1
@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class View extends JFrame implements ModelListener{
+public class SwingDisplay extends JFrame implements ModelListener{
 
 
   private JLabel stateLabel = new JLabel("State: ");
@@ -38,7 +38,7 @@ public class View extends JFrame implements ModelListener{
    *
    * @param model the model class
    */
-  View(Model model) {
+  SwingDisplay(Model model) {
     this.model = model;
     drawingComponent = new DrawingComponent(model);
 

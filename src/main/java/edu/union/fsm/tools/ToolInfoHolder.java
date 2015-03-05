@@ -5,15 +5,15 @@ import edu.union.fsm.*;
 public class ToolInfoHolder {
 
     Model model;
-    View view;
+    SwingDisplay swingDisplay;
     int firstX;
     int firstY;
     int secondX;
     int secondY;
 
-    public ToolInfoHolder(Model model, View view) {
+    public ToolInfoHolder(Model model, SwingDisplay swingDisplay) {
         this.model = model;
-        this.view = view;
+        this.swingDisplay = swingDisplay;
         firstX = 0;
         firstY = 0;
         secondX = 0;
@@ -24,8 +24,8 @@ public class ToolInfoHolder {
     public Model getModel() {
         return model;
     }
-    public View getView() {
-        return view;
+    public SwingDisplay getSwingDisplay() {
+        return swingDisplay;
     }
     public int getFirstX() {
         return firstX;

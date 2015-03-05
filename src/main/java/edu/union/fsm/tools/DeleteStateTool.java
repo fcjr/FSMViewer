@@ -7,14 +7,14 @@ public class DeleteStateTool implements Tool{
 
     ToolInfoHolder info;
     Model theModel;
-    View theView;
+    SwingDisplay swingDisplay;
     int firstX;
     int firstY;
 
     public DeleteStateTool(ToolInfoHolder info){
         this.info = info;
         this.theModel = info.getModel();
-        this.theView = info.getView();
+        this.swingDisplay = info.getSwingDisplay();
         firstX = 0;
         firstY = 0;
     }

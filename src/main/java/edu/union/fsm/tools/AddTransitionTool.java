@@ -7,7 +7,7 @@ public class AddTransitionTool implements Tool{
 
     ToolInfoHolder info;
     Model theModel;
-    View theView;
+    SwingDisplay swingDisplay;
     int firstX;
     int firstY;
     int secondX;
@@ -16,7 +16,7 @@ public class AddTransitionTool implements Tool{
     public AddTransitionTool(ToolInfoHolder info){
         this.info = info;
         this.theModel = info.getModel();
-        this.theView = info.getView();
+        this.swingDisplay = info.getSwingDisplay();
         firstX = 0;
         firstY = 0;
         secondX = 0;
@@ -32,12 +32,12 @@ public class AddTransitionTool implements Tool{
 
           if(theModel.displayStore.containsState(firstX,firstY) &&
              theModel.displayStore.containsState(secondX,secondY)) {
-                 String name = theView.getName();
+                 String name = swingDisplay.getName();
                  int fromID = theModel.displayStore.getState(firstX,firstY);
                  int toID = theModel.displayStore.getState(secondX,secondY);
                  theModel.fsmStore.addTransition(name,fromID,toID);
           } else {
-              theView.displayErrorMessage("Error: Not a valid transition.");
+              swingDisplay.displayErrorMessage("Error: Not a valid transition.");
           }
       }
   }

@@ -7,14 +7,14 @@ public class AddStateTool implements Tool{
 
     ToolInfoHolder info;
     Model theModel;
-    View theView;
+    SwingDisplay swingDisplay;
     int firstX;
     int firstY;
 
     public AddStateTool(ToolInfoHolder info){
         this.info = info;
         this.theModel = info.getModel();
-        this.theView = info.getView();
+        this.swingDisplay = info.getSwingDisplay();
         firstX = 0;
         firstY = 0;
     }
@@ -22,13 +22,13 @@ public class AddStateTool implements Tool{
     public void execute(){
         firstX = info.getFirstX();
         firstY = info.getFirstY();
-        String name = theView.getName();
+        String name = swingDisplay.getName();
         //TODO SELECT TYPE
         if (!theModel.displayStore.containsState(firstX,firstY)){
             int id = theModel.fsmStore.addState(name);
             theModel.displayStore.addState(firstX,firstY,id);
         } else {
-            theView.displayErrorMessage("Can't Add State, state already exists in position.");
+            swingDisplay.displayErrorMessage("Can't Add State, state already exists in position.");
         }
     }
 }
