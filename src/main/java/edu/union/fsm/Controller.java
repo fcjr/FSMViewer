@@ -219,9 +219,14 @@ public class Controller implements MouseListener {
     public void actionPerformed(ActionEvent e) {
 
       try {
-          LoadBin loader = new LoadBin(theModel, theView);
-          loader.loadFile();
-          theModel.addListener(theView);
+
+          LoadBin loader = new LoadBin(theView);
+          Object toLoad = loader.loadFile();
+          Model loadModel = (Model) toLoad;
+          theModel.load(loadModel, theView);
+
+      } catch(NullPointerException ex) {
+        //DO NOTHING
       } catch(Exception ex){
 
         System.out.println(ex);
