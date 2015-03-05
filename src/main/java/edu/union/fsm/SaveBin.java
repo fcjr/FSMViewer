@@ -53,8 +53,6 @@ public class SaveBin {
 
                 ObjectOutputStream os = new ObjectOutputStream(fs);
 
-                //model.cleanForWriting();
-
                 os.writeObject(toSave);
 
                 os.close();
