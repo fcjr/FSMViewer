@@ -66,7 +66,12 @@ public class Controller implements MouseListener {
       int secondY = swingDisplay.coordToCellSpot(e.getY());
       toolInfoHolder.setSecondY(secondY);
 
-      currentTool.execute();
+      try {
+          currentTool.execute();
+      } catch (ToolException ex) {
+          String toPrint = ex.getMessage();
+          swingDisplay.displayErrorMessage(toPrint);
+      }
   }
 
 
