@@ -5,27 +5,21 @@ import edu.union.fsm.*;
 public class ToggleTypeTool implements Tool{
 
     ToolInfoHolder info;
-    InformationStore informationStore;
-    SwingDisplay swingDisplay;
-    int firstX;
-    int firstY;
 
     public ToggleTypeTool(ToolInfoHolder info){
         this.info = info;
-        this.informationStore = info.getInformationStore();
-        this.swingDisplay = info.getSwingDisplay();
-        firstX = 0;
-        firstY = 0;
     }
 
-    public void execute(){
+    public void execute() throws ToolException{
 
-        firstX = info.getFirstX();
-        firstY = info.getFirstY();
+        InformationStore informationStore = info.getInformationStore();
+        int firstX = info.getFirstX();
+        int firstY = info.getFirstY();
 
-        if(informationStore.displayStore.containsState(firstX,firstY)){
-            int id = informationStore.displayStore.getState(firstX,firstY);
-            informationStore.fsmStore.toggleStateType(id);
+        try {
+            informationStore.toggleStateType(firstX,firstY);
+        } catch(StoreException ex) {
+            throw new ToolException(ex);
         }
     }
 }

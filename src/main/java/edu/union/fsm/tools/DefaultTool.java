@@ -6,7 +6,7 @@ public class DefaultTool implements Tool{
 
     public DefaultTool(){}
 
-    public void execute(){
+    public void execute() throws ToolException {
     //DO NOTHING
     }
 }

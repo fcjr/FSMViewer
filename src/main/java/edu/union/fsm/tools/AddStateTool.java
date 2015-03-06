@@ -10,25 +10,35 @@ public class AddStateTool implements Tool{
     SwingDisplay swingDisplay;
     int firstX;
     int firstY;
+    String name;
 
+    /**
+     * Tool which adds a state to the InformationStore.
+     * @param  info ToolInfoHolder wrapper for needed information
+     */
     public AddStateTool(ToolInfoHolder info){
         this.info = info;
         this.informationStore = info.getInformationStore();
         this.swingDisplay = info.getSwingDisplay();
+        this.name = "";
         firstX = 0;
         firstY = 0;
     }
 
-    public void execute(){
+    /**
+     * adds the state to the Information store.
+     */
+    public void execute() throws ToolException{
+
         firstX = info.getFirstX();
         firstY = info.getFirstY();
-        String name = swingDisplay.getName();
-        //TODO SELECT TYPE
-        if (!informationStore.displayStore.containsState(firstX,firstY)){
-            int id = informationStore.fsmStore.addState(name);
-            informationStore.displayStore.addState(firstX,firstY,id);
-        } else {
-            swingDisplay.displayErrorMessage("Can't Add State, state already exists in position.");
+        name = swingDisplay.getName();
+
+        try{
+            informationStore.addState(name,firstX,firstY);
+        } catch(StoreException ex) {
+            throw new ToolException(ex);
         }
+
     }
 }
