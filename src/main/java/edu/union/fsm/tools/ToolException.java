@@ -16,8 +16,7 @@ public class ToolException extends Exception {
        * with the other exceptions message
        * @param  ex the original exception
        */
-      public ToolException(Exception ex){
-          String message = ex.getMessage();
-          super(message);
+      public ToolException(Exception ex) {
+          super(ex.getMessage());
       }
  }
