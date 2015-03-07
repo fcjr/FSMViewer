@@ -2,14 +2,12 @@ package edu.union.fsm.tool;
 
 import edu.union.fsm.*;
 
-public class AddTransitionTool implements Tool{
+public class AddTransitionTool extends Tool{
 
-
-    ToolInfoHolder info;
 
     public AddTransitionTool(ToolInfoHolder info){
-        this.info = info;
-    }
+        super(info);
+        }
 
     public void execute() throws ToolException{
 

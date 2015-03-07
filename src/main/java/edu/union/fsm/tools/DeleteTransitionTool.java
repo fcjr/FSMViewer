@@ -2,12 +2,10 @@ package edu.union.fsm.tool;
 
 import edu.union.fsm.*;
 
-public class DeleteTransitionTool implements Tool{
-
-    ToolInfoHolder info;
+public class DeleteTransitionTool extends Tool{
 
     public DeleteTransitionTool(ToolInfoHolder info){
-        this.info = info;
+        super(info);
     }
 
     public void execute() throws ToolException{

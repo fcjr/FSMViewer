@@ -2,20 +2,11 @@ package edu.union.fsm.tool;
 
 import edu.union.fsm.*;
 
-public class MoveStateTool implements Tool{
+public class MoveStateTool extends Tool{
 
-
-
-    ToolInfoHolder info;
-    InformationStore informationStore;
-    SwingDisplay swingDisplay;
-    int firstX;
-    int firstY;
-    int secondX;
-    int secondY;
 
     public MoveStateTool(ToolInfoHolder info){
-        this.info = info;
+        super(info);
     }
 
     public void execute() throws ToolException{

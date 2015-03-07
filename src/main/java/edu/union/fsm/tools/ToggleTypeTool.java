@@ -2,12 +2,10 @@ package edu.union.fsm.tool;
 
 import edu.union.fsm.*;
 
-public class ToggleTypeTool implements Tool{
-
-    ToolInfoHolder info;
+public class ToggleTypeTool extends Tool{
 
     public ToggleTypeTool(ToolInfoHolder info){
-        this.info = info;
+        super(info);
     }
 
     public void execute() throws ToolException{

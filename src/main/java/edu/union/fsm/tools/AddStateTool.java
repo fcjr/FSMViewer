@@ -2,27 +2,14 @@ package edu.union.fsm.tool;
 
 import edu.union.fsm.*;
 
-public class AddStateTool implements Tool{
-
-
-    ToolInfoHolder info;
-    InformationStore informationStore;
-    SwingDisplay swingDisplay;
-    int firstX;
-    int firstY;
-    String name;
+public class AddStateTool extends Tool{
 
     /**
      * Tool which adds a state to the InformationStore.
      * @param  info ToolInfoHolder wrapper for needed information
      */
     public AddStateTool(ToolInfoHolder info){
-        this.info = info;
-        this.informationStore = info.getInformationStore();
-        this.swingDisplay = info.getSwingDisplay();
-        this.name = "";
-        firstX = 0;
-        firstY = 0;
+        super(info);
     }
 
     /**
@@ -30,9 +17,11 @@ public class AddStateTool implements Tool{
      */
     public void execute() throws ToolException{
 
-        firstX = info.getFirstX();
-        firstY = info.getFirstY();
-        name = swingDisplay.getName();
+        SwingDisplay swingDisplay = info.getSwingDisplay();
+        InformationStore informationStore = info.getInformationStore();
+        int firstX = info.getFirstX();
+        int firstY = info.getFirstY();
+        String name = swingDisplay.getName();
 
         try{
             informationStore.addState(name,firstX,firstY);

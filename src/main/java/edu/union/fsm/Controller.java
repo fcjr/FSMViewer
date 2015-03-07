@@ -26,12 +26,11 @@ public class Controller implements MouseListener {
   public Controller(SwingDisplay swingDisplay, InformationStore informationStore) {
     this.swingDisplay = swingDisplay;
     this.informationStore = informationStore;
-    informationStore.fsmStore.addListener(swingDisplay);
-    informationStore.displayStore.addListener(swingDisplay);
+    informationStore.addListener(swingDisplay);
 
 
     toolInfoHolder = new ToolInfoHolder(informationStore, swingDisplay);
-    currentTool = new DefaultTool();
+    currentTool = new DefaultTool(toolInfoHolder);
 
 
     //Adds all of the control listeners to their respected Jpane

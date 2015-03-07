@@ -2,13 +2,11 @@ package edu.union.fsm.tool;
 
 import edu.union.fsm.*;
 
-public class DeleteStateTool implements Tool{
+public class DeleteStateTool extends Tool{
 
-
-    ToolInfoHolder info;
 
     public DeleteStateTool(ToolInfoHolder info){
-        this.info = info;
+        super(info);
     }
 
     public void execute() throws ToolException {
