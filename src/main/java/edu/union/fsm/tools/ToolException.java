@@ -1,4 +1,4 @@
-package edu.union.fsm.tool;
+package edu.union.fsm.tools;
 
 public class ToolException extends Exception {
 

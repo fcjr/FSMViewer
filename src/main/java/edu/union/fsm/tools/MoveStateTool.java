@@ -1,4 +1,4 @@
-package edu.union.fsm.tool;
+package edu.union.fsm.tools;
 
 import edu.union.fsm.*;
 
