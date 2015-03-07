@@ -1,7 +1,5 @@
 package edu.union.fsm;
 
-import java.util.Iterator;
-import java.util.ArrayList;
 import java.util.*;
 import java.io.*;
 
@@ -16,7 +14,6 @@ public class FSMStore implements Serializable{
     private ArrayList<State> States;
     private ArrayList<Transition> Transitions;
     private int nextID;
-    private transient Vector listeners;
 
     /**
      * default constructor
@@ -25,52 +22,6 @@ public class FSMStore implements Serializable{
         nextID = 0;
         States = new ArrayList<State>();
         Transitions = new ArrayList<Transition>();
-        listeners = new Vector();
-    }
-
-    /**
-     * adds the given listener to the listener vector
-     * @param l the listener to add
-     */
-    public void addListener(InformationStoreListener l)
-    {
-        if (listeners == null) {
-            listeners = new Vector();
-        }
-        listeners.add(l);
-    }
-
-    /**
-     * removes the requested listener
-     * @param l the listener to remove
-     */
-    public void removeListener(InformationStoreListener l)
-    {
-        listeners.remove(l);
-    }
-
-    /**
-     * removes all Listeners
-     * @param l the listener to remove
-     */
-    public void clearListeners()
-    {
-        listeners = new Vector();
-    }
-
-    /**
-     * calls update on all of the listeners
-     */
-    public void notifyListeners()
-    {
-        InformationStoreListener l;
-        Iterator iter = listeners.iterator();
-
-        while(iter.hasNext()) {
-            l = (InformationStoreListener) iter.next();
-            l.update();
-        }
-
     }
 
     /**
@@ -112,7 +63,6 @@ public class FSMStore implements Serializable{
         if (this.containsState(id)){
             State toToggle = this.getState(id);
             toToggle.toggleState();
-            notifyListeners();
         }
     }
 
@@ -130,7 +80,6 @@ public class FSMStore implements Serializable{
           Transition toAdd = getTransitionPrivate(fromID, toID);
           if(toAdd != null){
             toAdd.addCondition(name);
-            notifyListeners();
             return toAdd.getID();
           } else {
             int toReturn = this.nextID;
@@ -138,7 +87,6 @@ public class FSMStore implements Serializable{
             Transitions.add(toAdd);
             nextID++;
             //SUCESSFULLY ADDED TRANSITION NOTIFY LISTENERS
-            notifyListeners();
             return toReturn;
           }
         } else {
@@ -245,8 +193,6 @@ public class FSMStore implements Serializable{
                 }
             }
         }
-        //SUCESSFULLY REMOVED TRANSITION NOTIFY LISTENERS
-        notifyListeners();
     }
 
     /**

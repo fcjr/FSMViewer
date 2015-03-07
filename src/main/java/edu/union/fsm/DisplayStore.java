@@ -1,6 +1,5 @@
 package edu.union.fsm;
 
-import java.util.Vector;
 import java.util.*;
 import java.io.*;
 
@@ -13,8 +12,6 @@ public class DisplayStore implements Serializable {
     int column;
 
     DisplayNode[][] displayGraph;
-
-    private transient Vector listeners;
 
     /**
      * constructor.
@@ -30,9 +27,6 @@ public class DisplayStore implements Serializable {
 		displayGraph[i][j] = new DisplayNode();
 	    }
 	}
-
-    listeners = new Vector();
-
     }
 
     /**
@@ -69,51 +63,6 @@ public class DisplayStore implements Serializable {
     }
 
     /**
-     * adds a InformationStoreListener to the store.
-     * @param l listener to add
-     */
-    public void addListener(InformationStoreListener l)
-    {
-        if (listeners == null) {
-            listeners = new Vector();
-        }
-        listeners.add(l);
-    }
-
-    /**
-    * removes a InformationStoreListener to the store.
-    * @param l listener to remove
-    */
-    public void removeListener(InformationStoreListener l)
-    {
-        listeners.remove(l);
-    }
-
-    /**
-     * removes all Listeners
-     * @param l the listener to remove
-     */
-    public void clearListeners()
-    {
-        listeners = new Vector();
-    }
-
-    /**
-     * calls .update() on all InformationStoreListeners
-     */
-    public void notifyListeners()
-    {
-        InformationStoreListener l;
-        Iterator iter = listeners.iterator();
-
-        while(iter.hasNext()) {
-            l = (InformationStoreListener) iter.next();
-            l.update();
-        }
-
-    }
-
-    /**
      * return number of rows
      * @return # of rows
      */
@@ -140,8 +89,6 @@ public class DisplayStore implements Serializable {
 
         int toReturn = displayGraph[x][y].setNode(ID);
 
-        notifyListeners();
-
         return toReturn;
 
 
@@ -157,10 +104,7 @@ public class DisplayStore implements Serializable {
 
          int toReturn = displayGraph[x][y].removeNode();
 
-         notifyListeners();
-
 	     return toReturn;
-
 
      }
 
@@ -183,8 +127,6 @@ public class DisplayStore implements Serializable {
 	    displayGraph[x2][y2].setNode(displayGraph[x1][y1].getID());
 
 	    displayGraph[x1][y1].removeNode();
-
-        notifyListeners();
 
 	    return true;
 	}
