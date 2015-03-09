@@ -28,13 +28,11 @@ public class SaveBinButtonListener implements ActionListener{
     public void actionPerformed(ActionEvent e) {
 
         try{
-
+            
             SaveBin saver = new SaveBin(informationStore, swingDisplay);
             saver.saveFile();
-            informationStore.addListener(swingDisplay);
-        }
 
-        catch(Exception ex){
+        } catch(Exception ex){
 
             ex.printStackTrace();
             System.out.println(ex);

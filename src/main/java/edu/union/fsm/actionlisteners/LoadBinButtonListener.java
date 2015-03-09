@@ -31,7 +31,7 @@ public class LoadBinButtonListener implements ActionListener{
             LoadBin loader = new LoadBin(swingDisplay);
             Object toLoad = loader.loadFile();
             InformationStore loadInformationStore = (InformationStore) toLoad;
-            informationStore.load(loadInformationStore, swingDisplay);
+            informationStore.load(loadInformationStore);
 
         } catch(NullPointerException ex) {
             //DO NOTHING
