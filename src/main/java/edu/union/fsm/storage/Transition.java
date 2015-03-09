@@ -1,4 +1,4 @@
-package edu.union.fsm;
+package edu.union.fsm.storage;
 
 import java.util.ArrayList;
 import java.io.*;
@@ -20,7 +20,7 @@ public class Transition implements Serializable {
      * @param   fromID from state's id
      * @param   toID to state's id
      */
-    public Transition(int id, String name, int fromID, int toID) {
+    protected Transition(int id, String name, int fromID, int toID) {
         this.id = id;
         this.conditions = new ArrayList<String>();
         this.conditions.add(name);
@@ -61,7 +61,7 @@ public class Transition implements Serializable {
      * removes the given condition if it exists.
      * @param name name of condition to remove
      */
-    public void removeCondition(String name) {
+     protected void removeCondition(String name) {
         if(this.conditions.contains(name)) {
             this.conditions.remove(name);
         }

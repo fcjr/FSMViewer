@@ -4,7 +4,8 @@
  * @author Frank, Rudy, Nate
  */
 
-package edu.union.fsm;
+package edu.union.fsm.storage;
+
 
 import java.io.*;
 
@@ -26,7 +27,7 @@ public class State implements Serializable {
      * @param   id id of state
      * @param   name name of state
      */
-    public State(int id, String name) {
+    protected State(int id, String name) {
         this.id = id;
         this.name = name;
         this.setType(2);
@@ -41,7 +42,7 @@ public class State implements Serializable {
      * @param   name name of state
      * @param   type type of state
      */
-    public State(int id, String name, int type) {
+    protected State(int id, String name, int type) {
         this.id = id;
         this.name = name;
         this.setType(type);
@@ -51,7 +52,7 @@ public class State implements Serializable {
      * returns id of state
      * @return id of state
      */
-    public int getID() {
+    protected int getID() {
         return id;
     }
 
@@ -66,7 +67,7 @@ public class State implements Serializable {
     /**
      * toggles the type of state between all types
      */
-    public void toggleState() {
+    protected void toggleState() {
         if(start) {
             this.setType(1);
         } else if (accept) {
@@ -80,7 +81,7 @@ public class State implements Serializable {
      * renames the state
      * @param name the new name
      */
-    public void rename(String name) {
+    protected void rename(String name) {
         this.name = name;
     }
 
@@ -88,7 +89,7 @@ public class State implements Serializable {
      * sets the type of the state
      * @param type the type int to set
      */
-    public void setType(int type) {
+    protected void setType(int type) {
         if(type == 0) {
             this.start = true;
             this.accept = false;

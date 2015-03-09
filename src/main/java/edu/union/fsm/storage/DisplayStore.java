@@ -1,4 +1,4 @@
-package edu.union.fsm;
+package edu.union.fsm.storage;
 
 import java.util.*;
 import java.io.*;

@@ -7,6 +7,8 @@
 
 package edu.union.fsm;
 
+import edu.union.fsm.storage.*;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.*;
@@ -29,7 +31,7 @@ public class SwingDisplay extends JFrame implements InformationStoreListener{
   private JButton loadBinButton = new JButton("Load");
   private JButton savePNGButton = new JButton("Save Image (PNG)");
 
-  private InformationStore model;
+  private InformationStore informationStore;
   private DrawingComponent drawingComponent;
 
 
@@ -38,9 +40,9 @@ public class SwingDisplay extends JFrame implements InformationStoreListener{
    *
    * @param model the model class
    */
-  SwingDisplay(InformationStore model) {
-    this.model = model;
-    drawingComponent = new DrawingComponent(model);
+  SwingDisplay(InformationStore informationStore) {
+    this.informationStore = informationStore;
+    drawingComponent = new DrawingComponent(informationStore);
 
     JPanel topPanel = new JPanel();
     JPanel middlePanel = new JPanel();

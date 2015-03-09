@@ -1,6 +1,7 @@
 package edu.union.fsm.tools;
 
 import edu.union.fsm.*;
+import edu.union.fsm.storage.*;
 
 public class DeleteTransitionTool extends Tool{
 

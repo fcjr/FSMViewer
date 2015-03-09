@@ -1,4 +1,4 @@
-package edu.union.fsm;
+package edu.union.fsm.storage;
 
 public class StoreException extends Exception{
       //Parameterless Constructor
