@@ -12,6 +12,11 @@ import java.io.*;
 
 public class State implements Serializable {
 
+    protected static final int START = 0;
+    protected static final int ACCEPT = 1;
+    protected static final int ALL = 2;
+    protected static final int NEITHER = 3;
+
     private int id;
     private int type;
     private String name;
@@ -19,7 +24,7 @@ public class State implements Serializable {
 
     //type 0 == start
     //type 1 == accept
-    //type 2 == both
+    //type 2 == all
     //other == neither
 
     /**
@@ -30,7 +35,7 @@ public class State implements Serializable {
     protected State(int id, String name) {
         this.id = id;
         this.name = name;
-        this.setType(2);
+        this.setType(NEITHER);
     }
 
     /**
@@ -69,14 +74,14 @@ public class State implements Serializable {
      * toggles the type of state between all types
      */
     protected void toggleState() {
-        if(type == 0) {
-            this.setType(1);
-        } else if (type == 1) {
-            this.setType(2);
-        } else if (type == 2) {
-            this.setType(3);
+        if(type == START) {
+            this.setType(ACCEPT);
+        } else if (type == ACCEPT) {
+            this.setType(ALL);
+        } else if (type == ALL) {
+            this.setType(NEITHER);
         } else {
-            this.setType(0);
+            this.setType(START);
         }
     }
 
@@ -101,7 +106,7 @@ public class State implements Serializable {
      * @return true iff the state is a start state
      */
     public boolean isStart(){
-        if(type == 0 || type == 2) {
+        if(type == START || type == ALL) {
             return true;
         } else {
             return false;
@@ -113,7 +118,7 @@ public class State implements Serializable {
      * @return true iff the state is an accept state
      */
     public boolean isAccept(){
-        if(type == 1 || type == 2) {
+        if(type == ACCEPT || type == ALL) {
             return true;
         } else {
             return false;
