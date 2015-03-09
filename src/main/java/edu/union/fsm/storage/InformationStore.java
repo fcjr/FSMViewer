@@ -10,6 +10,7 @@ package edu.union.fsm.storage;
 
 import java.util.*;
 import java.io.*;
+import java.util.LinkedList;
 
 
 public class InformationStore implements Serializable  {
@@ -257,12 +258,12 @@ public class InformationStore implements Serializable  {
      * @param id id of the starting node
      * @return an iterable of the ids of next states as Integer Objects.
      */
-    public ArrayList<Integer> getNextStates(String name, int id) throws StoreException {
-        ArrayList<Integer> toReturn = new ArrayList<Integer>();
+    public LinkedList<Integer> getNextStates(String name, int id) throws StoreException {
+        LinkedList<Integer> toReturn = new LinkedList<Integer>();
         ArrayList<Transition> trans = this.getTransitions();
         for(Transition current: trans){
-            if(current.getToID() == id && current.containsCondition(name)) {
-                Integer toAdd = new Integer(current.getFromID());
+            if(current.getFromID() == id && current.containsCondition(name)) {
+                Integer toAdd = new Integer(current.getToID());
                 toReturn.add(toAdd);
             }
         }
@@ -325,6 +326,15 @@ public class InformationStore implements Serializable  {
      */
     public State getState(int row, int column) {
         int id = displayStore.getState(row,column);
+        return fsmStore.getState(id);
+    }
+
+    /**
+     * returns the state of the given id
+     * @param id the id in question
+     * @return  the state object
+     */
+    public State getState(int id){
         return fsmStore.getState(id);
     }
 
