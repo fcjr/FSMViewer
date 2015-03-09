@@ -13,13 +13,13 @@ import java.io.*;
 public class State implements Serializable {
 
     private int id;
+    private int type;
     private String name;
-    private boolean start;
-    private boolean accept;
 
 
     //type 0 == start
     //type 1 == accept
+    //type 2 == both
     //other == neither
 
     /**
@@ -37,6 +37,7 @@ public class State implements Serializable {
      * non-default constructor which can specify type
      * type 0 == start
      * type 1 == accept
+     * type 2 == both
      * other == neither
      * @param   id id of state
      * @param   name name of state
@@ -45,7 +46,7 @@ public class State implements Serializable {
     protected State(int id, String name, int type) {
         this.id = id;
         this.name = name;
-        this.setType(type);
+        this.type = type;
     }
 
     /**
@@ -68,10 +69,12 @@ public class State implements Serializable {
      * toggles the type of state between all types
      */
     protected void toggleState() {
-        if(start) {
+        if(type == 0) {
             this.setType(1);
-        } else if (accept) {
+        } else if (type == 1) {
             this.setType(2);
+        } else if (type == 2) {
+            this.setType(3);
         } else {
             this.setType(0);
         }
@@ -90,16 +93,7 @@ public class State implements Serializable {
      * @param type the type int to set
      */
     protected void setType(int type) {
-        if(type == 0) {
-            this.start = true;
-            this.accept = false;
-        } else if(type == 1) {
-            this.start = false;
-            this.accept = true;
-        } else {
-            this.start = false;
-            this.accept = false;
-        }
+        this.type = type;
     }
 
     /**
@@ -107,7 +101,11 @@ public class State implements Serializable {
      * @return true iff the state is a start state
      */
     public boolean isStart(){
-        return start;
+        if(type == 0 || type == 2) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -115,7 +113,11 @@ public class State implements Serializable {
      * @return true iff the state is an accept state
      */
     public boolean isAccept(){
-        return accept;
+        if(type == 1 || type == 2) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
