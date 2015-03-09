@@ -319,7 +319,7 @@ public class InformationStore implements Serializable  {
     }
 
     /**
-     * returns the state at the given row and column
+     * returns the state at the given row and column, returns -1 if doesn't contain the state.
      * @param   x column
      * @param   y row
      * @return  the state object
