@@ -94,7 +94,18 @@ public class SimulateButtonListener implements ActionListener{
                     if(accepts.isEmpty()){ //NO ACCEPT STATES HIGHLIGHTED.
                         swingDisplay.displayErrorMessage("Valid traversal, but ended on no accept states.");
                     } else{
-                        swingDisplay.displayErrorMessage("Success. valid accepted traversal.");
+                        String toPrint = "Valid Traversal.  Traversal was accepted at the following state(s): \n";
+                        LinkedList<String> acceptNames = new LinkedList<String>();
+                        for(Integer id: highlighted) {
+                            State current = informationStore.getState(id.intValue());
+                            if(current.isAccept()){
+                                acceptNames.add(current.getName());
+                            }
+                        }
+                        String acceptLabel = acceptNames.toString();
+                        acceptLabel = acceptLabel.replaceAll("[\\[\\]]","");
+                        toPrint += acceptLabel;
+                        swingDisplay.displayErrorMessage(toPrint);
                     }
                 }
             }
