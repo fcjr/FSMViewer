@@ -180,6 +180,20 @@ public class InformationStore implements Serializable  {
         if(displayStore.containsState(firstX,firstY)){
             int id = displayStore.getState(firstX,firstY);
             fsmStore.toggleStateType(id);
+
+            State toggled = fsmStore.getState(id);
+            if(toggled.isStart()) {
+                ArrayList<State> states = fsmStore.getStates();
+                for(State current: states) {
+                    if(current.isStart() && toggled != current) {
+                        if(current.isAccept()){
+                            current.setType(State.ACCEPT);
+                        } else{
+                            current.setType(State.NEITHER);
+                        }
+                    }
+                }
+            }
             notifyListeners();
         }
     }

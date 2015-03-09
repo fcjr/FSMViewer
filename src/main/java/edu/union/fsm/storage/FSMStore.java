@@ -266,4 +266,12 @@ class FSMStore implements Serializable{
      * @return number of transitions
      */
     public int numTransitions() {return Transitions.size();}
+
+    /**
+     * returns the list of states.
+     * @return the arraylist of state
+     */
+    protected ArrayList<State> getStates(){
+        return States;
+    }
 }

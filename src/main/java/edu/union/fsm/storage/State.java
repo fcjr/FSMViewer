@@ -36,6 +36,7 @@ public class State implements Serializable {
         this.id = id;
         this.name = name;
         this.setType(NEITHER);
+        this.highlighted = false;
     }
 
     /**
@@ -124,6 +125,10 @@ public class State implements Serializable {
             return false;
         }
     }
+
+    /**
+     *
+     */
 
 
 }
