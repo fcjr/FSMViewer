@@ -20,6 +20,7 @@ public class State implements Serializable {
     private int id;
     private int type;
     private String name;
+    private boolean highlighted;
 
 
     //type 0 == start
