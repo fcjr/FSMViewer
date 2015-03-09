@@ -30,6 +30,9 @@ public class SwingDisplay extends JFrame implements InformationStoreListener{
     private JButton saveBinButton = new JButton("Save");
     private JButton loadBinButton = new JButton("Load");
     private JButton savePNGButton = new JButton("Save Image (PNG)");
+    private JLabel simulationLabel = new JLabel("|  Simulation:");
+    private JTextField simulationField = new JTextField(10);
+    private JButton simulationButton = new JButton("Start");
 
     private InformationStore informationStore;
     private DrawingComponent drawingComponent;
@@ -69,6 +72,9 @@ public class SwingDisplay extends JFrame implements InformationStoreListener{
         bottomPanel.add(saveBinButton);
         bottomPanel.add(loadBinButton);
         bottomPanel.add(savePNGButton);
+        bottomPanel.add(simulationLabel);
+        bottomPanel.add(simulationField);
+        bottomPanel.add(simulationButton);
 
         this.add(topPanel,BorderLayout.NORTH);
         this.add(middlePanel,BorderLayout.CENTER);
@@ -106,6 +112,30 @@ public class SwingDisplay extends JFrame implements InformationStoreListener{
     */
     public void clearName() {
         nameField.setText("");
+    }
+
+    /**
+    * returns the string in the simulation field
+    * @return user inputed string.
+    */
+    public String getSimulation(){
+
+        return simulationField.getText();
+
+    }
+
+    /**
+    * clears simulation Field.
+    */
+    public void clearSimulation() {
+        simulationField.setText("");
+    }
+
+    /**
+    * updates the label of the simulationButton
+    */
+    public void updateSimulationButton(String newLabel) {
+        simulationButton.setText(newLabel);
     }
 
     /**
@@ -147,6 +177,9 @@ public class SwingDisplay extends JFrame implements InformationStoreListener{
     }
     public void addSavePNGButtonListener(ActionListener l) {
         savePNGButton.addActionListener(l);
+    }
+    public void addSimulationButtonListener(ActionListener l) {
+        simulationButton.addActionListener(l);
     }
 
 
