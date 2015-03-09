@@ -199,6 +199,81 @@ public class InformationStore implements Serializable  {
     }
 
     /**
+     * returns the id of the start state
+     */
+    public int getStart() throws StoreException {
+        ArrayList<State> states = fsmStore.getStates();
+        for(State current: states) {
+            if(current.isStart()) {
+                return current.getID();
+            }
+        }
+        throw new StoreException("The FSM does not contain a starting state.");
+    }
+
+    /**
+     * highlights the requested state.
+     * @param id the id of the state to highlight
+     */
+    public void highlight(int id) throws StoreException {
+        try{
+            State toHighlight = fsmStore.getState(id);
+            toHighlight.highlight();
+            notifyListeners();
+        } catch (Exception ex){
+            throw new StoreException("Unable to highlight state.");
+        }
+    }
+
+    /**
+     * unhighlights the requested state.
+     * @param id the id of the state to highlight
+     */
+    public void unhighlight(int id) throws StoreException {
+        try{
+            State toHighlight = fsmStore.getState(id);
+            toHighlight.unhighlight();
+            notifyListeners();
+        } catch (Exception ex){
+            throw new StoreException("Unable to unhighlight state.");
+        }
+    }
+
+    /**
+     * unhighlights all states.
+     * @param id the id of the state to highlight
+     */
+    public void clearHighlights() throws StoreException {
+        ArrayList<State> states = fsmStore.getStates();
+        for(State current: states) {
+            current.unhighlight();
+        }
+        notifyListeners();
+    }
+
+    /**
+     * returns an iterable of the ids of next states as Integer Objects.
+     * @param name name of the transition condition to follow
+     * @param id id of the starting node
+     * @return an iterable of the ids of next states as Integer Objects.
+     */
+    public ArrayList<Integer> getNextStates(String name, int id) throws StoreException {
+        ArrayList<Integer> toReturn = new ArrayList<Integer>();
+        ArrayList<Transition> trans = this.getTransitions();
+        for(Transition current: trans){
+            if(current.getToID() == id && current.containsCondition(name)) {
+                Integer toAdd = new Integer(current.getFromID());
+                toReturn.add(toAdd);
+            }
+        }
+        if(!toReturn.isEmpty()) {
+            return toReturn;
+        } else {
+            throw new StoreException("No valid transitions to follow.");
+        }
+    }
+
+    /**
      * return number of rows
      * @return # of rows
      */
@@ -253,6 +328,10 @@ public class InformationStore implements Serializable  {
         return fsmStore.getState(id);
     }
 
+    /**
+     * returns an arraylist of the transition objects
+     * @return an arraylist of the transition objects
+     */
     public ArrayList<Transition> getTransitions() {
         return fsmStore.getTransitions();
     }

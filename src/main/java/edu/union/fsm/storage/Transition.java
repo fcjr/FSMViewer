@@ -68,6 +68,17 @@ public class Transition implements Serializable {
     }
 
     /**
+     * @return true iff contains this condition.
+     */
+    protected boolean containsCondition(String name) {
+        if(this.conditions.contains(name)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * returns the number of conditions in the transition
      * @return num of conditions
      */

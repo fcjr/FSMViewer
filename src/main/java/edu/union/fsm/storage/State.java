@@ -60,7 +60,7 @@ public class State implements Serializable {
      * returns id of state
      * @return id of state
      */
-    protected int getID() {
+    public int getID() {
         return id;
     }
 
@@ -128,8 +128,24 @@ public class State implements Serializable {
     }
 
     /**
-     *
+     * returns true iff the state is highlighted
+     * @return true iff the state is highlighted
      */
+    public boolean isHighlighted() {
+        return highlighted;
+    }
 
+    /**
+     *	highlights the state
+     */
+     protected void highlight(){
+         highlighted = true;
+     }
 
+     /**
+      * unhighlights the state
+      */
+      protected void unhighlight(){
+          highlighted = false;
+      }
 }
