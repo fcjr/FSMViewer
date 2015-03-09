@@ -91,7 +91,8 @@ public class DrawingComponent extends JComponent {
                     String name = toDraw.getName();
                     boolean isStart = toDraw.isStart();
                     boolean isAccept = toDraw.isAccept();
-                    paintState(g,name,isStart,isAccept,row,column);
+                    boolean isHighlighted = toDraw.isHighlighted();
+                    paintState(g,name,isStart,isAccept,isHighlighted,row,column);
                 }
             }
         }
@@ -244,10 +245,14 @@ public class DrawingComponent extends JComponent {
      * @param  row the row to draw it in
      * @param  column the column to draw it in
      */
-    private void paintState(Graphics g, String name, boolean isStart, boolean isAccept,
+    private void paintState(Graphics g, String name, boolean isStart, boolean isAccept, boolean isHighlighted,
               int row, int column)
     {
-        g.setColor(Color.BLACK);
+        if(isHighlighted){
+            g.setColor(Color.RED);
+        } else {
+            g.setColor(Color.BLACK);
+        }
 
        //draw initial circle
        g.drawOval(row*CELL_SIZE, column*CELL_SIZE, CELL_SIZE, CELL_SIZE);
