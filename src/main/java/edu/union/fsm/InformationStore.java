@@ -151,4 +151,21 @@ public class InformationStore implements Serializable  {
         }
     }
 
+    public int getRows() {
+        return displayStore.getRows();
+    }
+    public int getColumns() {
+        return displayStore.getColumns();
+    }
+    public boolean containsState(int row, int column) {
+        return displayStore.containsState(row,column);
+    }
+    public State getState(int row, int column) {
+        int id = displayStore.getState(row,column);
+        return fsmStore.getState(id);
+    }
+    public ArrayList<Transition> getTransitions() {
+        return fsmStore.getTransitions();
+    }
+
 }

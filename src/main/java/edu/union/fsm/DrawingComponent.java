@@ -1,5 +1,7 @@
 package edu.union.fsm;
 
+//import edu.union.fsm.storage.*;
+
 import java.awt.geom.Rectangle2D;
 import java.awt.*;
 import java.awt.event.*;
@@ -81,14 +83,11 @@ public class DrawingComponent extends JComponent {
      * @param g magical graphics object
      */
     private void paintStates(Graphics g){
-        DisplayStore displayStore = informationStore.displayStore;
-        FSMStore fsmStore = informationStore.fsmStore;
 
-        for(int row = 0; row < displayStore.getRows(); row++){
-            for(int column = 0; column < displayStore.getColumns(); column++) {
-                if(displayStore.containsState(row,column)){
-                    int id = displayStore.getState(row,column);
-                    State toDraw = fsmStore.getState(id);
+        for(int row = 0; row < informationStore.getRows(); row++){
+            for(int column = 0; column < informationStore.getColumns(); column++) {
+                if(informationStore.containsState(row,column)){
+                    State toDraw = informationStore.getState(row,column);
                     String name = toDraw.getName();
                     boolean isStart = toDraw.isStart();
                     boolean isAccept = toDraw.isAccept();
@@ -104,7 +103,7 @@ public class DrawingComponent extends JComponent {
      * @param g magical graphics object
      */
     private void paintTransitions(Graphics g){
-        ArrayList<Transition> transitions = informationStore.fsmStore.getTransitions();
+        ArrayList<Transition> transitions = informationStore.getTransitions();
         for(Transition currentTrans: transitions){
             String name = currentTrans.getLabel();
             int fromID = currentTrans.getFromID();
