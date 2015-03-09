@@ -109,6 +109,7 @@ public class Controller implements MouseListener {
         this.swingDisplay.addSaveBinButtonListener(new SaveBinButtonListener(informationStore, swingDisplay));
         this.swingDisplay.addLoadBinButtonListener(new LoadBinButtonListener(informationStore, swingDisplay));
         this.swingDisplay.addSavePNGButtonListener(new SavePNGButtonListener(swingDisplay));
+        this.swingDisplay.addSimulationButtonListener(new SimulateButtonListener(informationStore, swingDisplay));
     }
 
     /**
