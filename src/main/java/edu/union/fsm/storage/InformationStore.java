@@ -36,9 +36,6 @@ public class InformationStore implements Serializable  {
     */
     public void addListener(InformationStoreListener l)
     {
-        if (listeners == null) {
-            listeners = new Vector();
-        }
         listeners.add(l);
     }
 
@@ -75,18 +72,22 @@ public class InformationStore implements Serializable  {
 
     }
 
-
-    public void load(InformationStore modelToLoad, InformationStoreListener l) {
-        this.fsmStore = modelToLoad.fsmStore;
-        this.displayStore = modelToLoad.displayStore;
-        this.addListener(l);
+    /**
+     * Loads information from a different information store into this one.
+     * @param  toLoad the informationStore to load
+     */
+    public void load(InformationStore toLoad) {
+        this.fsmStore = toLoad.fsmStore;
+        this.displayStore = toLoad.displayStore;
         notifyListeners();
     }
 
-    public void cleanForWriting() {
-        this.clearListeners();
-    }
-
+    /**
+     * Adds the given state if there is not one which exists there already.
+     * @param  name name of the state
+     * @param  firstX the x coord of the state to add
+     * @param  firstY the y coord of the state to add
+     */
     public void addState(String name, int firstX,int firstY) throws StoreException {
         if (!displayStore.containsState(firstX,firstY)){
             int id = fsmStore.addState(name);
@@ -97,6 +98,14 @@ public class InformationStore implements Serializable  {
         notifyListeners();
     }
 
+    /**
+     * Adds the given transition if there is not one which exists there already.
+     * @param  name name of the state
+     * @param  firstX the 1st x coord of the transition to add
+     * @param  firstY the 1st y coord of the transition to add
+     * @param  secondX the 2nd x coord of the transition to add
+     * @param  secondY the 2nd y coord of the transition to add
+     */
     public void addTransition(String name, int firstX, int firstY, int secondX, int secondY) throws StoreException {
         if(displayStore.containsState(firstX,firstY) &&
         displayStore.containsState(secondX,secondY)) {
@@ -109,6 +118,11 @@ public class InformationStore implements Serializable  {
         }
     }
 
+    /**
+     * removes the given state
+     * @param  firstX x coord of the state to remove
+     * @param  firstY y coord of the state to remove
+     */
     public void removeState(int firstX,int firstY) throws StoreException{
         if(displayStore.containsState(firstX,firstY)){
             int id = displayStore.removeState(firstX,firstY);
@@ -117,6 +131,13 @@ public class InformationStore implements Serializable  {
         }
     }
 
+    /**
+     * Removes the given transition
+     * @param  firstX the 1st x coord of the transition to remove
+     * @param  firstY the 1st y coord of the transition to remove
+     * @param  secondX the 2nd x coord of the transition to remove
+     * @param  secondY the 2nd y coord of the transition to remove
+     */
     public void removeTransition(int firstX, int firstY, int secondX, int secondY) throws StoreException{
         if(displayStore.containsState(firstX,firstY) &&
         displayStore.containsState(secondX,secondY)) {
@@ -133,6 +154,13 @@ public class InformationStore implements Serializable  {
         }
     }
 
+    /**
+     * Moves a state from one location to another.
+     * @param  firstX original x coord
+     * @param  firstY original y coord
+     * @param  secondX new x coord
+     * @param  secondY new y coord
+     */
     public void moveState(int firstX, int firstY, int secondX, int secondY) throws StoreException {
         if(displayStore.containsState(firstX,firstY) &&
         !displayStore.containsState(secondX,secondY)) {
@@ -143,6 +171,11 @@ public class InformationStore implements Serializable  {
         }
     }
 
+    /**
+     * Toggles the type of the given state
+     * @param  firstX the x coord of the state to toggle
+     * @param  firstY the y coord of the state to toggle
+     */
     public void toggleStateType(int firstX, int firstY) throws StoreException {
         if(displayStore.containsState(firstX,firstY)){
             int id = displayStore.getState(firstX,firstY);
@@ -151,25 +184,61 @@ public class InformationStore implements Serializable  {
         }
     }
 
+    /**
+     * return number of rows
+     * @return # of rows
+     */
     public int getRows() {
         return displayStore.getRows();
     }
-    public int getRow(int id){
+
+    /**
+     * returns the row of a given id
+     * @param  id id to check
+     * @return    the row number
+     */
+    public int getRow(int id) {
         return displayStore.getRow(id);
     }
+
+    /**
+     * returns number of columns
+     * @return # of columns
+     */
     public int getColumns() {
         return displayStore.getColumns();
     }
-    public int getColumn(int id){
+
+    /**
+     * returns the column of a given id
+     * @param  id id to check
+     * @return    the column number
+     */
+    public int getColumn(int id) {
         return displayStore.getColumn(id);
     }
+
+    /**
+     * returns true iff the state exists.
+     * @param   x column
+     * @param   y row
+     * @return  true iff the state exists.
+     */
     public boolean containsState(int row, int column) {
         return displayStore.containsState(row,column);
     }
+
+    /**
+     * returns the state at the given row and column
+     * @param   x column
+     * @param   y row
+     * @return  the state object
+     */
     public State getState(int row, int column) {
         int id = displayStore.getState(row,column);
         return fsmStore.getState(id);
     }
+
     public ArrayList<Transition> getTransitions() {
         return fsmStore.getTransitions();
     }
