@@ -9,7 +9,7 @@ import java.io.*;
  *
  * @author Frankie,rudy,nate
  */
-public class FSMStore implements Serializable{
+class FSMStore implements Serializable{
 
     private ArrayList<State> States;
     private ArrayList<Transition> Transitions;

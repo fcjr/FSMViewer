@@ -6,7 +6,7 @@ import java.io.*;
 /**
  * Class for storing the position information.
  */
-public class DisplayStore implements Serializable {
+class DisplayStore implements Serializable {
 
     int row;
     int column;

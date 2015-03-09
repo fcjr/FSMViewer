@@ -5,7 +5,7 @@ import java.io.*;
 /**
  * Display Node for storing information in the DisplayStore.
  */
-public class DisplayNode implements Serializable {
+class DisplayNode implements Serializable {
 
 
 

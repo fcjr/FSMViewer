@@ -51,7 +51,7 @@ public class Transition implements Serializable {
     public int getToID() {
         return toID;
     }
-    public void addCondition(String name) {
+    protected void addCondition(String name) {
         if(!this.conditions.contains(name)) {
             this.conditions.add(name);
         }
