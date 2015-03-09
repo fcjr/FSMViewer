@@ -16,8 +16,8 @@ public class InformationStore implements Serializable  {
 
     private static final int DIMENSION = 8;
 
-    public FSMStore fsmStore;
-    public DisplayStore displayStore;
+    private FSMStore fsmStore;
+    private DisplayStore displayStore;
     private transient Vector listeners;
 
     /**
@@ -154,8 +154,14 @@ public class InformationStore implements Serializable  {
     public int getRows() {
         return displayStore.getRows();
     }
+    public int getRow(int id){
+        return displayStore.getRow(id);
+    }
     public int getColumns() {
         return displayStore.getColumns();
+    }
+    public int getColumn(int id){
+        return displayStore.getColumn(id);
     }
     public boolean containsState(int row, int column) {
         return displayStore.containsState(row,column);

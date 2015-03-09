@@ -122,10 +122,10 @@ public class DrawingComponent extends JComponent {
      * @param  toID id of the toState
      */
     private void paintTransition(Graphics g, String name, int fromID, int toID){
-        int fromRow = informationStore.displayStore.getRow(fromID);
-        int fromColumn = informationStore.displayStore.getColumn(fromID);
-        int toRow = informationStore.displayStore.getRow(toID);
-        int toColumn = informationStore.displayStore.getColumn(toID);
+        int fromRow = informationStore.getRow(fromID);
+        int fromColumn = informationStore.getColumn(fromID);
+        int toRow = informationStore.getRow(toID);
+        int toColumn = informationStore.getColumn(toID);
         int offset = CELL_SIZE/2;
         int x1 = fromRow * CELL_SIZE + offset;
         int y1 = fromColumn * CELL_SIZE + offset;
