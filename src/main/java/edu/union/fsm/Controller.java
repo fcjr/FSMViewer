@@ -9,6 +9,7 @@ package edu.union.fsm;
 
 import edu.union.fsm.tools.*;
 import edu.union.fsm.saving.*;
+import edu.union.fsm.actionlisteners.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +20,7 @@ import java.awt.event.MouseListener;
 
 public class Controller implements MouseListener {
 
-    private static final boolean debug = false;
+    private final boolean DEBUG = false;
 
     private SwingDisplay swingDisplay;
     private InformationStore informationStore;
@@ -39,6 +40,7 @@ public class Controller implements MouseListener {
         //Adds all of the control listeners to their respected Jpane
         populateDisplayListeners();
 
+        //Make this a mouse listener for the display
         this.swingDisplay.addMouseListener(this);
     }
 
@@ -103,9 +105,9 @@ public class Controller implements MouseListener {
         this.swingDisplay.addDeleteTransitionButtonListener(setter);
 
         //NON TOOL LISTENERS
-        this.swingDisplay.addSaveBinButtonListener(new SaveBinButtonListener());
-        this.swingDisplay.addLoadBinButtonListener(new LoadBinButtonListener());
-        this.swingDisplay.addSavePNGButtonListener(new SavePNGButtonListener());
+        this.swingDisplay.addSaveBinButtonListener(new SaveBinButtonListener(informationStore, swingDisplay));
+        this.swingDisplay.addLoadBinButtonListener(new LoadBinButtonListener(informationStore, swingDisplay));
+        this.swingDisplay.addSavePNGButtonListener(new SavePNGButtonListener(swingDisplay));
     }
 
     /**
@@ -115,7 +117,7 @@ public class Controller implements MouseListener {
         try {
             currentTool.execute();
         } catch (ToolException ex) {
-            if(debug) {
+            if(DEBUG) {
                 System.out.println(ex);
                 ex.printStackTrace();
             }
@@ -132,76 +134,12 @@ public class Controller implements MouseListener {
         try {
             currentTool = toolToSet;
         } catch (Exception ex) {
-            if(debug) {
+            if(DEBUG) {
                 System.out.println(ex);
                 ex.printStackTrace();
             }
             swingDisplay.displayErrorMessage("Error Selecting Tool. Please Try again.");
         }
     }
-
-
-    //BUTTON LISTENERS all these do are toggle the current tool.
-    private class SaveBinButtonListener implements ActionListener{
-
-        public void actionPerformed(ActionEvent e) {
-
-            try{
-
-                SaveBin saver = new SaveBin(informationStore, swingDisplay);
-                saver.saveFile();
-                informationStore.addListener(swingDisplay);
-            }
-
-            catch(Exception ex){
-
-                ex.printStackTrace();
-                System.out.println(ex);
-
-                swingDisplay.displayErrorMessage("Error Selecting Tool");
-            }
-        }
-    }
-
-    private class LoadBinButtonListener implements ActionListener{
-
-        public void actionPerformed(ActionEvent e) {
-
-            try {
-
-                LoadBin loader = new LoadBin(swingDisplay);
-                Object toLoad = loader.loadFile();
-                InformationStore loadInformationStore = (InformationStore) toLoad;
-                informationStore.load(loadInformationStore, swingDisplay);
-
-            } catch(NullPointerException ex) {
-                //DO NOTHING
-            } catch(Exception ex){
-
-                System.out.println(ex);
-                ex.printStackTrace();
-
-                swingDisplay.displayErrorMessage("Error Selecting Tool");
-            }
-        }
-    }
-
-    private class SavePNGButtonListener implements ActionListener{
-
-        public void actionPerformed(ActionEvent e) {
-
-            try {
-                SavePNG saver = new SavePNG(swingDisplay.getMainDisplayComponent(), swingDisplay);
-                saver.saveFile();
-            } catch(Exception ex){
-
-                System.out.println(ex);
-                ex.printStackTrace();
-
-                swingDisplay.displayErrorMessage("Error Selecting Tool");
-            }
-        }
-    }
-
 
 }
