@@ -107,10 +107,11 @@ public class Controller implements MouseListener {
         this.swingDisplay.addDeleteTransitionButtonListener(setter);
 
         //NON TOOL LISTENERS
+        SimulateButtonListener simulator = new SimulateButtonListener(informationStore, swingDisplay);
+        this.swingDisplay.addSimulationButtonListener(simulator);
         this.swingDisplay.addSaveBinButtonListener(new SaveBinButtonListener(informationStore, swingDisplay));
-        this.swingDisplay.addLoadBinButtonListener(new LoadBinButtonListener(informationStore, swingDisplay));
+        this.swingDisplay.addLoadBinButtonListener(new LoadBinButtonListener(informationStore, swingDisplay, simulator));
         this.swingDisplay.addSavePNGButtonListener(new SavePNGButtonListener(swingDisplay));
-        this.swingDisplay.addSimulationButtonListener(new SimulateButtonListener(informationStore, swingDisplay));
     }
 
     /**

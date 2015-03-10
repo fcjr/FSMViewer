@@ -132,4 +132,13 @@ public class SimulateButtonListener implements ActionListener{
             throw new Exception("Invalid Simulation Input. Please check your input.");
         }
     }
+
+    public void clearSimulation(){
+        try {
+            swingDisplay.clearSimulation();
+            swingDisplay.updateSimulationButton("Start");
+            mode = START;
+            informationStore.clearHighlights();
+        } catch (Exception ex) {}
+    }
 }
