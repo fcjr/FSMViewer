@@ -61,6 +61,8 @@ public class SavePNG {
                 componentToSave.printAll(graphics);
 
                 ImageIO.write(image, "png", file);
+                
+                graphics.dispose();
 
             }
             else if (returnVal == JFileChooser.CANCEL_OPTION) {
