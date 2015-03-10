@@ -18,6 +18,7 @@ public class SimulateButtonListener implements ActionListener{
     private LinkedList<Integer> highlighted;
     private InformationStore informationStore;
     private SwingDisplay swingDisplay;
+    private Debugger debugger;
 
     /**
     * Tool which adds a state to the InformationStore.
@@ -29,6 +30,7 @@ public class SimulateButtonListener implements ActionListener{
         mode = START;
         queue = null;
         highlighted = null;
+        debugger = Debugger.getInstance();
     }
 
     /**
@@ -111,6 +113,7 @@ public class SimulateButtonListener implements ActionListener{
             }
 
         } catch (Exception ex) {
+            debugger.stackDebug(ex);
             swingDisplay.displayErrorMessage(ex.getMessage());
         }
     }
