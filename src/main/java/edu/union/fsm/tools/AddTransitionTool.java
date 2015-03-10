@@ -19,6 +19,9 @@ public class AddTransitionTool extends Tool{
         int secondX = info.getSecondX();
         int secondY = info.getSecondY();
         String name = swingDisplay.getName();
+        if(name.contains(",")){
+            throw new ToolException("Names cannot contain commas.  Please try again.");
+        }
 
         try{
             informationStore.addTransition(name, firstX, firstY, secondX, secondY);
