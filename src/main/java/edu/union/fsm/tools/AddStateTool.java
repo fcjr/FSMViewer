@@ -9,8 +9,8 @@ public class AddStateTool extends Tool{
      * Tool which adds a state to the InformationStore.
      * @param  info ToolInfoHolder wrapper for needed information
      */
-    public AddStateTool(ToolInfoHolder info){
-        super(info);
+    public AddStateTool(){
+        super();
     }
 
     /**

@@ -6,8 +6,8 @@ import edu.union.fsm.storage.*;
 public class DeleteStateTool extends Tool{
 
 
-    public DeleteStateTool(ToolInfoHolder info){
-        super(info);
+    public DeleteStateTool(){
+        super();
     }
 
     public void execute() throws ToolException {

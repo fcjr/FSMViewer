@@ -6,8 +6,8 @@ import edu.union.fsm.storage.*;
 public class AddTransitionTool extends Tool{
 
 
-    public AddTransitionTool(ToolInfoHolder info){
-        super(info);
+    public AddTransitionTool(){
+        super();
         }
 
     public void execute() throws ToolException{

@@ -4,8 +4,8 @@ import edu.union.fsm.*;
 
 public class DefaultTool extends Tool{
 
-    public DefaultTool(ToolInfoHolder info){
-        super(info);
+    public DefaultTool(){
+        super();
     }
 
     public void execute() throws ToolException {
