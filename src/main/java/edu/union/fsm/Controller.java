@@ -21,21 +21,22 @@ import java.awt.event.MouseListener;
 
 public class Controller implements MouseListener {
 
-    private final boolean DEBUG = false;
-
     private SwingDisplay swingDisplay;
     private InformationStore informationStore;
     private Tool currentTool;
     private ToolInfoHolder toolInfoHolder;
+    private Debugger debugger;
 
     public Controller(SwingDisplay swingDisplay, InformationStore informationStore) {
         this.swingDisplay = swingDisplay;
         this.informationStore = informationStore;
+        this.debugger = Debugger.getInstance();
         informationStore.addListener(swingDisplay);
 
         //Setup tool info and default tool.
-        toolInfoHolder = new ToolInfoHolder(informationStore, swingDisplay);
-        currentTool = new DefaultTool(toolInfoHolder);
+        toolInfoHolder = ToolInfoHolder.getInstance();
+        toolInfoHolder.init(informationStore, swingDisplay);
+        currentTool = new DefaultTool();
 
 
         //Adds all of the control listeners to their respected Jpane
@@ -76,40 +77,41 @@ public class Controller implements MouseListener {
     private void populateDisplayListeners() {
 
         //Add State Button
-        Tool tool = new AddStateTool(toolInfoHolder);
+        Tool tool = new AddStateTool();
         ToolSetter setter = new ToolSetter(tool, this);
         this.swingDisplay.addAddStateButtonListener(setter);
 
         //Delete State Button
-        tool = new DeleteStateTool(toolInfoHolder);
+        tool = new DeleteStateTool();
         setter = new ToolSetter(tool, this);
         this.swingDisplay.addDeleteStateButtonListener(setter);
 
         //Move State Button
-        tool = new MoveStateTool(toolInfoHolder);
+        tool = new MoveStateTool();
         setter = new ToolSetter(tool, this);
         this.swingDisplay.addMoveStateButtonListener(setter);
 
         //Toggle Type Button
-        tool = new ToggleTypeTool(toolInfoHolder);
+        tool = new ToggleTypeTool();
         setter = new ToolSetter(tool, this);
         this.swingDisplay.addToggleTypeButtonListener(setter);
 
         //Add Transition Button
-        tool = new AddTransitionTool(toolInfoHolder);
+        tool = new AddTransitionTool();
         setter = new ToolSetter(tool, this);
         this.swingDisplay.addAddTransitionButtonListener(setter);
 
         //Delete Transition Button
-        tool = new DeleteTransitionTool(toolInfoHolder);
+        tool = new DeleteTransitionTool();
         setter = new ToolSetter(tool, this);
         this.swingDisplay.addDeleteTransitionButtonListener(setter);
 
         //NON TOOL LISTENERS
+        SimulateButtonListener simulator = new SimulateButtonListener(informationStore, swingDisplay);
+        this.swingDisplay.addSimulationButtonListener(simulator);
         this.swingDisplay.addSaveBinButtonListener(new SaveBinButtonListener(informationStore, swingDisplay));
-        this.swingDisplay.addLoadBinButtonListener(new LoadBinButtonListener(informationStore, swingDisplay));
+        this.swingDisplay.addLoadBinButtonListener(new LoadBinButtonListener(informationStore, swingDisplay, simulator));
         this.swingDisplay.addSavePNGButtonListener(new SavePNGButtonListener(swingDisplay));
-        this.swingDisplay.addSimulationButtonListener(new SimulateButtonListener(informationStore, swingDisplay));
     }
 
     /**
@@ -119,10 +121,7 @@ public class Controller implements MouseListener {
         try {
             currentTool.execute();
         } catch (ToolException ex) {
-            if(DEBUG) {
-                System.out.println(ex);
-                ex.printStackTrace();
-            }
+            debugger.stackDebug(ex);
             String toPrint = ex.getMessage();
             swingDisplay.displayErrorMessage(toPrint);
         }
@@ -136,10 +135,7 @@ public class Controller implements MouseListener {
         try {
             currentTool = toolToSet;
         } catch (Exception ex) {
-            if(DEBUG) {
-                System.out.println(ex);
-                ex.printStackTrace();
-            }
+            debugger.stackDebug(ex);
             swingDisplay.displayErrorMessage("Error Selecting Tool. Please Try again.");
         }
     }

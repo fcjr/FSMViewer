@@ -5,8 +5,8 @@ import edu.union.fsm.storage.*;
 
 public class ToggleTypeTool extends Tool{
 
-    public ToggleTypeTool(ToolInfoHolder info){
-        super(info);
+    public ToggleTypeTool(){
+        super();
     }
 
     public void execute() throws ToolException{

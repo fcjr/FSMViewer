@@ -5,25 +5,39 @@ import edu.union.fsm.storage.*;
 
 public class ToolInfoHolder {
 
-    InformationStore model;
+    private static ToolInfoHolder instance = null;
+
+    InformationStore informationStore;
     SwingDisplay swingDisplay;
     int firstX;
     int firstY;
     int secondX;
     int secondY;
 
-    public ToolInfoHolder(InformationStore model, SwingDisplay swingDisplay) {
-        this.model = model;
-        this.swingDisplay = swingDisplay;
+    private ToolInfoHolder() {
+        this.informationStore = null;
+        this.swingDisplay = null;
         firstX = 0;
         firstY = 0;
         secondX = 0;
         secondY = 0;
     }
 
+    /**
+     * returns the singleton debugger object. creates and returns it if
+     * it has yet to be made.
+     * @return the singleton debugger.
+     */
+    public static synchronized ToolInfoHolder getInstance() {
+        if (instance == null) {
+            instance = new ToolInfoHolder();
+        }
+        return instance;
+    }
+
     //GETTERS
     public InformationStore getInformationStore() {
-        return model;
+        return informationStore;
     }
     public SwingDisplay getSwingDisplay() {
         return swingDisplay;
@@ -42,6 +56,10 @@ public class ToolInfoHolder {
     }
 
     //SETTERS
+    public void init(InformationStore informationStore, SwingDisplay swingDisplay) {
+        this.informationStore = informationStore;
+        this.swingDisplay = swingDisplay;
+    }
     public void setFirstX(int firstX) {
         this.firstX = firstX;
     }

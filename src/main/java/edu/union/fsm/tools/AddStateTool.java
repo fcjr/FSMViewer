@@ -9,8 +9,8 @@ public class AddStateTool extends Tool{
      * Tool which adds a state to the InformationStore.
      * @param  info ToolInfoHolder wrapper for needed information
      */
-    public AddStateTool(ToolInfoHolder info){
-        super(info);
+    public AddStateTool(){
+        super();
     }
 
     /**
@@ -23,6 +23,9 @@ public class AddStateTool extends Tool{
         int firstX = info.getFirstX();
         int firstY = info.getFirstY();
         String name = swingDisplay.getName();
+        if(name.contains(",")){
+            throw new ToolException("Names cannot contain commas.  Please try again.");
+        }
 
         try{
             informationStore.addState(name,firstX,firstY);

@@ -10,7 +10,8 @@ import edu.union.fsm.tests.*;
 ({
     //FSMStoreTests.class,
     //DisplayStoreTests.class,
-    InformationStoreTests.class
+    InformationStoreTests.class,
+    InformationStoreMockTests.class
 })
 public class FSMSuite
 { // no implementation needed; above annotations do the work.

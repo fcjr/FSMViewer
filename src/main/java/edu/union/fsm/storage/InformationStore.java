@@ -1,5 +1,5 @@
 /**
-* InformationStore.  Stores fsmStore and displayStore.
+* InformationStore Inferface.  Stores fsmStore and displayStore.
 *
 * @author Frank, Rudy, & Nate
 * @version 1
@@ -13,75 +13,37 @@ import java.io.*;
 import java.util.LinkedList;
 
 
-public class InformationStore implements Serializable  {
-
-    private static final int DIMENSION = 8;
-
-    private FSMStore fsmStore;
-    private DisplayStore displayStore;
-    private transient Vector listeners;
-
-    /**
-    * default constructor.
-    */
-    public InformationStore(){
-        fsmStore = new FSMStore();
-        displayStore = new DisplayStore(DIMENSION,DIMENSION);
-        listeners = new Vector();
-    }
+public interface InformationStore {
 
     //LISTENER FUNCTIONS
     /**
     * adds a InformationStoreListener to the store.
     * @param l listener to add
     */
-    public void addListener(InformationStoreListener l)
-    {
-        listeners.add(l);
-    }
+    public void addListener(InformationStoreListener l);
 
     /**
-    * removes a InformationStoreListener to the store.
+    * removes a InformationStore to the store.
     * @param l listener to remove
     */
-    public void removeListener(InformationStoreListener l)
-    {
-        listeners.remove(l);
-    }
+    public void removeListener(InformationStoreListener l);
 
     /**
     * removes all Listeners
     * @param l the listener to remove
     */
-    public void clearListeners()
-    {
-        listeners = new Vector();
-    }
+    public void clearListeners();
 
     /**
     * calls .update() on all InformationStoreListeners
     */
-    public void notifyListeners()
-    {
-        InformationStoreListener l;
-        Iterator iter = listeners.iterator();
-
-        while(iter.hasNext()) {
-            l = (InformationStoreListener) iter.next();
-            l.update();
-        }
-
-    }
+    public void notifyListeners();
 
     /**
      * Loads information from a different information store into this one.
      * @param  toLoad the informationStore to load
      */
-    public void load(InformationStore toLoad) {
-        this.fsmStore = toLoad.fsmStore;
-        this.displayStore = toLoad.displayStore;
-        notifyListeners();
-    }
+    public void load(InformationStore toLoad);
 
     /**
      * Adds the given state if there is not one which exists there already.
@@ -89,15 +51,7 @@ public class InformationStore implements Serializable  {
      * @param  firstX the x coord of the state to add
      * @param  firstY the y coord of the state to add
      */
-    public void addState(String name, int firstX,int firstY) throws StoreException {
-        if (!displayStore.containsState(firstX,firstY)){
-            int id = fsmStore.addState(name);
-            displayStore.addState(firstX,firstY,id);
-        } else {
-            throw new StoreException("Can't Add State, state already exists in position.");
-        }
-        notifyListeners();
-    }
+    public void addState(String name, int firstX,int firstY) throws StoreException;
 
     /**
      * Adds the given transition if there is not one which exists there already.
@@ -107,30 +61,14 @@ public class InformationStore implements Serializable  {
      * @param  secondX the 2nd x coord of the transition to add
      * @param  secondY the 2nd y coord of the transition to add
      */
-    public void addTransition(String name, int firstX, int firstY, int secondX, int secondY) throws StoreException {
-        if(displayStore.containsState(firstX,firstY) &&
-        displayStore.containsState(secondX,secondY)) {
-            int fromID = displayStore.getState(firstX,firstY);
-            int toID = displayStore.getState(secondX,secondY);
-            fsmStore.addTransition(name,fromID,toID);
-            notifyListeners();
-        } else {
-            throw new StoreException("Error: Not a valid transition.");
-        }
-    }
+    public void addTransition(String name, int firstX, int firstY, int secondX, int secondY) throws StoreException;
 
     /**
      * removes the given state
      * @param  firstX x coord of the state to remove
      * @param  firstY y coord of the state to remove
      */
-    public void removeState(int firstX,int firstY) throws StoreException{
-        if(displayStore.containsState(firstX,firstY)){
-            int id = displayStore.removeState(firstX,firstY);
-            fsmStore.removeState(id);
-            notifyListeners();
-        }
-    }
+    public void removeState(int firstX,int firstY) throws StoreException;
 
     /**
      * Removes the given transition
@@ -139,21 +77,7 @@ public class InformationStore implements Serializable  {
      * @param  secondX the 2nd x coord of the transition to remove
      * @param  secondY the 2nd y coord of the transition to remove
      */
-    public void removeTransition(int firstX, int firstY, int secondX, int secondY) throws StoreException{
-        if(displayStore.containsState(firstX,firstY) &&
-        displayStore.containsState(secondX,secondY)) {
-            int fromID = displayStore.getState(firstX,firstY);
-            int toID = displayStore.getState(secondX,secondY);
-            if (fsmStore.containsTransitionWithIDs(fromID,toID)){
-                fsmStore.removeTransitionWithIDs(fromID,toID);
-                notifyListeners();
-            } else{
-                throw new StoreException("Error: No transtion exists.");
-            }
-        } else {
-            throw new StoreException("Error: Invalid States.");
-        }
-    }
+    public void removeTransition(int firstX, int firstY, int secondX, int secondY) throws StoreException;
 
     /**
      * Moves a state from one location to another.
@@ -162,95 +86,37 @@ public class InformationStore implements Serializable  {
      * @param  secondX new x coord
      * @param  secondY new y coord
      */
-    public void moveState(int firstX, int firstY, int secondX, int secondY) throws StoreException {
-        if(displayStore.containsState(firstX,firstY) &&
-        !displayStore.containsState(secondX,secondY)) {
-            displayStore.moveState(firstX,firstY,secondX,secondY);
-            notifyListeners();
-        } else{
-            throw new StoreException("Error: Not a valid move.");
-        }
-    }
+    public void moveState(int firstX, int firstY, int secondX, int secondY) throws StoreException;
 
     /**
      * Toggles the type of the given state
      * @param  firstX the x coord of the state to toggle
      * @param  firstY the y coord of the state to toggle
      */
-    public void toggleStateType(int firstX, int firstY) throws StoreException {
-        if(displayStore.containsState(firstX,firstY)){
-            int id = displayStore.getState(firstX,firstY);
-            fsmStore.toggleStateType(id);
-
-            State toggled = fsmStore.getState(id);
-            if(toggled.isStart()) {
-                ArrayList<State> states = fsmStore.getStates();
-                for(State current: states) {
-                    if(current.isStart() && toggled != current) {
-                        if(current.isAccept()){
-                            current.setType(State.ACCEPT);
-                        } else{
-                            current.setType(State.NEITHER);
-                        }
-                    }
-                }
-            }
-            notifyListeners();
-        }
-    }
+    public void toggleStateType(int firstX, int firstY) throws StoreException;
 
     /**
      * returns the id of the start state
      */
-    public int getStart() throws StoreException {
-        ArrayList<State> states = fsmStore.getStates();
-        for(State current: states) {
-            if(current.isStart()) {
-                return current.getID();
-            }
-        }
-        throw new StoreException("The FSM does not contain a starting state.");
-    }
+    public int getStart() throws StoreException;
 
     /**
      * highlights the requested state.
      * @param id the id of the state to highlight
      */
-    public void highlight(int id) throws StoreException {
-        try{
-            State toHighlight = fsmStore.getState(id);
-            toHighlight.highlight();
-            notifyListeners();
-        } catch (Exception ex){
-            throw new StoreException("Unable to highlight state.");
-        }
-    }
+    public void highlight(int id) throws StoreException;
 
     /**
      * unhighlights the requested state.
      * @param id the id of the state to highlight
      */
-    public void unhighlight(int id) throws StoreException {
-        try{
-            State toHighlight = fsmStore.getState(id);
-            toHighlight.unhighlight();
-            notifyListeners();
-        } catch (Exception ex){
-            throw new StoreException("Unable to unhighlight state.");
-        }
-    }
+    public void unhighlight(int id) throws StoreException;
 
     /**
      * unhighlights all states.
      * @param id the id of the state to highlight
      */
-    public void clearHighlights() throws StoreException {
-        ArrayList<State> states = fsmStore.getStates();
-        for(State current: states) {
-            current.unhighlight();
-        }
-        notifyListeners();
-    }
+    public void clearHighlights() throws StoreException;
 
     /**
      * returns an iterable of the ids of next states as Integer Objects.
@@ -258,55 +124,32 @@ public class InformationStore implements Serializable  {
      * @param id id of the starting node
      * @return an iterable of the ids of next states as Integer Objects.
      */
-    public LinkedList<Integer> getNextStates(String name, int id) throws StoreException {
-        LinkedList<Integer> toReturn = new LinkedList<Integer>();
-        ArrayList<Transition> trans = this.getTransitions();
-        for(Transition current: trans){
-            if(current.getFromID() == id && current.containsCondition(name)) {
-                Integer toAdd = new Integer(current.getToID());
-                toReturn.add(toAdd);
-            }
-        }
-        if(!toReturn.isEmpty()) {
-            return toReturn;
-        } else {
-            throw new StoreException("No valid transitions to follow.");
-        }
-    }
-
+    public LinkedList<Integer> getNextStates(String name, int id) throws StoreException;
     /**
      * return number of rows
      * @return # of rows
      */
-    public int getRows() {
-        return displayStore.getRows();
-    }
+    public int getRows();
 
     /**
      * returns the row of a given id
      * @param  id id to check
      * @return    the row number
      */
-    public int getRow(int id) {
-        return displayStore.getRow(id);
-    }
+    public int getRow(int id);
 
     /**
      * returns number of columns
      * @return # of columns
      */
-    public int getColumns() {
-        return displayStore.getColumns();
-    }
+    public int getColumns();
 
     /**
      * returns the column of a given id
      * @param  id id to check
      * @return    the column number
      */
-    public int getColumn(int id) {
-        return displayStore.getColumn(id);
-    }
+    public int getColumn(int id);
 
     /**
      * returns true iff the state exists.
@@ -314,9 +157,7 @@ public class InformationStore implements Serializable  {
      * @param   y row
      * @return  true iff the state exists.
      */
-    public boolean containsState(int row, int column) {
-        return displayStore.containsState(row,column);
-    }
+    public boolean containsState(int row, int column);
 
     /**
      * returns the state at the given row and column, returns -1 if doesn't contain the state.
@@ -324,26 +165,19 @@ public class InformationStore implements Serializable  {
      * @param   y row
      * @return  the state object
      */
-    public State getState(int row, int column) {
-        int id = displayStore.getState(row,column);
-        return fsmStore.getState(id);
-    }
+    public State getState(int row, int column);
 
     /**
      * returns the state of the given id
      * @param id the id in question
      * @return  the state object
      */
-    public State getState(int id){
-        return fsmStore.getState(id);
-    }
+    public State getState(int id);
 
     /**
      * returns an arraylist of the transition objects
      * @return an arraylist of the transition objects
      */
-    public ArrayList<Transition> getTransitions() {
-        return fsmStore.getTransitions();
-    }
+    public ArrayList<Transition> getTransitions();
 
 }

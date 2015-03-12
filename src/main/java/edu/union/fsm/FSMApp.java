@@ -12,7 +12,7 @@ public class FSMApp {
 
     public static void main(String[] args) {
 
-      InformationStore informationStore = new InformationStore();
+      InformationStore informationStore = new InformationStoreImpl();
 
       SwingDisplay swingDisplay = new SwingDisplay(informationStore);
 

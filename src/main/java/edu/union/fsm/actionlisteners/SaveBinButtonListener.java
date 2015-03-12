@@ -28,8 +28,9 @@ public class SaveBinButtonListener implements ActionListener{
     public void actionPerformed(ActionEvent e) {
 
         try{
-            
+
             SaveBin saver = new SaveBin(informationStore, swingDisplay);
+            informationStore.clearHighlights();
             saver.saveFile();
 
         } catch(Exception ex){

@@ -5,8 +5,8 @@ import edu.union.fsm.storage.*;
 
 public class DeleteTransitionTool extends Tool{
 
-    public DeleteTransitionTool(ToolInfoHolder info){
-        super(info);
+    public DeleteTransitionTool(){
+        super();
     }
 
     public void execute() throws ToolException{

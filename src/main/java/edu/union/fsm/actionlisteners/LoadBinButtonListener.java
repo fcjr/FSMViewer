@@ -13,12 +13,14 @@ public class LoadBinButtonListener implements ActionListener{
 
     private InformationStore informationStore;
     private SwingDisplay swingDisplay;
+    SimulateButtonListener simulator;
     /**
      * Constuctor. Takes all required information needed to function.
      */
-    public LoadBinButtonListener(InformationStore informationStore, SwingDisplay swingDisplay){
+    public LoadBinButtonListener(InformationStore informationStore, SwingDisplay swingDisplay, SimulateButtonListener simulator){
         this.informationStore = informationStore;
         this.swingDisplay = swingDisplay;
+        this.simulator = simulator;
     }
 
     /**
@@ -32,6 +34,7 @@ public class LoadBinButtonListener implements ActionListener{
             Object toLoad = loader.loadFile();
             InformationStore loadInformationStore = (InformationStore) toLoad;
             informationStore.load(loadInformationStore);
+            simulator.clearSimulation();
 
         } catch(NullPointerException ex) {
             //DO NOTHING

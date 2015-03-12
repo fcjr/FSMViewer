@@ -12,8 +12,8 @@ public abstract class Tool {
      * which contains all the necessary information for the tool to function.
      * @param  info The ToolInfoHolder
      */
-    public Tool(ToolInfoHolder info){
-        this.info = info;
+    public Tool(){
+        this.info = ToolInfoHolder.getInstance();
     }
 
     /**

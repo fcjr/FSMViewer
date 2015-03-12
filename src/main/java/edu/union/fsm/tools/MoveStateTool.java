@@ -6,8 +6,8 @@ import edu.union.fsm.storage.*;
 public class MoveStateTool extends Tool{
 
 
-    public MoveStateTool(ToolInfoHolder info){
-        super(info);
+    public MoveStateTool(){
+        super();
     }
 
     public void execute() throws ToolException{
