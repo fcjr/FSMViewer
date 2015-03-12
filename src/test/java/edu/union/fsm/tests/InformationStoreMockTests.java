@@ -23,7 +23,7 @@ public class InformationStoreMockTests {
 
     @Before
     public void setUp() {
-        informationStore = new InformationStore();
+        informationStore = new InformationStoreImpl();
         dummyListener = new DummyISListener();
         informationStore.addListener(dummyListener);
     }
