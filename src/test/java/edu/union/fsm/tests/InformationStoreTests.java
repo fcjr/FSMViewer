@@ -23,7 +23,7 @@ public class InformationStoreTests {
 
     @Before
     public void setUp() {
-        informationStore = new InformationStore();
+        informationStore = new InformationStoreImpl();
     }
 
     @After
@@ -45,9 +45,9 @@ public class InformationStoreTests {
 	    assertFalse("There should be no state to begin with.", informationStore.containsState(1,1));
 
 	    // add state in empty cell
-	    informationStore.addState("Hello", 1, 1);	
+	    informationStore.addState("Hello", 1, 1);
 	    assertTrue("There should exist a state at location(1,1).", informationStore.containsState(1,1));
-	    
+
 	    State tempState = informationStore.getState(1,1);
 	    String tempName = tempState.getName();
 	    assertEquals("Name should be Hello", "Hello", tempName);
@@ -60,7 +60,7 @@ public class InformationStoreTests {
 	    assertEquals("Name of state should remain the same when trying to add a state where existing state is", "Hello", name);
 
 	} catch (Exception ex) {}
-	
+
     }
 
         @Test
@@ -70,7 +70,7 @@ public class InformationStoreTests {
 	    // checks that we have no transitions
     	    ArrayList<Transition> toCheck1 = informationStore.getTransitions();
     	    assertTrue("There should be no transition to begin with.", toCheck1.isEmpty());
-    
+
     	    informationStore.addState("Marco", 1, 1);
    	    informationStore.addState("Reus", 2, 2);
     	    informationStore.addTransition("BVB", 1, 1, 2, 2);
@@ -103,9 +103,9 @@ public class InformationStoreTests {
 	    informationStore.addTransition("FCB", 3, 3, 5, 5);
 	    ArrayList<Transition> toCheck5 = informationStore.getTransitions();
 	    assertEquals("There should be the two transitions.", 3, toCheck5.size());
-	     
+
     	} catch (Exception ex) {}
-	
+
     }
 
     @Test
@@ -123,9 +123,9 @@ public class InformationStoreTests {
 	    // remove non-existing state
 	    informationStore.removeState(4, 4);
 	    assertFalse("Removing nonexistant state should not break it.", informationStore.containsState(4,4));
-	    
+
 	} catch (Exception ex) {}
-	
+
     }
 
     @Test
@@ -136,7 +136,7 @@ public class InformationStoreTests {
 	     // checks that we have no transitions
     	    ArrayList<Transition> toCheck1 = informationStore.getTransitions();
     	    assertTrue("There should be no transition to begin with.", toCheck1.isEmpty());
-    
+
     	    informationStore.addState("Marco", 1, 1);
    	    informationStore.addState("Reus", 2, 2);
     	    informationStore.addTransition("BVB", 1, 1, 2, 2);
@@ -173,7 +173,7 @@ public class InformationStoreTests {
 	    ArrayList<Transition> toCheckrm5 = informationStore.getTransitions();
 	    System.out.println("3 remove " +toCheckrm5.size());
 	    assertEquals("There should be the two transitions.", 1, toCheckrm5.size());
-	    
+
 	} catch (Exception ex) {}
     }
 
@@ -207,20 +207,20 @@ public class InformationStoreTests {
 	    // moving state to non-empty cell
 	    informationStore.addState("World", 7, 5);
 	    informationStore.moveState(5, 2, 7, 5);
-	    
+
 	    State tempState3 = informationStore.getState(7,5);
 	    String tempName3 = tempState.getName();
 	    assertEquals("Name should not change", "World", tempName3);
 	    assertTrue("There should still exist a state at location(5,2).", informationStore.containsState(5,2));
 	    assertTrue("There should still exist a state at location(7,5).", informationStore.containsState(7,5));
 
-	    
+
 	    // moving non-existant state
 	    informationStore.moveState(3, 4, 6, 6);
 	    assertFalse("There should be no state at location(6,6). This should not break.", informationStore.containsState(6,6));
-		    
+
 	} catch (Exception ex) {}
-	
+
     }
 
 }
