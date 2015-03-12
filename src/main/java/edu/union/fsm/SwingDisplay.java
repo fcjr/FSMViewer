@@ -43,7 +43,7 @@ public class SwingDisplay extends JFrame implements InformationStoreListener{
     *
     * @param model the model class
     */
-    SwingDisplay(InformationStore informationStore) {
+    public SwingDisplay(InformationStore informationStore) {
         this.informationStore = informationStore;
         drawingComponent = new DrawingComponent(informationStore);
 
