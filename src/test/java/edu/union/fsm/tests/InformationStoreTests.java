@@ -58,30 +58,55 @@ public class InformationStoreTests {
 	    State toCheck = informationStore.getState(1,1);
 	    String name = toCheck.getName();
 	    assertEquals("Name of state should remain the same when trying to add a state where existing state is", "Hello", name);
+
 	} catch (Exception ex) {}
 	
     }
 
-    //    @Test
-    //public void testAddTransition() {
+        @Test
+    public void testAddTransition() {
 
-    //	try{
-    //	    ArrayList<Transition> toCheck = informationStore.getTransitions();
-    //	    assertTrue("There should be no transition to begin with.", toCheck.isEmpty());
-    //
-    //	    informationStore.addState("Marco", 1, 1);
-    //	    informationStore.addState("Reus", 2, 2);
-    //	    informationStore.addTransition("BVB", 1, 1, 2, 2);
-    //
-    //	    State from = informationStore.getState(1,1);
-    //	    State to = informationStore.getState(2,2);
-    //	    int fromID = from.getID();
-    //	    int toID = to.getID();
-    //	    boolean hasTransition = toCheck.containsTransitionWithIDs(fromID,toID);
-    //
-    //	    assertTrue("There should be the one transition we are looking for.", hasTransition);
-    //	} catch (Exception ex) {}
-    //}
+    	try{
+	    // checks that we have no transitions
+    	    ArrayList<Transition> toCheck1 = informationStore.getTransitions();
+    	    assertTrue("There should be no transition to begin with.", toCheck1.isEmpty());
+    
+    	    informationStore.addState("Marco", 1, 1);
+   	    informationStore.addState("Reus", 2, 2);
+    	    informationStore.addTransition("BVB", 1, 1, 2, 2);
+
+	    // checks to see that we have one transition after adding one
+	    ArrayList<Transition> toCheck = informationStore.getTransitions();
+    	    assertEquals("There should be one transition.", 1, toCheck.size());
+
+
+	    // should be one transition when adding another transition where already existing one
+	    informationStore.addTransition("FCB", 1, 1, 2, 2);
+	    ArrayList<Transition> toCheck2 = informationStore.getTransitions();
+	    assertEquals("There should be the one transition.", 1, toCheck2.size());
+
+
+	    // test when we add new transition to other state
+	    informationStore.addState("Thiago", 3, 3);
+	    informationStore.addTransition("FCB", 1, 1, 3, 3);
+	    ArrayList<Transition> toCheck3 = informationStore.getTransitions();
+	    assertEquals("There should be the two transitions.", 2, toCheck3.size());
+
+
+	    // test when we add new transition to other state
+	    informationStore.addTransition("FCB", 3, 3, 1, 1);
+	    ArrayList<Transition> toCheck4 = informationStore.getTransitions();
+	    assertEquals("There should be the two transitions.", 3, toCheck4.size());
+
+
+	    // adding transition to non-occupied cell
+	    informationStore.addTransition("FCB", 3, 3, 5, 5);
+	    ArrayList<Transition> toCheck5 = informationStore.getTransitions();
+	    assertEquals("There should be the two transitions.", 3, toCheck5.size());
+	     
+    	} catch (Exception ex) {}
+	
+    }
 
     @Test
     public void testRemoveState() {
@@ -106,6 +131,50 @@ public class InformationStoreTests {
     @Test
     public void testRemoveTransition() {
 
+	try {
+
+	     // checks that we have no transitions
+    	    ArrayList<Transition> toCheck1 = informationStore.getTransitions();
+    	    assertTrue("There should be no transition to begin with.", toCheck1.isEmpty());
+    
+    	    informationStore.addState("Marco", 1, 1);
+   	    informationStore.addState("Reus", 2, 2);
+    	    informationStore.addTransition("BVB", 1, 1, 2, 2);
+	    informationStore.removeTransition(1, 1, 2, 2);
+	    // checks to see that we have one transition after adding one
+	    ArrayList<Transition> toCheckrm = informationStore.getTransitions();
+    	    assertEquals("There should be one transition.", 0, toCheckrm.size());
+
+
+	    // should be one transition when adding another transition where already existing one
+	    informationStore.addTransition("FCB", 1, 1, 2, 2);
+	    informationStore.addTransition("BVB", 1, 1, 2, 2);
+	    informationStore.removeTransition(1, 1, 2, 2);
+
+	    ArrayList<Transition> toCheckrm2 = informationStore.getTransitions();
+	    System.out.println("1 remove " +toCheckrm2.size());
+	    assertEquals("There should be the one transition.", 0, toCheckrm2.size());
+
+
+	    // test when we add new transition to other state
+	    informationStore.addState("Thiago", 3, 3);
+	    informationStore.addTransition("BVB", 1, 1, 2, 2);
+
+	    informationStore.addTransition("FCB", 1, 1, 3, 3);
+	    informationStore.removeTransition(1, 1, 3, 3);
+
+	    ArrayList<Transition> toCheckrm3 = informationStore.getTransitions();
+	    System.out.println("2 remove " + toCheckrm3.size());
+	    assertEquals("There should be the two transitions.", 1, toCheckrm3.size());
+
+
+	    // adding transition to non-occupied cell
+	    informationStore.removeTransition(5, 5, 6, 6);
+	    ArrayList<Transition> toCheckrm5 = informationStore.getTransitions();
+	    System.out.println("3 remove " +toCheckrm5.size());
+	    assertEquals("There should be the two transitions.", 1, toCheckrm5.size());
+	    
+	} catch (Exception ex) {}
     }
 
     @Test
@@ -154,16 +223,4 @@ public class InformationStoreTests {
 	
     }
 
-    
-//  @Test
-//  public void testGetRow() {
-//	
-//  }
-
-//  @Test
-//  public void testGetColumn() {
-//	
-//  }
-
-    
 }
