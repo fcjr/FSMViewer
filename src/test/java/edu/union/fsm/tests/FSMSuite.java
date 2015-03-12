@@ -11,7 +11,8 @@ import edu.union.fsm.tests.*;
     //FSMStoreTests.class,
     //DisplayStoreTests.class,
     InformationStoreTests.class,
-    InformationStoreMockTests.class
+    InformationStoreMockTests.class,
+    ToolMockTests.class
 })
 public class FSMSuite
 { // no implementation needed; above annotations do the work.
