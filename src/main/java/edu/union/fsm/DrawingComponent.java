@@ -142,6 +142,7 @@ public class DrawingComponent extends JComponent {
 	// This is the case in which the states are vertically to one another
 	if (xl == 0){
 	    if (yl<0){
+		//Math
 		double thetal = 3*Math.PI/2 + Math.PI/4;
 		double thetar = 3*Math.PI/2 - Math.PI/4;
 		int ytl = (int)(Math.sin(thetal)*(double)offset/2);
@@ -162,6 +163,7 @@ public class DrawingComponent extends JComponent {
 		g.drawLine(x1,y1,x3, y3);
 	    }
 	    else{
+		//Math
 		double thetal = Math.PI/2 + Math.PI/4;
 		double thetar = Math.PI/2 - Math.PI/4;
 		int ytl = (int)(Math.sin(thetal)*(double)offset/2);
@@ -183,7 +185,9 @@ public class DrawingComponent extends JComponent {
 	    }
 	}
 
+	// Else statement consists handles the transitions of non-vertical transitions
 	else{
+	    //Math
 	    double theta = Math.atan((double)yl/(double)xl);
 	    double thetal = theta + Math.PI/4;
 	    double thetar = theta - Math.PI/4;
