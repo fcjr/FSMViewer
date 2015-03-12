@@ -43,6 +43,26 @@ public class Debugger {
     }
 
     /**
+     * Prints the string toPrint out to the console and continues to the next line when debuging is enabled.
+     * @param toPrint the string to print.
+     */
+    public void println(String toPrint){
+        if(debugEnabled) {
+            System.out.println(toPrint);
+        }
+    }
+
+    /**
+     * Prints the string toPrint out to the console when debuging is enabled.
+     * @param toPrint the string to print.
+     */
+    public void print(String toPrint){
+        if(debugEnabled) {
+            System.out.println(toPrint);
+        }
+    }
+
+    /**
      * Takes in a boolean and sets the debugger to on iff user input is true.  Turns
      * it off if false.
      * @param isEnabled true iff you want the debuging to be enabled.
