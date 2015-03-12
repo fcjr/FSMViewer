@@ -15,18 +15,8 @@ import edu.union.fsm.storage.*;
 
 public class DummyInformationStore implements InformationStore{
 
-    private boolean called;
-    private boolean bool;
-    public boolean addState;
-    public boolean addTransition;
 
     public DummyInformationStore(){
-        called = false;
-        bool = false;
-    }
-
-    public boolean bool() {
-        return bool;
     }
 
     //LISTENER FUNCTIONS
@@ -59,6 +49,9 @@ public class DummyInformationStore implements InformationStore{
      */
     public void load(InformationStore toLoad){}
 
+
+    private boolean addStateBool = false;
+
     /**
      * Adds the given state if there is not one which exists there already.
      * @param  name name of the state
@@ -66,15 +59,13 @@ public class DummyInformationStore implements InformationStore{
      * @param  firstY the y coord of the state to add
      */
     public void addState(String name, int firstX,int firstY) throws StoreException{
-        if(called == false) {
-            bool = true;
-            called = true;
-        } else{
-            bool = false;
-        }
-
+        addStateBool = true;
     }
 
+    public boolean addStateCalled(){return addStateBool;}
+
+
+    private boolean addTransitionbool = false;
     /**
      * Adds the given transition if there is not one which exists there already.
      * @param  name name of the state
@@ -84,8 +75,15 @@ public class DummyInformationStore implements InformationStore{
      * @param  secondY the 2nd y coord of the transition to add
      */
     public void addTransition(String name, int firstX, int firstY, int secondX, int secondY) throws StoreException{
-        bool = true;
+        addTransitionbool = true;
     }
+
+    public boolean addTransitionCalled() {
+        return addTransitionbool;
+    }
+
+    private boolean removeStatebool = false;
+
 
     /**
      * removes the given state
@@ -93,8 +91,12 @@ public class DummyInformationStore implements InformationStore{
      * @param  firstY y coord of the state to remove
      */
     public void removeState(int firstX,int firstY) throws StoreException{
-        bool = true;
+        removeStatebool = true;
     }
+
+    public boolean removeStateCalled(){return removeStatebool;}
+
+    private boolean removeTransitionbool = false;
 
     /**
      * Removes the given transition
@@ -104,8 +106,12 @@ public class DummyInformationStore implements InformationStore{
      * @param  secondY the 2nd y coord of the transition to remove
      */
     public void removeTransition(int firstX, int firstY, int secondX, int secondY) throws StoreException{
-        bool = true;
-    }
+        removeTransitionbool = true;}
+
+
+    public boolean removeTransitionCalled(){return removeTransitionbool;}
+
+    private boolean moveStatebool = false;
 
     /**
      * Moves a state from one location to another.
@@ -115,17 +121,22 @@ public class DummyInformationStore implements InformationStore{
      * @param  secondY new y coord
      */
     public void moveState(int firstX, int firstY, int secondX, int secondY) throws StoreException{
-        bool = true;
+        moveStatebool = true;
     }
 
+    private boolean toggleStateTypebool = false;
+
+    public boolean moveStateCalled(){return moveStatebool;}
     /**
      * Toggles the type of the given state
      * @param  firstX the x coord of the state to toggle
      * @param  firstY the y coord of the state to toggle
      */
     public void toggleStateType(int firstX, int firstY) throws StoreException{
-        bool = true;
+        toggleStateTypebool = true;
     }
+
+    public boolean toggleStateTypeCalled() { return toggleStateTypebool;}
 
     /**
      * returns the id of the start state
