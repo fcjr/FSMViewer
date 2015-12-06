@@ -1,8 +1,5 @@
 /**
 * Saves a seralized model class to a file.
-*
-* @author Frank, Rudy, & Nate
-* @version 1
 */
 
 package edu.union.fsm.saving;
@@ -61,7 +58,7 @@ public class SavePNG {
                 componentToSave.printAll(graphics);
 
                 ImageIO.write(image, "png", file);
-                
+
                 graphics.dispose();
 
             }

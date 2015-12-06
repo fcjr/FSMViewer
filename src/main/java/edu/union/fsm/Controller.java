@@ -1,8 +1,5 @@
 /**
 * Controller Method, manages listeners for the SwingDisplay file.
-*
-* @author Frank, Rudy, & Nate
-* @version 1
 */
 
 package edu.union.fsm;

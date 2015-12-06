@@ -1,8 +1,5 @@
 /**
 * InformationStore.  Stores fsmStore and displayStore.
-*
-* @author Frank, Rudy, & Nate
-* @version 1
 */
 
 

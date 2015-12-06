@@ -1,8 +1,5 @@
 /**
 * Main Application for SwingDisplaying finite state machines.
-*
-* @author Frank, Rudy, & Nate
-* @version 1
 */
 
 package edu.union.fsm;

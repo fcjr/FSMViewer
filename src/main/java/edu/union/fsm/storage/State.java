@@ -1,7 +1,5 @@
 /**
  * Wrapper class for all asociated information needed to store a state.
- *
- * @author Frank, Rudy, Nate
  */
 
 package edu.union.fsm.storage;

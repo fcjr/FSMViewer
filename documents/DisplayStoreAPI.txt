@@ -1,4 +1,0 @@
-addState(x,y,id) --> return id
-removeState(x,y) --> returns id
-move(x1,y1,x2,y2) --> return boolean of success
-getState(x,y) --> returns id
